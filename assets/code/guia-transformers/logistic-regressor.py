@@ -6,9 +6,9 @@ import torch
 # logistic regression for binary classification
 # adapted from https://github.com/ConsciousML/Logistic-Regression-from-scratch
 
-class_centers = [ [2,3], [4,1] ]
+class_centers = [ [2,3], [4,3] ]
 samples = 100
-dev = 0.7
+dev = 2.7
 training_steps = 5000
 training_log_steps = training_steps / 10
 learning_rate = 0.01
@@ -19,12 +19,16 @@ X, y = make_blobs(n_samples=samples, centers=class_centers, cluster_std=dev,
         n_features=FEATURES, random_state=4)
 # X: [train_samples, 2], y: [train_samples], y contains 0s and 1s
 
+# check if cuda or cpu
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print (f'Using {device}')
+
 # move data to tensors:
-X = torch.Tensor(X)
-y = torch.Tensor(y)
+X = torch.Tensor(X).to(device)
+y = torch.Tensor(y).to(device)
 
 # create train/test views of the data:
-mask = torch.ones(X.shape[0], dtype=bool)
+mask = torch.ones(X.shape[0], dtype=bool).to(device)
 mask[::3] = 0  # one every n elements for testing
 X_train, y_train = X[mask, :], y[mask]
 X_test, y_test = X[torch.bitwise_not(mask), :], y[torch.bitwise_not(mask)]  # also ~mask
@@ -49,10 +53,9 @@ def forward(X, weights, bias):
 
 def binary_cross_entropy(y_truth, y_pred):
     # y_truth: [train_samples], y_pred: [train_samples], fact: float, returns: [] (scalar tensor)
-    fact = 1 / y_truth.shape[0]
-    eps = 1e-10  # epsilon to avoid Nans
-    return -fact * (y_truth * torch.log(y_pred + eps) + 
-                    (1 - y_truth) * torch.log(1 - y_pred + eps)).sum()
+    m = 1 / y_truth.shape[0]
+    return -m * (y_truth * torch.log(y_pred) + 
+                    (1 - y_truth) * torch.log(1 - y_pred)).sum()
 
 def train(X, y_truth, weights, bias, lr=0.01, it=1000, it_log=100):
     # X: [train_samples, 2], y_truth: [train_samples], weights: [2], bias: [1]
@@ -62,9 +65,9 @@ def train(X, y_truth, weights, bias, lr=0.01, it=1000, it_log=100):
         err = (y_pred - y_truth)
         # torch.mul (operator *) performs element-wise multiplication with broadcasting
         grad_w = (1 / y_truth.shape[0]) * torch.matmul(err, X)
-        grad_b = torch.sum(err)
-        weights -= lr * grad_w
-        bias -= lr * grad_b
+        grad_b = (1 / y_truth.shape[0]) * torch.sum(err)
+        weights = weights - lr * grad_w
+        bias = bias - lr * grad_b
         if (i) % it_log == 0:
             bn_train = binary_cross_entropy(y_truth, y_pred).item()
             print (f'Epoch [{i+1}/{it}], Loss: {bn_train:.2f}')
@@ -72,9 +75,12 @@ def train(X, y_truth, weights, bias, lr=0.01, it=1000, it_log=100):
     return weights, bias, bn_train
 
 # training the model
-weights = torch.rand(X_train.shape[1], dtype=torch.float)
-bias = torch.rand(1, dtype=torch.float)
-weights, bias, bn_train = train(X_train, y_train, weights, bias, lr=learning_rate, it=training_steps, it_log=training_log_steps)
+# if operands are on GPU, result of any operation is on GPU
+# therefore, we just need to move weights and bias to GPU 
+weights = torch.rand(X_train.shape[1], dtype=torch.float).to(device)
+bias = torch.rand(1, dtype=torch.float).to(device)  # bias is a scalar tensor
+weights, bias, bn_train = train(X_train, y_train, weights, bias, 
+                            lr=learning_rate, it=training_steps, it_log=training_log_steps)
 y_pred = forward(X_test, weights, bias)
 print('Weights:', weights, 'Bias:', bias)
 print(f'Binary CE on the train set: {bn_train:.2f}')
@@ -87,8 +93,16 @@ print(f'Binary CE on the train set: {bn_train:.2f}')
 r = -weights[0].item() / weights[1].item()
 t = (0.5-bias.item()) / weights[1].item()
 
+# compute accuracy with PyTorch:
+prediction = forward(X_test,weights,bias) > 0.5
+correct = prediction == y_test
+accuracy = (torch.sum(correct) / y_test.shape[0])*100
+print (f'Accuracy: {accuracy:.2f}%')
+
 # plot the data and the line (hyperplane) for the decision boundary:
-plt.scatter(X[:, 0], X[:, 1], s=50, c = y)  # s is size of the points, c is an array of colors
+X = X.cpu()
+y = y.cpu()
+plt.scatter(X[:, 0].cpu(), X[:, 1].cpu(), s=50, c = y)  # s is size of the points, c is an array of colors
 plt.title(f"Hyperplane learned by the logistic regressor")
 plt.xlabel("x")
 plt.ylabel("y")
@@ -96,10 +110,4 @@ x_hyperplane = np.linspace(0,6,100)
 y_hyperplane = r*x_hyperplane+t
 plt.plot(x_hyperplane, y_hyperplane, '-r', label='y=2x+1')  # -r means solid red line
 plt.show()
-#plt.savefig("mixture-of-distributions.png")
-
-# compute accuracy with PyTorch:
-prediction = forward(X_test,weights,bias) > 0.5
-correct = prediction == y_test
-accuracy = (torch.sum(correct) / y_test.shape[0])*100
-print (f'Accuracy: {accuracy:.2f}%')
+#plt.savefig("decision-boundary.png")

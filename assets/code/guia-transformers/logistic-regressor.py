@@ -1,0 +1,105 @@
+from sklearn.datasets import make_blobs
+from matplotlib import pyplot as plt
+import numpy as np
+import torch
+
+# logistic regression for binary classification
+# adapted from https://github.com/ConsciousML/Logistic-Regression-from-scratch
+
+class_centers = [ [2,3], [4,1] ]
+samples = 100
+dev = 0.7
+training_steps = 5000
+training_log_steps = training_steps / 10
+learning_rate = 0.01
+FEATURES = 2
+
+# generate 2-dimensional classification dataset (2 classes):
+X, y = make_blobs(n_samples=samples, centers=class_centers, cluster_std=dev, 
+        n_features=FEATURES, random_state=4)
+# X: [train_samples, 2], y: [train_samples], y contains 0s and 1s
+
+# move data to tensors:
+X = torch.Tensor(X)
+y = torch.Tensor(y)
+
+# create train/test views of the data:
+mask = torch.ones(X.shape[0], dtype=bool)
+mask[::3] = 0  # one every n elements for testing
+X_train, y_train = X[mask, :], y[mask]
+X_test, y_test = X[torch.bitwise_not(mask), :], y[torch.bitwise_not(mask)]  # also ~mask
+
+# print(X_train, y_train)
+# print(X_test, y_test)
+
+def sigmoid(x):
+    # x: torch.Size([train_samples])
+    return 1 / (1 + torch.exp(-x))
+
+def forward(X, weights, bias):
+    # X: [train_samples, 2], weights: [2], bias: [1]
+    # torch.matmul(X,weights): [train_samples], returns: [train_samples]
+
+    """ torch.mm only works with compatible 2-dimensional tensors (matrices) and does not broadcast;
+    torch.matmul(a,b) performs matrix-vector product if a is 2-dimensional and b is 1-dimensional;
+    torch.matmul(a,b) prepends a 1 to the dimensions of a for the purpose of the matrix multiply if 
+    a is 1-dimensional and b is 2-dimensional; """
+
+    return sigmoid(torch.matmul(X,weights) + bias)  # bias is broadcasted to [train_samples]
+
+def binary_cross_entropy(y_truth, y_pred):
+    # y_truth: [train_samples], y_pred: [train_samples], fact: float, returns: [] (scalar tensor)
+    fact = 1 / y_truth.shape[0]
+    eps = 1e-10  # epsilon to avoid Nans
+    return -fact * (y_truth * torch.log(y_pred + eps) + 
+                    (1 - y_truth) * torch.log(1 - y_pred + eps)).sum()
+
+def train(X, y_truth, weights, bias, lr=0.01, it=1000, it_log=100):
+    # X: [train_samples, 2], y_truth: [train_samples], weights: [2], bias: [1]
+    # err: [train_samples], grad_w: [2], grad_b: [], returns: [] (scalar tensor)
+    for i in range(it):
+        y_pred = forward(X, weights, bias)
+        err = (y_pred - y_truth)
+        # torch.mul (operator *) performs element-wise multiplication with broadcasting
+        grad_w = (1 / y_truth.shape[0]) * torch.matmul(err, X)
+        grad_b = torch.sum(err)
+        weights -= lr * grad_w
+        bias -= lr * grad_b
+        if (i) % it_log == 0:
+            bn_train = binary_cross_entropy(y_truth, y_pred).item()
+            print (f'Epoch [{i+1}/{it}], Loss: {bn_train:.2f}')
+    bn_train = binary_cross_entropy(y_truth, y_pred).item()
+    return weights, bias, bn_train
+
+# training the model
+weights = torch.rand(X_train.shape[1], dtype=torch.float)
+bias = torch.rand(1, dtype=torch.float)
+weights, bias, bn_train = train(X_train, y_train, weights, bias, lr=learning_rate, it=training_steps, it_log=training_log_steps)
+y_pred = forward(X_test, weights, bias)
+print('Weights:', weights, 'Bias:', bias)
+print(f'Binary CE on the train set: {bn_train:.2f}')
+
+# decision boundary hyperplane equation:
+# w1 * x1 + w2 * x2 + b = 0.5
+# x2 = (0.5 - w1*x1 - b) / w2
+# x2 = -w1/w2 * x1 + (0.5 - b) / w2 
+# x2 = r*x1 + t
+r = -weights[0].item() / weights[1].item()
+t = (0.5-bias.item()) / weights[1].item()
+
+# plot the data and the line (hyperplane) for the decision boundary:
+plt.scatter(X[:, 0], X[:, 1], s=50, c = y)  # s is size of the points, c is an array of colors
+plt.title(f"Hyperplane learned by the logistic regressor")
+plt.xlabel("x")
+plt.ylabel("y")
+x_hyperplane = np.linspace(0,6,100)
+y_hyperplane = r*x_hyperplane+t
+plt.plot(x_hyperplane, y_hyperplane, '-r', label='y=2x+1')  # -r means solid red line
+plt.show()
+#plt.savefig("mixture-of-distributions.png")
+
+# compute accuracy with PyTorch:
+prediction = forward(X_test,weights,bias) > 0.5
+correct = prediction == y_test
+accuracy = (torch.sum(correct) / y_test.shape[0])*100
+print (f'Accuracy: {accuracy:.2f}%')

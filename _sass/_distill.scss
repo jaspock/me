@@ -124,3 +124,7 @@ d-appendix {
     }
   }
 }
+
+html[data-theme='dark'] span.katex {
+  color: var(--gray-color-light) !important;
+}

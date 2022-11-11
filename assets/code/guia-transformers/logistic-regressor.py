@@ -86,12 +86,14 @@ print('Weights:', weights, 'Bias:', bias)
 print(f'Binary CE on the train set: {bn_train:.2f}')
 
 # decision boundary hyperplane equation:
-# w1 * x1 + w2 * x2 + b = 0.5
-# x2 = (0.5 - w1*x1 - b) / w2
-# x2 = -w1/w2 * x1 + (0.5 - b) / w2 
+# sigma(w1 * x1 + w2 * x2 + b) = 0.5
+# 1 = exp(-(w1 * x1 + w2 * x2 + b))
+# log 1 = log exp(-(w1 * x1 + w2 * x2 + b))
+# 0 = -(w1 * x1 + w2 * x2 + b)
+# x2 = -w1/w2 * x1 - b/w2 
 # x2 = r*x1 + t
 r = -weights[0].item() / weights[1].item()
-t = (0.5-bias.item()) / weights[1].item()
+t = (-bias.item()) / weights[1].item()
 
 # compute accuracy with PyTorch:
 prediction = forward(X_test,weights,bias) > 0.5

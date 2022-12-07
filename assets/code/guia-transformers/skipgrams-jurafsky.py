@@ -1,5 +1,8 @@
 # %%
-# code by Tae Hwan Jung @graykode
+# Original code by Tae Hwan Jung @graykode
+# https://github.com/graykode/nlp-tutorial
+# Modifications by @jaspock
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -31,6 +34,7 @@ def random_batch():
     random_context= []
     random_output = []
 
+    # batch_size elements randomly taken from the list of indexes without replacement
     random_index = np.random.choice(range(len(skip_grams_positive)), base_batch_size, replace=False)
     for i in random_index:
         random_target.append(skip_grams_positive[i][0])
@@ -49,7 +53,7 @@ def random_batch():
 # Model
 class Word2Vec(nn.Module):
     def __init__(self):
-        super(Word2Vec, self).__init__()
+        super().__init__()
         self.W = nn.Embedding(voc_size, embedding_size)  # target matrix 
         self.C = nn.Embedding(voc_size, embedding_size)  # context matrix
 
@@ -70,10 +74,10 @@ if __name__ == '__main__':
     sentences = get_3word_sentences()
 
     word_sequence = " ".join(sentences).split()
-    word_list = " ".join(sentences).split()
-    word_list = list(set(word_list))
-    word_dict = {w: i for i, w in enumerate(word_list)}
-    dict_word = {i: w for i, w in enumerate(word_list)}
+    word_list = " ".join(sentences).split()  
+    word_list = list(set(word_list))  # removes duplicates
+    word_dict = {w: i for i, w in enumerate(word_list)}  # word from index
+    dict_word = {i: w for i, w in enumerate(word_list)}  # index from word
     voc_size = len(word_list)
 
     # Make skip gram of one size window
@@ -93,10 +97,10 @@ if __name__ == '__main__':
             skip_grams_negative.append([target, c])
 
     # Print samples
-    print('Positive samples: ', end='')
+    print('Some positive samples: ', end='')
     for i in skip_grams_positive[::len(skip_grams_positive)//20]:
       print(dict_word[i[0]], dict_word[i[1]],end=', ')
-    print('\nNegative samples: ', end='')
+    print('\nSome negative samples: ', end='')
     for i in skip_grams_negative[::len(skip_grams_negative)//20]:
       print(dict_word[i[0]], dict_word[i[1]],end=', ')
     print()
@@ -104,14 +108,16 @@ if __name__ == '__main__':
     model = Word2Vec()
 
     criterion = nn.BCELoss()
+    # model.parameters(): iterable with all parameters of the model
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     # Training
     for epoch in range(10000):
         input_w_batch, input_c_batch, target_batch = random_batch()
-        input_w_batch = torch.LongTensor(input_w_batch)
-        input_c_batch = torch.LongTensor(input_c_batch)
-        target_batch = torch.Tensor(target_batch) # BCELoss expects float values
+        # indexes are usually represented with longs in PyTorch:
+        input_w_batch = torch.tensor(input_w_batch,dtype=torch.long)
+        input_c_batch = torch.tensor(input_c_batch,dtype=torch.long)
+        target_batch = torch.tensor(target_batch,dtype=torch.float32) # BCELoss expects float values
 
         optimizer.zero_grad()
         output = model(input_w_batch,input_c_batch)

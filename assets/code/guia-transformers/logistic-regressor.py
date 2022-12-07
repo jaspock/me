@@ -1,4 +1,7 @@
-from sklearn.datasets import make_blobs
+# %%
+# Modifications by @jaspock
+
+from sklearn.datasets import make_blobs  # pip install scikit-learn
 from matplotlib import pyplot as plt
 import numpy as np
 import torch
@@ -24,14 +27,14 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print (f'Using {device}')
 
 # move data to tensors:
-X = torch.Tensor(X).to(device)
-y = torch.Tensor(y).to(device)
+X = torch.from_numpy(np.float32(X)).to(device) # default numpy is float32
+y = torch.from_numpy(np.float32(y)).to(device)
 
 # create train/test views of the data:
 mask = torch.ones(X.shape[0], dtype=bool).to(device)
 mask[::3] = 0  # one every n elements for testing
-X_train, y_train = X[mask, :], y[mask]
-X_test, y_test = X[torch.bitwise_not(mask), :], y[torch.bitwise_not(mask)]  # also ~mask
+X_train, y_train = X[mask], y[mask]
+X_test, y_test = X[torch.logical_not(mask)], y[torch.logical_not(mask)]  # also ~mask or bitwise_not(mask)
 
 # print(X_train, y_train)
 # print(X_test, y_test)
@@ -52,14 +55,16 @@ def forward(X, weights, bias):
     return sigmoid(torch.matmul(X,weights) + bias)  # bias is broadcasted to [train_samples]
 
 def binary_cross_entropy(y_truth, y_pred):
-    # y_truth: [train_samples], y_pred: [train_samples], fact: float, returns: [] (scalar tensor)
+    # y_truth: [train_samples], y_pred: [train_samples], m: float, returns: float (scalar)
     m = 1 / y_truth.shape[0]
     return -m * (y_truth * torch.log(y_pred) + 
                     (1 - y_truth) * torch.log(1 - y_pred)).sum()
 
 def train(X, y_truth, weights, bias, lr=0.01, it=1000, it_log=100):
     # X: [train_samples, 2], y_truth: [train_samples], weights: [2], bias: [1]
-    # err: [train_samples], grad_w: [2], grad_b: [], returns: [] (scalar tensor)
+    # err: [train_samples], grad_w: [2], grad_b: [1], bn_train: float
+    # bias could be a scalar tensor or a scalar, instead of a 1-dimensional tensor with 1 element
+    # tensors will be more convenient later when we use PyTorch to compute gradients
     for i in range(it):
         y_pred = forward(X, weights, bias)
         err = (y_pred - y_truth)

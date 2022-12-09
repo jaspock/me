@@ -71,14 +71,14 @@ if __name__ == '__main__':
         # output : [batch_size, n_class], target_batch : [batch_size]
         loss = criterion(output, target_batch)
         if (epoch + 1) % 1000 == 0:
-            print('Epoch:', '%04d' % (epoch + 1), 'cost =', '{:.6f}'.format(loss))
+            print(f'Epoch: {(epoch + 1):04d} cost = {loss:.6f}')
 
         loss.backward()
         optimizer.step()
 
     # Predict
-    predict = model(input_batch).data.max(1, keepdim=True)[1]
+    predict = model(input_batch).argmax(dim=1)
 
     # Test
-    print([sen.split()[:2] for sen in sentences], '->', [number_dict[n.item()] for n in predict.squeeze()])
+    print([sen.split()[:2] for sen in sentences], '->', [number_dict[n.item()] for n in predict])
     

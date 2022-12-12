@@ -166,6 +166,28 @@ class Transformer(nn.Module):
         dec_logits = self.projection(dec_outputs) # dec_logits : [batch_size x src_vocab_size x tgt_vocab_size]
         return dec_logits.view(-1, dec_logits.size(-1)), enc_self_attns, dec_self_attns, dec_enc_attns
 
+def greedy_decoder(model, enc_input, start_symbol):
+    """
+    For simplicity, a Greedy Decoder is Beam search when K=1. This is necessary for inference as we don't know the
+    target sequence input. Therefore we try to generate the target input word by word, then feed it into the transformer.
+    Starting Reference: http://nlp.seas.harvard.edu/2018/04/03/attention.html#greedy-decoding
+    :param model: Transformer Model
+    :param enc_input: The encoder input
+    :param start_symbol: The start symbol. In this example it is 'S' which corresponds to index 4
+    :return: The target input
+    """
+    enc_outputs, enc_self_attns = model.encoder(enc_input)
+    dec_input = torch.zeros(1, 5).type_as(enc_input.data)
+    next_symbol = start_symbol
+    for i in range(0, 5):
+        dec_input[0][i] = next_symbol
+        dec_outputs, _, _ = model.decoder(dec_input, enc_input, enc_outputs)
+        projected = model.projection(dec_outputs)
+        prob = projected.squeeze(0).max(dim=-1, keepdim=False)[1]
+        next_word = prob.data[i]
+        next_symbol = next_word.item()
+    return dec_input
+
 def showgraph(attn):
     attn = attn[-1].squeeze(0)[0]
     attn = attn.squeeze(0).data.numpy()
@@ -175,6 +197,25 @@ def showgraph(attn):
     ax.set_xticklabels(['']+sentences[0].split(), fontdict={'fontsize': 14}, rotation=90)
     ax.set_yticklabels(['']+sentences[2].split(), fontdict={'fontsize': 14})
     plt.show()
+
+def plot_positional_embeddings():
+    table= get_sinusoid_encoding_table(128,512)
+    fig, ax = plt.subplots(figsize=(10,6))
+    fig.suptitle('Positional embeddings') 
+    ax.set_ylabel('Embedding dimension')
+    ax.set_xlabel('Token position')
+    cax = ax.matshow(table.t(),aspect='0.20')
+    fig.colorbar(cax)
+    fig.show()
+
+def plot_sin_cos():
+    table= get_sinusoid_encoding_table(32,512)
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.set_xlabel('Token position')
+    for i in range(4):
+      ax.plot(table[:,i], label=f'dim = {i}')
+    fig.legend()
+    fig.show()
 
 if __name__ == '__main__':
     sentences = ['ich mochte ein bier P', 'S i want a beer', 'i want a beer E']
@@ -216,6 +257,15 @@ if __name__ == '__main__':
     predict, _, _, _ = model(enc_inputs, dec_inputs)
     predict = predict.data.max(1, keepdim=True)[1]
     print(sentences[0], '->', [number_dict[n.item()] for n in predict.squeeze()])
+
+    # Test greedy decoder:
+    greedy_dec_input = greedy_decoder(model, enc_inputs, start_symbol=tgt_vocab["S"])
+    predict, _, _, _ = model(enc_inputs, greedy_dec_input)
+    predict = predict.data.max(1, keepdim=True)[1]
+    print(sentences[0], '->', [number_dict[n.item()] for n in predict.squeeze()])
+
+    plot_positional_embeddings()
+    plot_sin_cos()
 
     print('first head of last state enc_self_attns')
     showgraph(enc_self_attns)

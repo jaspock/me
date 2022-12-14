@@ -238,6 +238,8 @@ if __name__ == '__main__':
     n_layers = 6  # number of Encoder of Decoder Layer
     n_heads = 8  # number of heads in Multi-Head Attention
 
+    torch.manual_seed(14)
+
     model = Transformer()
 
     criterion = nn.CrossEntropyLoss()

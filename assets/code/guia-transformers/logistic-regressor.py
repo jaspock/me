@@ -1,4 +1,7 @@
-# %%
+#%%
+
+# Jupyter code cell: https://code.visualstudio.com/docs/python/jupyter-support-py
+
 # Modifications by @jaspock
 
 from sklearn.datasets import make_blobs  # pip install scikit-learn

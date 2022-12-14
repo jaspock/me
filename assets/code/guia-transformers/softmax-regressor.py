@@ -143,3 +143,5 @@ if __name__ == "__main__":
 
     fig.show()
     # fig.savefig("test_digits.png")
+
+# %%

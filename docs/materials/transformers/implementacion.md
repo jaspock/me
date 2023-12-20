@@ -28,7 +28,7 @@ Los dos programas de este apartado son:
 Si no lo has hecho ya, puedes empezar a aprender Python y PyTorch siguiendo el [capítulo][cappy] correspondiente de esta serie.
 
 [cappy]: pytorch.md
-[pylog]: assets/notebooks/logistic.py
+[pylog]: assets/notebooks/logistic.ipynb
 [pysoft]: assets/notebooks/softmax.ipynb
 
 ## Código para skip-grams

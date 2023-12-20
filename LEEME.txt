@@ -1,5 +1,5 @@
-conda create -n tpln python==3.9
-conda activate tpln
+conda create -n mkdocs python==3.9
+conda activate mkdocs
 pip install -r requirements.txt
 
 [mkdocs new .]
@@ -7,11 +7,15 @@ pip install -r requirements.txt
 mkdocs serve
 mkdocs build
 
+---
+
+scp -r site/* user@server:homepage
+
+---
+
 [https://squidfunk.github.io/mkdocs-material/publishing-your-site/]
 
 [commit and push to github]
 [github/settings/github pages: branch gh-pages /root]
 
 ---
-
-scp -r site/* user@server:homepage

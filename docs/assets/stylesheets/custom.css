@@ -1,0 +1,104 @@
+
+:root {
+  --title-img-size: 192px;
+  --title-catalog-size: 112px;
+  counter-reset: problema;
+  font-weight: 300;
+}
+
+h2 {
+  counter-reset: problema;
+}
+
+@keyframes envelope {
+  0%, 40%, 80%, 100% {
+    transform: scale(1);
+  }
+  20%, 60% {
+    transform: scale(1.15);
+  }
+}
+.envelope {
+  animation: envelope 3000ms infinite;
+}
+
+.problema {
+  counter-increment: problema;
+  font-weight: bold;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.problema::after {
+  content: " " counter(problema);
+}
+
+.rounded-title-img {
+  border-radius: 3%;
+  width: var(--title-img-size);
+  height: var(--title-img-size);
+}
+
+.rounded-catalogue-img {
+  border-radius: 3%;
+  width: var(--title-catalog-size);
+  height: var(--title-catalog-size);
+}
+
+.small-text {
+  font-size: 85%;
+}
+
+/* avoids scroll bars in some equations:
+   https://github.com/squidfunk/mkdocs-material/issues/2142#issuecomment-1119423097 */
+.md-typeset div.arithmatex {
+  overflow: initial;
+}
+
+.section {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
+.enumerate-headings-plugin {
+  background-color: slategray;
+  color: white;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  border-radius: 10%;
+}
+
+.content-2columns.catalog {
+  display: grid;
+  grid-template-columns: var(--title-catalog-size) 1fr;
+  grid-gap: 2em;
+}
+
+.content-2columns {
+  display: grid;
+  grid-template-columns: var(--title-img-size) 1fr;
+  grid-gap: 2em;
+}
+
+.content-2columns :first-child {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: start;
+    margin-top: 0;
+}
+
+.content-2columns :last-child {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+@media (max-width: 600px) {
+  .content-2columns {
+      grid-template-columns: 1fr;
+  }
+  .content-2columns :last-child {
+    grid-row: 2;
+    grid-column: 1;
+  }
+}

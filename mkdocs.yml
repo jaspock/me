@@ -1,0 +1,105 @@
+site_name: Juan Antonio Pérez Ortiz
+site_description: Academic website
+site_author: Juan Antonio Pérez Ortiz
+copyright: Copyright 2024 Juan Antonio Pérez Ortiz — Universitat d'Alacant
+
+extra:
+  social:
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/japer3z
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/juan-antonio-p%C3%A9rez-ortiz-40049949
+    - icon: fontawesome/brands/github
+      link: https://github.com/jaspock
+
+theme:
+  name: material
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+      - navigation.tabs
+
+nav:
+  - Homepage: index.md
+  - Materials: 
+    - Catalog: materials.md
+    - Guía del transformer:
+      - Presentación: materials/transformers/intro.md
+      - Regresores: materials/transformers/regresor.md
+      - Embeddings: materials/transformers/embeddings.md
+      - Redes hacia adelante: materials/transformers/ffw.md
+      - Atención: materials/transformers/attention.md
+      - Transformers: materials/transformers/attention2.md
+      - Implementación: materials/transformers/implementacion.md
+      - PyTorch: materials/transformers/pytorch.md
+      - Apuntes de PyTorch: materials/transformers/apuntes.md
+      - Problemas: materials/transformers/problemas.md
+    - Differentiable neural computers: materials/dnc.md
+    - Historia del PLN: materials/historia.md
+  - Teaching: teaching.md
+  - Publications: publications.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - footnotes
+  - md_in_html # process markdown inside html blocks
+  - toc:
+      permalink: "#" # create permalinks for each header
+
+
+plugins:
+  - search
+  - include-markdown
+  - enumerate-headings:
+      toc_depth: 2
+      strict: true
+      increment_across_pages: true
+      include:
+        - materials/transformers/*
+      exclude:
+        - another_page.md
+      restart_increment_after:
+        - transformers/intro.md
+
+extra_javascript:
+  - assets/javascript/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - assets/stylesheets/custom.css
+  - https://fonts.googleapis.com/icon?family=Material+Icons
+  - https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i
+  - https://fonts.googleapis.com/css2?family=Noto+Sans:400,400i,700,700i
+  

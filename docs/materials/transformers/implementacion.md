@@ -39,14 +39,14 @@ Estudia una implementación del algoritmo [:octicons-book-24:][pyskip] [skip-gra
 
 Antes de abordar el código, lee sobre la [notación de Einstein](apuntes.md#notación-de-einstein) y su aplicación en PyTorch. Estudia también los apartados correspondientes al [estrujamiento de tensores](apuntes.md#desestrujando-tensores) y a los [vectores fila y columna](apuntes.md#vectores-fila-y-columna) en PyTorch.
 
-[pyskip]: https://github.com/jaspock/me/blob/master/assets/code/transformers/skipgrams-jurafsky.py
+[pyskip]: ../../../assets/code/transformers/skipgrams-jurafsky.py
 
 
 ## Código para un modelo de lengua con redes feedforward
 
 Estudia una implementación de un [:octicons-book-24:][pylm] [modelo de lengua][pylm] con redes *feedforward* como el que se ha visto en el capítulo de redes *feedforward*. La implementación coincide con la del artículo "[A neural probabilistic language model](https://dl.acm.org/doi/10.5555/944919.944966)" de 2003, que puedes consultar si necesitas más información.
 
-[pylm]: https://github.com/jaspock/me/blob/master/assets/code/transformers/ff-neural-lm.py
+[pylm]: ../../../assets/code/transformers/ff-neural-lm.py
 
 
 ## Código para un transformer del proyecto minGPT
@@ -61,7 +61,7 @@ pip install --editable .
 
 [minGPT]: https://github.com/karpathy/minGPT
 [vidkarpathy]: https://youtu.be/kCc8FmEb1nY
-[copia]: https://github.com/jaspock/me/tree/master/assets/code/transformers/minGPT-20230108
+[copia]: ../../.. /assets/code/transformers/minGPT-20230108
 
 ### Fichero mingpt/bpe.py
 

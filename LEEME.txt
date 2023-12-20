@@ -9,7 +9,7 @@ mkdocs build
 
 ---
 
-scp -r site/* user@server:homepage
+mkdocs build && scp -r site/* user@server:homepage
 
 ---
 

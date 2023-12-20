@@ -23,14 +23,13 @@ Repasa antes de abordar el código cómo puedes [depurar](pytorch.md#depuración
 Los dos programas de este apartado son:
 
 - Un  [:octicons-book-24:][pylog] [regresor logístico][pylog] que clasifica muestras bidimensionales sintéticas en dos clases. Se usan solo los elementos más básicos de PyTorch para poder tener una implementación lo más detallada posible. Como ejercicio, puedes hacer una traza y analizar qué tamaños tienen los tensores. Puedes jugar también con el número de pasos de entrenamiento  y la tasa de aprendizaje para ver cómo evoluciona el entrenamiento. Explora diversas posiciones de los centros de las clases y de la dispersión de los datos alrededor de estos y observa cómo cambia la frontera de decisión. Elimina el sesgo (*bias*) de las ecuaciones y observa cómo se restringe la forma de la frontera de decisión al obligar a esta a pasar por el origen de coordenadas.
-- Un  [:octicons-book-24:][pysoft] [regresor softmax para clasificar imágenes de dígitos][pysoft]. Las imágenes y etiquetas de los dígitos se toman de un conjunto de datos muy conocido llamado MNIST. Como ejercicio, puedes simplificar este código para que realice una tarea de clasificación de sentimiento sobre un conjunto de datos sintéticos muy pequeño que se defina explícitamente en el propio programa.
+- Un  [:octicons-book-24:][pysoft] [regresor softmax para clasificar textos según su temática][pysoft]. Como ejercicio, puedes probar a entrenar con un solo embedding en cada paso de entrenamiento en lugar de con un batch de todos ellos y ver cómo se comporta el error. Puedes también adaptar el código del regresor logístico anterior para que use las funciones de PyTorch que se ven en este programa.
 
 Si no lo has hecho ya, puedes empezar a aprender Python y PyTorch siguiendo el [capítulo][cappy] correspondiente de esta serie.
 
 [cappy]: pytorch.md
-[pylog]: https://github.com/jaspock/me/blob/master/assets/code/transformers/logistic-regressor.py
-[pysoft]: https://github.com/jaspock/me/blob/master/assets/code/transformers/softmax-regressor.py
-
+[pylog]: assets/notebooks/logistic.py
+[pysoft]: assets/notebooks/softmax.ipynb
 
 ## Código para skip-grams
 

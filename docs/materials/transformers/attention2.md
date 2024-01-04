@@ -15,7 +15,7 @@ En el bloque anterior se estudió el transformer como un sistema que va generand
 
 ## El modelo codificador-descodificador
 
-En el bloque anterior, hemos estudiado todos los elementos del transformer, pero en algunas aplicaciones en las que una secuencia de tokens se transforma en otra secuencia de tokens, las capas del transformer se asocian a dos submodelos bien diferenciados y conectados entre ellos mediante mecanismos de atención: el codificador y el descodificador. El capítulo "[Machine translation][mt]" [<i class="fas fa-file"></i>][mt] se centra en la arquitectura completa. En este capítulo solo es necesario que estudies por ahora las secciones 10.2 y 10.6.
+En el bloque anterior, hemos estudiado todos los elementos del transformer, pero en algunas aplicaciones en las que una secuencia de tokens se transforma en otra secuencia de tokens, las capas del transformer se asocian a dos submodelos bien diferenciados y conectados entre ellos mediante mecanismos de atención: el codificador y el descodificador. El capítulo [:octicons-book-24:][mt] "[Machine translation][mt]" se centra en la arquitectura completa. En este capítulo solo es necesario que estudies por ahora las secciones 10.2 y 10.6.
 
 [mt]: https://web.archive.org/web/20221104204739/https://web.stanford.edu/~jurafsky/slp3/10.pdf
 
@@ -25,14 +25,18 @@ Observa que ya vimos en el bloque anterior que tareas como la traducción autom�
 
 ## Anotaciones al libro
 
-Es recomendable que estudies estos comentarios después de una primera lectura del capítulo y antes de la segunda lectura.
+{%
+   include-markdown "./assets/mds/texts.md"
+   start="<!--recomendable-start-->"
+   end="<!--recomendable-end-->"
+%}
 
 Apartado 10.2
 {: .section}
 
 Este apartado es muy breve y se limita a presentar la idea de la arquitectura codificador-descodificador, que no solo está presente en los transformers. Observa cómo el codificador genera una representación intermedia de la secuencia de entrada que es usada por el descodificador para guiar la generación de la secuencia de salida.
 
-## Apartado 10.6
+Apartado 10.6
 {: .section}
 
 Otro apartado breve donde se ve que las únicas novedades que aporta la arquitectura completa a lo que ya sabías son:
@@ -44,8 +48,8 @@ Otro apartado breve donde se ve que las únicas novedades que aporta la arquitec
 
 Hay algunos elementos adicionales a la definición de los diferentes modelos neuronales que son también relevantes cuando estos se aplican en el área del procesamiento del lenguaje natural. 
 
-- Estudia el mecanismo de búsqueda en haz (*beam search*) descrito en la [sección 10.5][mt].
-- Lee lo que se dice sobre la obtención de subpalabras en las secciones [10.7.1][mt] y [2.4.3][cap2].
+- Estudia el mecanismo de búsqueda en haz (*beam search*) descrito en la [:octicons-book-24:][mt] [sección 10.5][mt].
+- Lee lo que se dice sobre la obtención de subpalabras en las secciones [:octicons-book-24:][mt] [10.7.1][mt] y [:octicons-book-24:][cap2] [2.4.3][cap2].
 
 [cap2]: https://web.archive.org/web/20221026071429/https://web.stanford.edu/~jurafsky/slp3/2.pdf
 
@@ -61,7 +65,7 @@ La mayoría de los modelos neuronales actuales de procesamiento de textos no con
 
 ## Modelos preentrenados
 
-El capítulo "[Transfer Learning with Contextual Embeddings and Pre-trained language models][bert]" [<i class="fas fa-file"></i>][bert] estudia los modelos preentrenados basados en codificador y cómo adaptarlos a nuestras necesidades. Para nuestro estudio son relevantes la introducción y las secciones 11.1 y 11.2. 
+El capítulo [:octicons-book-24:][bert] "[Transfer Learning with Contextual Embeddings and Pre-trained language models][bert]" estudia los modelos preentrenados basados en codificador y cómo adaptarlos a nuestras necesidades. Para nuestro estudio son relevantes la introducción y las secciones 11.1 y 11.2. 
 
 [bert]: https://web.archive.org/web/20221026071419/https://web.stanford.edu/~jurafsky/slp3/11.pdf
 
@@ -79,33 +83,6 @@ Apartado 11.2
 {: .section}
 
 Este apartado aborda la tarea de entrenar un codificador basado en transformer de forma que sus representaciones sean lo más generales posibles, es decir, que no estén adaptadas a un problema concreto. Para ello, el modelo se entrena con una tarea *neutra* cuya resolución, aun así, implicará que el modelo ha aprendido a generar buenas representaciones profundas de los tokens. Esta tarea es de tipo *autosupervisado* en el sentido de que no necesita un texto etiquetado (por ejemplo, con la temática o la polaridad de sus frases), sino que la simple secuencia de tokens es el ingrediente fundamental del entrenamiento. Una de las tareas más utilizadas para ello es la de predecir los tokens que deliberadamente se han eliminado de la secuencia de entrada. Una vez entrenado un modelo profundo de esta manera, este puede distribuirse para que otros desarrolladores solo tenga que ajustar el modelo a su tarea concreta mediante el proceso de *fine-tuning* en el que solo se actualizan los pesos del clasificador que procesa los embeddings generados por el modelo preentrenado. Uno de los primeros modelos preentrenados basados en transformer fue BERT, que se presentó en 2018 y que se convirtió rápidamente en uno de los modelos preentrenados más utilizado. 
-
-## Ecuaciones del transformer
-
-A modo de resumen, se presentan aquí a modo de resumen las ecuaciones del transformer completo. El transformer usa la arquitectura codificador-descodificador para emitir de forma autoregresiva una secuencia de salida $\boldsymbol{y}= y_1, y_2,\ldots,y_n$ a partir de una secuencia de entrada $\boldsymbol{x}= x_1, x_2,\ldots,x_n$. Habitualmente cada $x_i$ será un embedding *no contextual* para el token correspondiente de la frase a procesar obtenido de una tabla de embeddings, y cada $y_i$ será el vector de probabilidades correspondiente al $i$-ésimo token de la frase de salida.
-
-El codificador tiene $N$ capas idénticas, cada una formada a su vez por dos subcapas:
-
-$$
-\begin{align}
-\underline{\boldsymbol{h}}^l &= \text{LN}\left(\text{SelfAtt}\left(\boldsymbol{h}^{l-1}\right) + \boldsymbol{h}^{l-1}\right) \\
-\boldsymbol{h}^l &= \text{LN}\left(\text{FF}\left(\underline{\boldsymbol{h}}^l\right) + \underline{\boldsymbol{h}}^l\right)
-\end{align}
-$$
-
-donde $\boldsymbol{h}^l = \{h_1^l,h_2^l,\ldots,h_n^l\}$ son las salidas de la capa $l$-ésima (una por cada token de la entrada). La salida de la primera capa es $\boldsymbol{h}^0= \boldsymbol{x}$. La función LN obtiene la normalización a nivel de capa, SelfAtt es el mecanismo de atención con múltiples cabezales y FF es una red hacia delante completamente conectada.
-
-El descodificador sigue un planteamiento similar con un par de particularidades: el mecanismo de autoatención usa una máscara para no usar los embeddings de los tokens aún no generados y aparece una tercera subcapa responsable de la atención hacia el codificador:
-
-$$
-\begin{align}
-\underline{\boldsymbol{s}}^l &= \text{LN}\left(\text{MaskedSelfAtt}\left(\boldsymbol{s}^{l-1}\right) + \boldsymbol{s}^{l-1}\right) \\
-\underline{\underline{\boldsymbol{s}}}^l &= \text{LN}\left(\text{CrossAtt}\left(\underline{\boldsymbol{s}}^{l},\boldsymbol{h}^N\right) + \underline{\boldsymbol{s}}^{l}\right) \\
-\boldsymbol{s}^l &= \text{LN}\left(\text{FF}\left(\underline{\underline{\boldsymbol{s}}}^l\right) + \underline{\underline{\boldsymbol{s}}}^l\right)
-\end{align}
-$$
-
-donde $\boldsymbol{s}^l$ son las salidas de la capa $l$-ésima del descodificador. Los embeddings de la última capa $\boldsymbol{s}^M$ se pasan por una capa densa adicional seguida de una función softmax para obtener la estimación de la probabilidad del token correspondiente. La salida de la primera capa del descodificador $\boldsymbol{s}^0$ es, como en el codificador, un embedding no contextual del token anterior (por ejemplo, el token de mayor probabilidad emitido en el paso anterior).
 
 ## Las diferentes caras de la atención
 

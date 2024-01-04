@@ -65,7 +65,7 @@ La mayoría de los modelos neuronales actuales de procesamiento de textos no con
 
 ## Modelos preentrenados
 
-El capítulo [:octicons-book-24:][bert] "[Transfer Learning with Contextual Embeddings and Pre-trained language models][bert]" estudia los modelos preentrenados basados en codificador y cómo adaptarlos a nuestras necesidades. Para nuestro estudio son relevantes la introducción y las secciones 11.1 y 11.2. 
+El capítulo [:octicons-book-24:][bert] "[Transfer Learning with Contextual Embeddings and Pre-trained language models][bert]" estudia los modelos preentrenados basados en codificador y cómo adaptarlos a nuestras necesidades. Para nuestro estudio son relevantes la introducción y las secciones 11.1, 11.2 y 11.3 (quitando el apartado 11.3.4). 
 
 [bert]: https://web.archive.org/web/20221026071419/https://web.stanford.edu/~jurafsky/slp3/11.pdf
 
@@ -83,6 +83,11 @@ Apartado 11.2
 {: .section}
 
 Este apartado aborda la tarea de entrenar un codificador basado en transformer de forma que sus representaciones sean lo más generales posibles, es decir, que no estén adaptadas a un problema concreto. Para ello, el modelo se entrena con una tarea *neutra* cuya resolución, aun así, implicará que el modelo ha aprendido a generar buenas representaciones profundas de los tokens. Esta tarea es de tipo *autosupervisado* en el sentido de que no necesita un texto etiquetado (por ejemplo, con la temática o la polaridad de sus frases), sino que la simple secuencia de tokens es el ingrediente fundamental del entrenamiento. Una de las tareas más utilizadas para ello es la de predecir los tokens que deliberadamente se han eliminado de la secuencia de entrada. Una vez entrenado un modelo profundo de esta manera, este puede distribuirse para que otros desarrolladores solo tenga que ajustar el modelo a su tarea concreta mediante el proceso de *fine-tuning* en el que solo se actualizan los pesos del clasificador que procesa los embeddings generados por el modelo preentrenado. Uno de los primeros modelos preentrenados basados en transformer fue BERT, que se presentó en 2018 y que se convirtió rápidamente en uno de los modelos preentrenados más utilizado. 
+
+Apartado 11.3
+{: .section}
+
+Este apartado demuestra como adaptar un modelo preentrenado capaz de producir embeddings *neutros* a tareas concretas de clasificación. El proceso de adaptación se denomina *fine-tuning* y consiste sustituir los predictores de la última capa del modelo pre-entrenado por un predictor específico para la tarea que se quiere resolver. El modelo preentrenado se mantiene fijo durante el proceso de *fine-tuning* y solo se actualizan los pesos del nuevo predictor. Si la tarea de clasificación es a nivel de frase o de pares de frases (por ejemplo, determinar el sentimiento de una frase o determinar si una frase se deduce de otra) basta con entrenar un predictor sobre el token [CLS]. Si la tarea es a nivel de token (por ejemplo, determinar la categoría gramatical de cada token) se puede entrenar un predictor que actúe sobre todos los tokens de la frase.
 
 ## Las diferentes caras de la atención
 

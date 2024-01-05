@@ -35,19 +35,32 @@ Si no lo has hecho ya, puedes empezar a aprender Python y PyTorch siguiendo el [
 
 ## Código para skip-grams
 
-Estudia una implementación del algoritmo [:octicons-book-24:][pyskip] [skip-gram][pyskip] para la obtención de embeddings incontextuales que sigue las pautas marcadas en el libro de Jurafsky y Martin. La implementación anterior se basa en [otra](https://github.com/jaspock/me/blob/master/assets/code/guia-transformers/skipgrams-original.py) que sigue el enfoque del trabajo "[Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546)" de 2013, que no se ajusta totalmente al que hemos estudiado nosotros.
+Esta es una implementación del algoritmo [:octicons-book-24:][pyskip] [skip-gram][pyskip] para la obtención de embeddings incontextuales que se estudia [en esta página](embeddings.md) de la guía y que sigue las pautas marcadas en el libro de Jurafsky y Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/skipgram.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-Antes de abordar el código, lee sobre la [notación de Einstein](apuntes.md#notación-de-einstein) y su aplicación en PyTorch. Estudia también los apartados correspondientes al [estrujamiento de tensores](apuntes.md#desestrujando-tensores) y a los [vectores fila y columna](apuntes.md#vectores-fila-y-columna) en PyTorch.
-
-[pyskip]: ../../../assets/code/transformers/skipgrams-jurafsky.py
-
+[pyskip]: assets/notebooks/skipgram.ipynb
 
 ## Código para un modelo de lengua con redes feedforward
 
-Estudia una implementación de un [:octicons-book-24:][pylm] [modelo de lengua][pylm] con redes *feedforward* como el que se ha visto en el capítulo de redes *feedforward*. La implementación coincide con la del artículo "[A neural probabilistic language model](https://dl.acm.org/doi/10.5555/944919.944966)" de 2003, que puedes consultar si necesitas más información.
+Esta es la implementación de un [:octicons-book-24:][pylm] [modelo de lengua][pylm] con redes *feedforward* que se estudia [en esta página](ffw.md) y que sigue las ecuaciones del libro de Jurafsky y Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/ffnn.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 [pylm]: ../../../assets/code/transformers/ff-neural-lm.py
 
+## Código para el transformer
+
+El transformer se presenta en tres cuadernos diferentes: 
+
+- Uno que contiene la [:octicons-book-24:][pytr] [arquitectura base][pytr] y las implementaciones tanto de un modelo basado en codificador como de uno basado en descodificador. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/transformer.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+- Otro que aplica el descodificador a un [:octicons-book-24:][pygpt] [modelo de lengua][pygpt] que predice el siguiente token de una secuencia. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/lmgpt.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+- Y otro que se basa en el codificador para instrumentar un sistema de [:octicons-book-24:][pyner] [reconocimiento de entidades nombradas][pyner]. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/nerbert.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+[pytr]: assets/notebooks/transformer.ipynb
+[pygpt]: assets/notebooks/lmgpt.ipynb
+[pyner]: assets/notebooks/nerbert.ipynb
 
 ## Código para un transformer del proyecto minGPT
 

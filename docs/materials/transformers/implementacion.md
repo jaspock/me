@@ -45,11 +45,11 @@ Esta es una implementación del algoritmo [:octicons-book-24:][pyskip] [skip-gra
 Esta es la implementación de un [:octicons-book-24:][pylm] [modelo de lengua][pylm] con redes *feedforward* que se estudia [en esta página](ffw.md) y que sigue las ecuaciones del libro de Jurafsky y Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/ffnn.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-[pylm]: ../../../assets/code/transformers/ff-neural-lm.py
+[pylm]: assets/notebooks/ffnn.ipynb
 
 ## Código para el transformer
 
-El transformer se presenta en tres cuadernos diferentes: 
+El transformer (estudiado en esta [parte](attention.md) de la guía) se presenta en tres cuadernos diferentes: 
 
 - Uno que contiene la [:octicons-book-24:][pytr] [arquitectura base][pytr] y las implementaciones tanto de un modelo basado en codificador como de uno basado en descodificador. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/transformer.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
@@ -135,18 +135,6 @@ Este código realiza el entrenamiento de un modelo de lengua a nivel de caracter
 Puedes cambiar la variable `C.model.model_type` para que use modelos de diferentes tamaños (de mayor a menor, `gpt2-xl`, `gpt2-large`, `gpt2-medium`, `gpt2`, `gpt-mini`, `gpt-micro` y `gpt-nano`). Puedes ver el número de capas, el número de cabezales y el tamaño de los embeddings de cada modelo en el constructor de la clase `GPT` del fichero `mingpt/model.py`.
 
 Lanza el programa y déjalo un tiempo entrenando con `python charpgt.py`. El modelo se va guardando en la carpeta `out`. 
-
-
-## Otros programas para el transformer
-
-La implementación en PyTorch del bloque anterior se centraba en un modelo de lengua basado en descodificador. En principio, no es necesario que estudies ningún código adicional para el transformer, pero si estás interesado en una arquitectura completa de transformer o en el codificador, puedes estudiar el código de las implementaciones que se presentan a continuación:
-
-- Una implementación del [transformer][pytr] completo. La implementación sigue la del artículo "[Attention is all you need](https://arxiv.org/abs/1706.03762)" de 2017, que puedes consultar si necesitas más información. 
-- Una implementación sencilla del [modelo BERT][pybert] con código muy parecido al del transformer completo anterior.
-
-[pytr]: https://github.com/jaspock/me/blob/master/assets/code/transformers/transformer.py
-[pybert]: https://github.com/jaspock/me/blob/master/assets/code/transformers/bert.py
-
 
 ## Implementaciones adicionales
 

@@ -89,9 +89,40 @@ Apartado 11.3
 
 Este apartado demuestra como adaptar un modelo preentrenado capaz de producir embeddings *neutros* a tareas concretas de clasificación. El proceso de adaptación se denomina *fine-tuning* y consiste sustituir los predictores de la última capa del modelo pre-entrenado por un predictor específico para la tarea que se quiere resolver. El modelo preentrenado se mantiene fijo durante el proceso de *fine-tuning* y solo se actualizan los pesos del nuevo predictor. Si la tarea de clasificación es a nivel de frase o de pares de frases (por ejemplo, determinar el sentimiento de una frase o determinar si una frase se deduce de otra) basta con entrenar un predictor sobre el token [CLS]. Si la tarea es a nivel de token (por ejemplo, determinar la categoría gramatical de cada token) se puede entrenar un predictor que actúe sobre todos los tokens de la frase.
 
+## Multilingual models
+
+So far, in our exploration on transformer-based natural language processing models, we have primarily considered systems that work on a single language or, at least, we have not explictly considered the possibility of using a single model for multiple languages. But, as we will see in this section, models can handle multiple languages at the same time and there are important advantages in doing so. One of these advantages comes from a phenomenon known as *transfer learning*, where knowledge gained about one language in the representations learned by the neural network can be applied to other languages. This is particularly valuable for *low-resource* languages, that is, languages with fewer training resources, as they may end up benefiting from the knowledge gained by the model from other languages.
+
+Training multilingual models
+{: .section}
+
+Training a multilingual transformer model is not very different from training a monolingual model. The main difference is that the training data is a mixture of texts in different languages. The tokenizer is obtained by using the whole multilingual corpus with systems such as SentencePiece or byte pair encoding (BPE). If the languages are related, then some tokens may be shared which will help the neural network to learn *joint representations* also known as *cross-lingual embeddings*. Consider, for example, the case of *centro*, *centru*, *centre* and *center* in Spanish, Asturian, Catalan, or English, respectively; if these words are tokenized as *centr* and the remaining suffix, then the model may learn a representation for *centr* from Spanish, Catalan or English texts and use it with Asturian inputs, even though the word *centru* has not been seen in the Asturian training data. People or location names may also be easily shared across languages.In the usual case of data imbalance, where there are many more texts in some languages than in others, it is common to use a rebalancing formula to upsample languages with less data so that their texts end up being overrepresented in the training or evaluation datasets, as well as in the corpus used to train the tokenizer.
+
+Interestingly, in spite of not using shared tokens, it may happen that words such as *atristuráu* (in Asturian) or *sad* (in English) get similar embeddings in some layers of the model, which is another example of the language-independent nature of some of the representations learned.
+
+Additionally, depending on the task, language-specific tokens can be used as a first token to indicate the language of the text. This is not so common in the case of decoder-like models, but it is a standard practice in encoder-like models such as those used in named entity recognition or sentence classification. These are special tokens added to the vocabulary that are preprended to every sentence both during training and inference, and also learned during training in the same way as the *MASK* token is learned in BERT-like pretraining. 
+
+Decoder-like language models are usually trained with multilingual data from the beginning, but they do not require language-specific tokens. The language used in the prompt is enough to guide the generation process towards the desired language.
+
+Pre-trained multilingual models
+{: .section}
+
+The first pre-trained models such as BERT were English-centric. However, over time variants emerged for other languages, such as CamemBERT for French, GilBERTo for Italian, or BERTo for Spanish. Despite these advances, these models were still essentially monolingual. An inflection point was reached with the appearance of pre-trained multilingual models such as mBERT or XLM-R, which handle around a hundred languages or, more recently, Glot500, which arrives to 500 languages. As these models are self-supervisedly trained with neutral tasks such as masked language modeling, they are general-purpose that can then be fine-tuned for specific tasks in any of the languages ​​they handle. A notable phenomenon in this case is the *zero-shot generalization* ability of the model, meaning that, for example, in a named entity recognition task, a model can be fine-tuned only with English texts, but thanks to the multilingual representations learned during pre-training, it can be applied to texts in other languages with some success ​​without the need for labeled data in those languages. This is particularly useful for low-resource languages.
+
+Challenges
+{: .section}
+
+Multilingual models often confront the challenge known as *the curse of multilinguality* (a term coined after the *curse of dimensionality* in statistics and machine learning). This phenomenon refers to the decline in performance for each individual language as the model expands to encompass a larger number of languages. It is also common that those languages with more resources are the ones that benefit the least from the multilingual model, even showing a lower performance than a monolingual model trained with the same data. 
+
+A number of techniques have been proposed in order to mitigate the curse of multilinguality. One of them is the use of *adapters*, small, trainable modules (for example, a feedforward network), one for each of the languages, inserted at specific points into the layers of the transformer. When training the model, the common parameters are learned as usual, but the parameters of the adapters are only updated for the language they are associated with. This way, the model learns a mixture of cross-lingual and language-specific parameters. Adapters are also used to fine-tune pre-trained models to new tasks or languages without retraining the entire model, this way keeping the original weights of the model frozen and only updating the parameters of the adapters. 
+
+Note that other alternatives for the use of monolingual models in multilingual scenarios, such as *translate-train* or *translate-test*, are also possible. In the first case, the training data only available in one language is translated into the other languages and a multilingual model is trained with both the source and the translated data. In the second case, the test data is translated into the language of a monolingual model at inference time. In both cases, the translation is performed with a machine translation system.
+
+Finally, there are a number of multilingual datasets available for different tasks, such as the universal dependencies treebanks, the XNLI dataset for natural language inference (determining whether a sentence entails, contradicts or is neutral toward a hypothesis sentence), or the FLORES+ corpus for machine translation.
+   
 ## Las diferentes caras de la atención
 
-En el siguiente análisis nos basaremos en la [discusión][dontloo] de *dontloo* en Cross Validated. En los sistemas *seq2seq* originales basados en redes recurrentes, la atención se calcula una media ponderada de las claves:
+Este contenido es opcional. Puedes saltarlo directamente salvo que te hayan dicho expresamente que lo estudies. En el siguiente análisis nos basaremos en la [discusión][dontloo] de *dontloo* en Cross Validated. En los sistemas *seq2seq* originales basados en redes recurrentes, la atención se calcula una media ponderada de las claves:
 
 [dontloo]: https://stats.stackexchange.com/a/424127/240809
 

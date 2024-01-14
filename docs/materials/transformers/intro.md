@@ -85,7 +85,8 @@ Para ampliar conocimientos, puedes consultar estos libros que, en su mayoría, e
 - La serie "[Probabilistic Machine Learning: An Introduction][pml1]" (2022) y "[Probabilistic Machine Learning: Advanced Topics][pml2]" (2023) de Kevin Murphy aborda con más profundidad diversos elementos del aprendizaje automático.
 - "[Deep learning for Natural Language Processing: A Gentle Introduction][gentle]" de Mihai Surdeanu y Marco A. Valenzuela-Escárcega. También en elaboración. Contiene código en algunos capítulos.
 - "[Deep Learning with PyTorch Step-by-Step: A Beginner's Guide][pytorchstep]" (2022) de Daniel Voigt Godoy. Este es un libro de pago con versión digital o en papel (en tres volúmenes, en este caso). Existe una versión en español para los primeros capítulos. Escrito en un estilo directo y sencillo con multitud de detalles y ejemplos.
-
+- "[The Mathematical Engineering of Deep Learning][mathdl]" (2024) de Benoit Liquet, Sarat Moka y Yoni Nazarathy.
+- "[The Little Book of Deep Learning](little)" (2023) de François Fleuret.
 
 [jurafskybib]: https://web.stanford.edu/~jurafsky/slp3/
 [gentle]: https://clulab.org/gentlenlp/
@@ -95,6 +96,8 @@ Para ampliar conocimientos, puedes consultar estos libros que, en su mayoría, e
 [pml1]: https://probml.github.io/pml-book/book1.html
 [pml2]: https://probml.github.io/pml-book/book2.html
 [cambridge]: https://www.cambridge.org/es/academic/subjects/computer-science/pattern-recognition-and-machine-learning/dive-deep-learning?format=PB
+[mathdl]: https://deeplearningmath.org/
+[little]: https://fleuret.org/francois/lbdl.html
 
 La siguiente lista contiene enlaces a algunos cursos en vídeo impartidos por investigadores o universidades reconocidos:
 

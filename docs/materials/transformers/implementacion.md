@@ -64,7 +64,7 @@ El transformer (estudiado en esta [parte](attention.md) de la guía) se presenta
 
 ## Código para un transformer del proyecto minGPT
 
-Una buena implementación en PyTorch de un modelo de lengua basado en transformer es la de [minGPT][minGPT] de Andrej Karpathy. El código permite entrenar y usar modelos de lengua, además de permitir la carga de los pesos del modelo GPT-2.
+Una buena implementación en PyTorch de un modelo de lengua basado en transformer es la de [minGPT][minGPT] de Andrej Karpathy. El código permite entrenar y usar modelos de lengua, además de permitir la carga de los pesos del modelo GPT-2. El código de nuestro transformer está basado en el de minGPT, por lo que el modelo en sí no te debería resultar difícil de entender.
 
 Esta guía tiene una [copia][copia] del código de minGPT con algunas pequeñas modificaciones. A continuación, se comenta qué ficheros son relevantes para nuestros intereses. Los ficheros de los que no se diga nada no tienes que mirarlos. Para usar el código y poder modificarlo, puedes instalarlo con:
 

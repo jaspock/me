@@ -58,9 +58,11 @@ La siguiente tabla muestra una secuenciación de los contenidos de esta guía co
 | 8 | [Redes hacia delante](ffw.md) | 3 horas | Este bloque contiene pocas novedades, pero nos permite introducir el concepto de red neuronal y crear un primer modelo de lengua extremadamente básico con ellas. |
 | 9 | [Implementación de redes hacia delante](implementacion.md#codigo-para-un-modelo-de-lengua-con-redes-feedforward) | 1 hora | Explora el código de la implementación de un modelo de lengua simple basado en redes hacia delante. | 
 | 10 | [Transformers y modelos de atención](attention.md) | 6 horas | Todos los conceptos anteriores nos permiten poder abordar en este momento la arquitectura del transformer. Esta página se centra en la parte del transformer conocida como *descodificador*, que es la que se usa en los conocidos modelos de lengua. |
-| 11 | [Implementación del descodificador de un transformer](implementacion.md#codigo-para-un-transformer-del-proyecto-mingpt) | 6 horas | Analiza el código de la implementación de un modelo de lengua basado en el descodificador del transformer. Este código tiene mayor complejidad que los de otros modelos. | 
+| 11 | [Implementación del código del transformer](implementacion.md#codigo-para-el-transformer) | 6 horas | Analiza el código de la implementación de un transformer general y de un modelo de lengua basado en el descodificador. Este código tiene mayor complejidad que los de otros modelos. | 
 | 12 | [Aspectos adicionales del transformer](attention2.md) | 4 horas | Esta página introduce la otra parte del transformer (el *codificador*) y muestra qué puede hacerse con él, tanto en solitario como acoplado a un descodificador. |
-| 13 | [Implementación de un transformer completo](implementacion.md#otros-programas-para-el-transformer) | 4 horas | Analiza el código de la implementación de un modelo tipo BERT basado en el codificador del transformer y de un transformer completo. | 
+| 13 | [Implementación de un reconocedor de entidades nombradas](implementacion.md#codigo-para-el-transformer) | 1 hora | Analiza el código de la implementación de un reconocedor de entidades nombradas basado en el codificador. | 
+| 14 | [Implementación de un modelo GPT-2](implementacion.md#codigo-para-un-transformer-del-proyecto-mingpt) | 4 horas | Analiza opcionalmente el código de la implementación de un modelo de lengua que es capaz de cargar y usar GPT-2. |
+| 15 | [Voz](speech.md) | 4 horas | Este contenido puede ser opcional, ya que se mueve a un dominio distinto: el del procesamiento del habla. |
 
 [debug]: pytorch.md#depuracion
 

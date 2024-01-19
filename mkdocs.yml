@@ -50,6 +50,7 @@ nav:
       - PyTorch: materials/transformers/pytorch.md
       - Apuntes de PyTorch: materials/transformers/apuntes.md
       - Problemas: materials/transformers/problemas.md
+      - Voz: materials/transformers/speech.md
     - Differentiable neural computers: materials/dnc.md
     - Historia del PLN: materials/historia.md
   - Teaching: teaching.md

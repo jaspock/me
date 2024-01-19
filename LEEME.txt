@@ -9,6 +9,7 @@ mkdocs build
 
 ---
 
+rm -rf docs/materials/transformers/notebooks/_data/*
 mkdocs build && scp -r site/* user@server:homepage
 
 ---

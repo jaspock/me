@@ -45,7 +45,7 @@ Apartado 16.4
 
 La clasificación temporal conexionista (*connectionist temporal classification*, CTC) es una técnica muy importante utilizada en el entrenamiento y la inferencia de sistemas de reconocimiento automático de voz. Su función principal es actuar como una función de pérdida que permite al modelo alinear las ventanas de voz de entrada con sus salidas textuales correspondientes en un escenario, el de la voz, donde la entrada y la salida suelen tener longitudes muy diferentes.
 
-CTC opera introduciendo una etiqueta especial de blanco que permite que el modelo no genere nada para una ventana determinada. Durante el entrenamiento, la función de pérdida de CTC calcula la probabilidad de todos los alineamientos posibles entre la entrada de voz y su transcripción textual y guiar el modelo hacia el más probable. Esto permite que el modelo aprenda a partir de datos en los que cada fragmento de audio no está alineado con un carácter, datos que son mucho más fáciles de obtener que los datos alineados.
+CTC opera introduciendo una etiqueta especial de blanco que permite que el modelo no genere nada para una ventana determinada. Durante el entrenamiento, la función de pérdida de CTC calcula la probabilidad de todos los alineamientos posibles entre la entrada de voz y su transcripción textual y guía el modelo hacia el más probable. Esto permite que el modelo aprenda a partir de datos en los que cada fragmento de audio no está alineado con un carácter, datos que son mucho más fáciles de obtener que los datos alineados.
 
 Esta sección introduce una forma avanzada de CTC conocida como RNN-Transducer o RNN-T o simplemente *transducer*.
 
@@ -54,7 +54,7 @@ Esta sección introduce una forma avanzada de CTC conocida como RNN-Transducer o
 Whisper
 {: .section}
 
-Whisper fue uno de los sistemas con mejor desempeño durante 2023, pese a no alejarse demasiado de las arquitecturas básicas que se presentan en el libro. El sistema se basa en una arquitectura de transformer con codificador y descodificador similar a la del sistema LAS de la figura 16.6 del libro: la entrada de voz se procesa en el codificador, que obtiene un embedding por cada ventana de voz; el descodificador va generando entonces la salida textual, carácter a carácter, a partir de dichos embeddings. La función de error no es ni RNN-T ni CTC, sino entropía cruzada, que no está pensada específicamente para esta tarea. El buen rendimiento del sistema se obtiene gracias a la utilización de un gran conjunto de datos de entrenamiento y, en menor medida, al entrenamiento del mismo modelo con múltiples tareas como transcripción de la entrada o detección de silencios o ruido. Whisper, además, trabaja con diferentes idiomas (un token especial se usa para determinar el idioma de la salida) siendo entrenado incluso en la transcripción de voz en un idioma a texto en otro idioma.
+Whisper fue uno de los sistemas con mejor desempeño durante 2023, pese a no alejarse demasiado de las arquitecturas básicas que se presentan en el libro. El sistema se basa en una arquitectura de transformer con codificador y descodificador similar a la del sistema LAS de la figura 16.6 del libro: la entrada de voz se procesa en el codificador, que obtiene un embedding profundo por cada ventana de voz; el descodificador va generando entonces la salida textual, carácter a carácter, a partir de dichos embeddings. La función de error no es ni RNN-T ni CTC, sino entropía cruzada, que no está pensada específicamente para esta tarea. El buen rendimiento del sistema se obtiene gracias a la utilización de un gran conjunto de datos de entrenamiento y, en menor medida, al entrenamiento del mismo modelo con múltiples tareas además de la transcripción de la entrada, como detección de silencios o ruido. Whisper, además, trabaja con diferentes idiomas (un token especial se usa para determinar el idioma de la salida) siendo entrenado incluso en la transcripción de voz en un idioma a texto en otro idioma.
 
 La siguiente figura está tomada del artículo "[Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356)" y muestra la arquitectura de Whisper. Observa la etiqueta de idioma y la etiqueta de tarea a realizar a la entrada del descodificador. El token `SOT` es el token especial que indica el inicio de la transcripción.
 
@@ -64,7 +64,7 @@ El siguiente texto es también del artículo anterior. Con lo que has estudiado 
 
 > We chose an encoder-decoder Transformer as this architecture has been well validated to scale reliably. All audio is re-sampled to 16,000 Hz, and an 80-channel logmagnitude Mel spectrogram representation is computed on 25-millisecond windows with a stride of 10 milliseconds. For feature normalization, we globally scale the input to be between -1 and 1 with approximately zero mean across the pre-training dataset. The encoder processes this input representation with a small stem consisting of two convolution layers with a filter width of 3 and the GELU activation function where the second convolution layer has a stride of two. [...] The encoder and decoder have the same width and number of transformer blocks. [...] We use the same byte-level BPE text tokenizer used in GPT2 for the English-only models and refit the vocabulary (but keep the same size) for the multilingual models to avoid excessive fragmentation on other languages since the GPT-2 BPE vocabulary is English only.
 
-No es necesario conocer en este momento el funcionamiento de las capas convolucionales. Basta decir que son capas que se utilizan normalmente para procesar imágenes y que, en este caso, se utilizan para procesar los espectrogramas. La capa convolucional realiza una serie de transformaciones que destacan patrones temporales y variaciones locales en el espectro de Mel. La convolución se basa en realizar el producto escalar entre un *filtro* (o *kernel*) de un cierto ancho (en nuestro caso, un vector de parámetros con un cierto tamaño) y su entrada, donde los parámetros del filtro se van aprendiendo durante el entrenamiento. Este filtro se va deslizando sobre la entrada saltando un número de posiciones (conocido como *stride*) entre una aplicación y otra. En el caso de Whisper, el *stride* tiene un ancho de 1 para la primera convolución, lo que mantienen el tamaño de los datos, pero de 2 en la segunda, lo que reduce la dimensionalidad a la mitad.
+No es necesario conocer en este momento el funcionamiento de las capas convolucionales. Basta decir que son capas que se utilizan normalmente para procesar imágenes y que, en este caso, se utilizan para procesar los espectrogramas. La capa convolucional realiza una serie de transformaciones que destacan patrones temporales y variaciones locales en el espectro de Mel. La convolución se basa en realizar el producto escalar entre un *filtro* (o *kernel*) de un cierto ancho (en nuestro caso, un vector de parámetros con un cierto tamaño) y su entrada, donde los parámetros del filtro se van aprendiendo durante el entrenamiento. Este filtro se va deslizando sobre la entrada saltando un número de posiciones (conocido como *stride*) entre una aplicación y otra. En el caso de Whisper, el *stride* tiene un ancho de 1 para la primera convolución, lo que mantiene el tamaño de los datos, pero de 2 en la segunda, lo que reduce la dimensionalidad a la mitad.
 
 
 Wav2vec2
@@ -104,6 +104,12 @@ MMS es en realidad un conjunto de modelos para cientos de idiomas diferentes que
 
 ![](assets/imgs/mms.png)
 
+SeamlessM4T
+{: .section}
+
+Este modelo puede realizar traducciones de voz a texto, voz a voz, texto a voz y texto a texto para unos 100 idiomas, dependiendo de la tarea. El artículo "[SeamlessM4T—Massively Multilingual & Multimodal Machine Translation](https://ai.meta.com/blog/seamless-m4t/)" describe el modelo y su rendimiento. La siguiente figura es parte del artículo y muestra la arquitectura del modelo para el caso en el que diferentes tipos de entradas se traducen a texto:
+
+![](assets/imgs/seamlessm4t.png)
 
 Universal speech model (USM)
 {: .section}
@@ -113,7 +119,12 @@ Otro modelo multilingue a gran escala es Universal Speech Model (USM) que usa RN
 ![](assets/imgs/usm.png)
 
 
-UniAudio
+Otros modelos
 {: .section}
 
-Este modelo se sale de la línea de los modelos anteriores, ya que no es un modelo de reconocimiento de voz, sino de síntesis de voz y de otro tipo de sonidos. Se ha añadido aquí como muestra interesante de un modelo que es capaz de generar sonidos realistas, pero no entraremos en más detalles por quedar fuera de los objetivos de este bloque. UniAudio puede hacer síntesis de voz, conversión de voz, síntesis de voces cantando, texto a sonido, texto a música, o edición de voz y audio, entre otros. Puedes leer más sobre el modelo y probarlo en su [repositorio de Github](https://github.com/yangdongchao/UniAudio).
+Estos modelos se salen de la línea de los modelos anteriores, ya que no son modelos de reconocimiento de voz, sino de síntesis de voz y de otro tipo de sonidos. Se han añadido aquí como muestra interesante de modelos que son capaces de generar sonidos realistas o procesar otros tipos de sonidos, pero no entraremos en más detalles por quedar fuera de los objetivos de este bloque. 
+
+- UniAudio puede hacer síntesis de voz, conversión de voz, síntesis de voces cantando, texto a sonido, texto a música, o edición de voz y audio, entre otros. Puedes leer más sobre el modelo y probarlo en su [repositorio de Github](https://github.com/yangdongchao/UniAudio).
+- MERT es un modelo general para diversas tareas de lo que se denomina *music understanding*. Está descrito en el artículo "[MERT: Acoustic Music Understanding Model with Large-Scale Self-supervised Training](https://arxiv.org/abs/2306.00107)".
+- MaGNET es un sistema de texto a música y de texto a sonidos descrito en "[Masked Audio Generation using a Single Non-Autoregressive Transformer](https://arxiv.org/abs/2401.04577)".
+

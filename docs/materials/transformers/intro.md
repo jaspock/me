@@ -83,6 +83,7 @@ Para ampliar conocimientos, puedes consultar estos libros que, en su mayoría, e
 
 - "[Speech and Language Processing][jurafskybib]" de Dan Jurafsky y James H. Martin. Sin fecha de publicación aún, pero con un borrador avanzado disponible en la web. Explica detalladamente los conceptos y modelos más relevantes en el procesamiento del lenguaje natural sin entrar en detalles de implementación. Es el libro en el que se basa esta guía.
 - "[Dive into Deep Learning][d2l]" de Aston Zhang, Zachary C. Lipton, Mu Li y Alexander J. Smola. Se adentra con mucho detalle en la implementación de los modelos más relevantes del aprendizaje profundo. Hay una versión en [papel][cambridge] publicada en 2023.
+- ["Deep learning: foundations and concepts"][bishop] de Chris Bishop y Hugh Bishop. También disponible en papel desde 2024.
 - "[Understanding Deep Learning][understanding]" (2023) por Simon J.D. Prince. Libro lleno de imágenes y figuras que ayudan a entender todos los conceptos.
 - La serie "[Probabilistic Machine Learning: An Introduction][pml1]" (2022) y "[Probabilistic Machine Learning: Advanced Topics][pml2]" (2023) de Kevin Murphy aborda con más profundidad diversos elementos del aprendizaje automático.
 - "[Deep learning for Natural Language Processing: A Gentle Introduction][gentle]" de Mihai Surdeanu y Marco A. Valenzuela-Escárcega. También en elaboración. Contiene código en algunos capítulos.
@@ -94,6 +95,7 @@ Para ampliar conocimientos, puedes consultar estos libros que, en su mayoría, e
 [gentle]: https://clulab.org/gentlenlp/
 [understanding]: https://udlbook.github.io/udlbook/
 [pytorchstep]: https://leanpub.com/pytorch
+[bishop]: https://www.bishopbook.com/
 [d2l]: http://d2l.ai/
 [pml1]: https://probml.github.io/pml-book/book1.html
 [pml2]: https://probml.github.io/pml-book/book2.html

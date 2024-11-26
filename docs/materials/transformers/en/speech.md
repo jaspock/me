@@ -2,10 +2,10 @@
 <div class="content-2columns" markdown>
 ![](../assets/imgs/speechbot.jpg){: .rounded-title-img}
 
-# Sistemas neuronales de reconocimiento de voz
+# Neural Speech Recognition Systems
 </div>
 
-Los sistemas de reconocimiento o generación de de voz tienen décadas de historia, pero, una vez más, en los últimos años, los sistemas basados en aprendizaje profundo han superado significativamente a los sistemas tradicionales. Los sistemas clásicos solían estar formados por varias etapas, donde cada etapa se diseñaba por separado. Sin embargo, los sistemas basados en redes neuronales suelen ser sistemas *end-to-end*, donde la entrada es la señal de voz y la salida es el texto, por ejemplo.
+Speech recognition and generation systems have a long history, but in recent years, deep learning-based systems have significantly outperformed traditional systems. Classic systems were typically composed of multiple stages, each designed separately. In contrast, neural network-based systems are often *end-to-end*, where the input is the speech signal, and the output is text, for example.
 
 {%
    include-markdown "../assets/mds/texts.md"
@@ -13,16 +13,15 @@ Los sistemas de reconocimiento o generación de de voz tienen décadas de histor
    end="<!--nota-inicial-end-->"
 %}
 
-## Fundamentos de los sistemas de reconocimiento de voz
+## Fundamentals of Speech Recognition Systems
 
-Vamos a acometer el estudio de los elementos básicos del procesamiento de voz siguiendo el capítulo [:octicons-book-24:][automaticspeech] "[Automatic Speech Recognition and Text-to-Speech][automaticspeech]". Puedes leer la introducción y los apartados 16.2, 16.3 y 16.4. El apartado 16.6 es opcional y solo has de leerlo si te interesa el tema de la síntesis de voz.
+We will study the basic elements of speech processing following chapter [:octicons-book-24:][automaticspeech] "[Automatic Speech Recognition and Text-to-Speech][automaticspeech]". You can read the introduction and sections 16.2, 16.3, and 16.4. Section 16.6 is optional and only needs to be read if you are interested in voice synthesis.
 
-El libro presenta unas arquitecturas *end-to-end* para el reconocimiento de voz muy básicas. Más adelante, se resumen brevemente algunas arquitecturas más avanzadas.
+The book introduces very basic *end-to-end* architectures for speech recognition. Later, some more advanced architectures are briefly summarized.
 
 [automaticspeech]: https://web.archive.org/web/20230111103255/https://web.stanford.edu/~jurafsky/slp3/16.pdf
 
-
-## Anotaciones al libro
+## Book Annotations
 
 {%
    include-markdown "../assets/mds/texts.md"
@@ -30,101 +29,99 @@ El libro presenta unas arquitecturas *end-to-end* para el reconocimiento de voz 
    end="<!--recomendable-end-->"
 %}
 
-Apartado 16.2
+Section 16.2
 {: .section}
 
-Este apartado y los dos siguientes se centran en el reconocimiento de voz (también conocido como *speech-to-text)*, una de las tareas más importantes en el procesamiento de voz. La señal de audio ha de ser preprocesada para extraer las características más relevantes. Una de las maneras más habituales de hacerlo es mediante la obtención de los espectrogramas (o sonogramas) de las diferentes ventanas (*frames*) en las que se subdivide la señal digital resultante de la conversión analógica-digital. El espectrograma muestra la energía del contenido frecuencial de la señal según esta cambia a lo largo del tiempo. En el libro se analiza brevemente cómo obtener el espectrograma a partir de la transformada rápida discreta de Fourier y su posterior ajuste en base a la escala de Mel. 
+This section and the following two focus on speech recognition (also known as *speech-to-text*), one of the most important tasks in speech processing. The audio signal must be preprocessed to extract the most relevant features. One of the most common methods is obtaining spectrograms (or sonograms) of the different windows (*frames*) into which the digital signal resulting from analog-to-digital conversion is divided. The spectrogram shows the energy of the signal's frequency content as it changes over time. The book briefly explains how to compute the spectrogram using the discrete Fourier transform and adjust it according to the Mel scale.
 
-Apartado 16.3
+Section 16.3
 {: .section}
 
-Los espectrogramas suelen tener demasiada resolución temporal y frecuencial, por lo que se suelen reducir localmente mediante la aplicación, por ejemplo, de capas convolucionales. El resultado es un espectrograma de menor resolución, pero que conserva las características más relevantes de la señal de audio. El resultado ya puede ser utilizado como entrada de un transformer como el del modelo LAS de la figura 16.6.
+Spectrograms usually have too much temporal and frequency resolution, so they are often locally reduced using convolutional layers. The result is a lower-resolution spectrogram that retains the most relevant features of the audio signal. This output can then be used as input for a transformer, such as the LAS model shown in Figure 16.6.
 
-Apartado 16.4
+Section 16.4
 {: .section}
 
-La clasificación temporal conexionista (*connectionist temporal classification*, CTC) es una técnica muy importante utilizada en el entrenamiento y la inferencia de sistemas de reconocimiento automático de voz. Su función principal es actuar como una función de pérdida que permite al modelo alinear las ventanas de voz de entrada con sus salidas textuales correspondientes en un escenario, el de la voz, donde la entrada y la salida suelen tener longitudes muy diferentes.
+Connectionist Temporal Classification (CTC) is a crucial technique used in training and inference for automatic speech recognition systems. Its main function is to act as a loss function that aligns input speech windows with their corresponding textual outputs in scenarios where the input and output lengths typically differ greatly.
 
-CTC opera introduciendo una etiqueta especial de blanco que permite que el modelo no genere nada para una ventana determinada. Durante el entrenamiento, la función de pérdida de CTC calcula la probabilidad de todos los alineamientos posibles entre la entrada de voz y su transcripción textual y guía el modelo hacia el más probable. Esto permite que el modelo aprenda a partir de datos en los que cada fragmento de audio no está alineado con un carácter, datos que son mucho más fáciles de obtener que los datos alineados.
+CTC introduces a special blank label that allows the model to produce no output for a given window. During training, the CTC loss function computes the probability of all possible alignments between the speech input and its textual transcription, guiding the model toward the most likely alignment. This enables the model to learn from data where each audio fragment is not aligned with specific characters, making it easier to obtain training data.
 
-Esta sección introduce una forma avanzada de CTC conocida como RNN-Transducer o RNN-T o simplemente *transducer*.
+This section introduces an advanced form of CTC known as the RNN-Transducer (RNN-T or simply *transducer*).
 
-## Arquitecturas modernas para el procesamiento de voz
+## Modern Architectures for Speech Processing
 
 Whisper
 {: .section}
 
-Whisper fue uno de los sistemas con mejor desempeño durante 2023, pese a no alejarse demasiado de las arquitecturas básicas que se presentan en el libro. El sistema se basa en una arquitectura de transformer con codificador y descodificador similar a la del sistema LAS de la figura 16.6 del libro: la entrada de voz se procesa en el codificador, que obtiene un embedding profundo por cada ventana de voz; el descodificador va generando entonces la salida textual, carácter a carácter, a partir de dichos embeddings. La función de error no es ni RNN-T ni CTC, sino entropía cruzada, que no está pensada específicamente para esta tarea. El buen rendimiento del sistema se obtiene gracias a la utilización de un gran conjunto de datos de entrenamiento y, en menor medida, al entrenamiento del mismo modelo con múltiples tareas además de la transcripción de la entrada, como detección de silencios o ruido. Whisper, además, trabaja con diferentes idiomas (un token especial se usa para determinar el idioma de la salida) siendo entrenado incluso en la transcripción de voz en un idioma a texto en otro idioma.
+Whisper was one of the best-performing systems in 2023, despite not deviating significantly from the basic architectures presented in the book. The system is based on a transformer architecture with an encoder and decoder, similar to the LAS system shown in Figure 16.6 of the book. The speech input is processed by the encoder, which generates a deep embedding for each speech window. The decoder then generates textual output, character by character, from these embeddings. Instead of RNN-T or CTC, Whisper uses cross-entropy as the error function, which is not specifically designed for this task. The system's strong performance is attributed to a large training dataset and, to a lesser extent, training the same model for multiple tasks beyond transcription, such as detecting silence or noise. Whisper also supports multiple languages, using a special token to specify the output language. It was even trained on tasks like transcribing speech in one language to text in another.
 
-La siguiente figura está tomada del artículo "[Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356)" y muestra la arquitectura de Whisper. Observa la etiqueta de idioma y la etiqueta de tarea a realizar a la entrada del descodificador. El token `SOT` es el token especial que indica el inicio de la transcripción.
+The following figure, from the paper "[Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356)", shows Whisper's architecture. Note the language and task tags in the decoder's input. The `SOT` token is the special token that marks the start of transcription.
 
 ![](../assets/imgs/whisper.png)
 
-El siguiente texto es también del artículo anterior. Con lo que has estudiado hasta ahora, es muy probable que lo entiendas casi en su totalidad:
+The following text is also from the same paper. Based on what you've studied so far, you should understand most of it:
 
-> We chose an encoder-decoder Transformer as this architecture has been well validated to scale reliably. All audio is re-sampled to 16,000 Hz, and an 80-channel logmagnitude Mel spectrogram representation is computed on 25-millisecond windows with a stride of 10 milliseconds. For feature normalization, we globally scale the input to be between -1 and 1 with approximately zero mean across the pre-training dataset. The encoder processes this input representation with a small stem consisting of two convolution layers with a filter width of 3 and the GELU activation function where the second convolution layer has a stride of two. [...] The encoder and decoder have the same width and number of transformer blocks. [...] We use the same byte-level BPE text tokenizer used in GPT2 for the English-only models and refit the vocabulary (but keep the same size) for the multilingual models to avoid excessive fragmentation on other languages since the GPT-2 BPE vocabulary is English only.
+> We chose an encoder-decoder Transformer as this architecture has been well validated to scale reliably. All audio is re-sampled to 16,000 Hz, and an 80-channel log-magnitude Mel spectrogram representation is computed on 25-millisecond windows with a stride of 10 milliseconds. For feature normalization, we globally scale the input to be between -1 and 1 with approximately zero mean across the pre-training dataset. The encoder processes this input representation with a small stem consisting of two convolution layers with a filter width of 3 and the GELU activation function where the second convolution layer has a stride of two. [...] The encoder and decoder have the same width and number of transformer blocks. [...] We use the same byte-level BPE text tokenizer used in GPT2 for the English-only models and refit the vocabulary (but keep the same size) for the multilingual models to avoid excessive fragmentation on other languages since the GPT-2 BPE vocabulary is English only.
 
-No es necesario conocer en este momento el funcionamiento de las capas convolucionales. Basta decir que son capas que se utilizan normalmente para procesar imágenes y que, en este caso, se utilizan para procesar los espectrogramas. La capa convolucional realiza una serie de transformaciones que destacan patrones temporales y variaciones locales en el espectro de Mel. La convolución se basa en realizar el producto escalar entre un *filtro* (o *kernel*) de un cierto ancho (en nuestro caso, un vector de parámetros con un cierto tamaño) y su entrada, donde los parámetros del filtro se van aprendiendo durante el entrenamiento. Este filtro se va deslizando sobre la entrada saltando un número de posiciones (conocido como *stride*) entre una aplicación y otra. En el caso de Whisper, el *stride* tiene un ancho de 1 para la primera convolución, lo que mantiene el tamaño de los datos, pero de 2 en la segunda, lo que reduce la dimensionalidad a la mitad.
-
+It is not necessary to fully understand the functionality of convolutional layers at this stage. For now, it is sufficient to know that these layers are commonly used for image processing and, in this case, are applied to process spectrograms. The convolutional layer highlights temporal patterns and local variations in the Mel spectrum through transformations. Convolution involves taking the dot product between a *filter* (or *kernel*) of a certain width (in our case, a parameter vector of a certain size) and its input, with the filter's parameters learned during training. This filter slides over the input, moving a certain number of positions (known as *stride*) between applications. In Whisper, the stride has a width of 1 for the first convolution, preserving data size, but is 2 in the second, halving the dimensionality.
 
 Wav2vec2
 {: .section}
 
-Dado que la obtención de datos etiquetados (señal de audio y su transcripción) es muy costosa, especialmente para ciertos idiomas, el modelo Wav2Vec 2.0 propone un esquema auto-supervisado similar al de los sistemas tipo BERT en procesamiento del lenguaje natural, enmascarando parte de la representación latente y cuantizada de la señal de voz (esto se explica a continuación) y entrenando el modelo para que prediga qué iba en la parte enmascarada. El modelo se entrena, por tanto, con un gran conjunto de datos de audio sin transcripción, pero, tras el entrenamiento, las representaciones aprendidas pueden ser utilizadas para ajustar (*fine-tuning*) el modelo a tareas concretas de reconocimiento de voz con un conjunto de datos etiquetados relativamente pequeño, usando, por ejemplo, CTC como función de pérdida.
+Given the high cost of obtaining labeled data (audio signals and their transcriptions), particularly for certain languages, the Wav2Vec 2.0 model proposes a self-supervised scheme similar to BERT-like systems in natural language processing. It masks parts of the latent and quantized speech signal representation (explained below) and trains the model to predict the masked parts. The model is thus trained on a large dataset of unlabeled audio. Once trained, the learned representations can be fine-tuned for specific speech recognition tasks with a relatively small labeled dataset, using, for example, CTC as the loss function.
 
-La siguiente figura representa la arquitectura de Wav2Vec 2.0 y está tomada del artículo "[wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations](https://arxiv.org/abs/2006.11477)":
+The following figure, from the paper "[wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations](https://arxiv.org/abs/2006.11477)", illustrates the Wav2Vec 2.0 architecture:
 
 ![](../assets/imgs/wav2vec2.png)
 
-Como puedes ver, el modelo procesa directamente la señal de voz, sin necesidad de obtener una representación en frecuencias. La señal es convenientemente segmentada y cada segmento se pasa por un codificador con múltiples capas convolucionales. La salida de la última capa convolucional se cuantiza en un número determinado de valores, es decir, cada vector se termina clasificando dentro de un conjunto de posibles clases o *códigos*. Estos códigos no tienen por qué coincidir con fonemas concretos, pero ayudan a agrupar los vectores de forma que idealmente, tras el entrenamiento, vectores de código similares corresponden a ventanas de voz que comparten características similares. El código correspondiente se representa en la ilustración mediante un vector $\mathbf{q}$. Las representaciones cuantizadas se pasan a un codificador de un transformer donde se combinan globalmente (observa que las capas convolucionales realizan un procesamiento local y no global) mediante la auto-atención, capturando así de una forma *end-to-end* las posibles dependencias a nivel de secuencia. A su salida, el transformer tiene que predecir la representación latente cuantizada de aquellas partes de la señal de voz cuyas representaciones latentes han sido enmascaradas.
+As shown, the model processes the speech signal directly, without requiring a frequency representation. The signal is segmented, and each segment passes through an encoder with multiple convolutional layers. The output of the final convolutional layer is quantized into a set number of values, meaning each vector is classified into a set of possible classes or *codes*. These codes do not necessarily correspond to specific phonemes but help group vectors so that, ideally, after training, similar code vectors correspond to speech windows with similar features. The corresponding code is represented in the illustration as a vector $\mathbf{q}$. 
 
+The quantized representations are passed to a transformer encoder, where they are globally combined (note that convolutional layers perform local, not global, processing) through self-attention, capturing sequence-level dependencies in an *end-to-end* manner. At its output, the transformer predicts the quantized latent representation of those parts of the speech signal that were masked during training.
 
 Conformer
 {: .section}
 
-Conformer es el primer modelo que se publicó con una arquitectura que combinaba redes convolucionales y codificadores de transformers. La siguiente figura está tomada del artículo "[Conformer: Convolution-augmented Transformer for Speech Recognition](https://arxiv.org/abs/2005.08100)" y muestra cómo la arquitectura original del transformer se modificó ligeramente para incluir capas convolucionales dentro de cada bloque del transformer así como una disposición en *macaron* (por la tradicional galleta francesa) en la que la red *feedfoward* no solo está al final de cada bloque, sino también al principio. Las salidas de las redes *feedfoward* se multiplican por 1/2 antes de combinarse con las capas residuales.
+Conformer is the first model to integrate convolutional networks and transformer encoders in its architecture. The following figure, taken from the paper "[Conformer: Convolution-augmented Transformer for Speech Recognition](https://arxiv.org/abs/2005.08100)," illustrates how the original transformer architecture was slightly modified to include convolutional layers within each transformer block and a *macaron* arrangement (named after the traditional French cookie). In this configuration, the feedforward network is not only at the end of each block but also at the beginning. The outputs of the feedforward networks are multiplied by 1/2 before being combined with the residual layers.
 
 ![](../assets/imgs/conformer.png)
-
 
 UniSpeech
 {: .section}
 
-UniSpeech usa una mezcla de aprendizaje auto-supervisado como el de wav2vec 2.0 y de aprendizaje supervisado en base a la transcripción de la señal de voz para conseguir que las representaciones latentes aprendidas sean más robustas y estén más alineadas con la estructura fonética. La siguiente figura está tomada del artículo "[UniSpeech: Unified Speech Representation Learning with Labeled and Unlabeled Data](https://arxiv.org/abs/2101.07597)" y muestra la arquitectura del modelo:
+UniSpeech combines self-supervised learning, like that in Wav2Vec 2.0, with supervised learning based on the transcription of speech signals to produce more robust latent representations aligned with phonetic structure. The following figure, taken from the paper "[UniSpeech: Unified Speech Representation Learning with Labeled and Unlabeled Data](https://arxiv.org/abs/2101.07597)," shows the model's architecture:
 
 ![](../assets/imgs/unispeech.png)
 
-En la parte derecha de la imagen anterior se muestra el cuantizador eligiendo en dos páginas de códigos (*codebook*) el punto más cercano a la representación latente $z$. Normalmente se usan varias páginas de códigos y se concatenan sus propuestas para obtener la representación latente cuantizada.
+On the right side of the above image, the quantizer selects the closest point to the latent representation $z$ from two codebook pages. Typically, multiple codebook pages are used, and their outputs are concatenated to produce the quantized latent representation.
 
-
-Massively multilingual speech (MMS)
+Massively Multilingual Speech (MMS)
 {: .section}
 
-MMS es en realidad un conjunto de modelos para cientos de idiomas diferentes que nos sirve de buen ejemplo de modelos multilingües a una escala masiva: el proyecto construyó modelos pre-entrenados de tipo wav2vec 2.0 que cubren unos 1400 idiomas, un único modelo de reconocimiento automático de voz multilingüe para unos 1100 idiomas, modelos de síntesis de voz para el mismo número de idiomas, así como un modelo de identificación de idioma para unos 4000 idiomas. De forma similar a UniSpeech, se combina el aprendizaje auto-supervisado con el supervisado basado en CTC, además de considerar adaptadores diferentes para cada idioma. El trabajar con este número tan elevado de idiomas (se estima que la cantidad de idiomas en el mundo es de unos 7000) es posible gracias a la recopilación de un dataset (transcrito o no, dependiendo del idioma) integrado por la lectura de textos religiosos, junto a otros conjuntos multilingües de datos transcritos como FLEURS. La siguiente gráfica tomada del artículo "[Scaling Speech Technology to 1,000+ Languages](https://research.facebook.com/publications/scaling-speech-technology-to-1000-languages/)" muestra los idiomas soportados por MMS:
+MMS represents a set of models designed for hundreds of different languages, exemplifying massively multilingual models. The project developed pretrained models based on Wav2Vec 2.0 that cover approximately 1,400 languages, a single multilingual automatic speech recognition model for around 1,100 languages, speech synthesis models for the same number of languages, and a language identification model for about 4,000 languages. Similar to UniSpeech, MMS combines self-supervised learning with supervised learning based on CTC, and uses language-specific adapters. 
+
+This extensive multilingual support is made possible through the collection of a dataset (transcribed or not, depending on the language) derived from religious texts and other multilingual transcription datasets like FLEURS. The following graphic, taken from the paper "[Scaling Speech Technology to 1,000+ Languages](https://research.facebook.com/publications/scaling-speech-technology-to-1000-languages/)," shows the languages supported by MMS:
 
 ![](../assets/imgs/mms.png)
 
 SeamlessM4T
 {: .section}
 
-Este modelo puede realizar traducciones de voz a texto, voz a voz, texto a voz y texto a texto para unos 100 idiomas, dependiendo de la tarea. El artículo "[SeamlessM4T—Massively Multilingual & Multimodal Machine Translation](https://ai.meta.com/blog/seamless-m4t/)" describe el modelo y su rendimiento. La siguiente figura es parte del artículo y muestra la arquitectura del modelo para el caso en el que diferentes tipos de entradas se traducen a texto:
+This model can perform voice-to-text, voice-to-voice, text-to-speech, and text-to-text translations for approximately 100 languages, depending on the task. The paper "[SeamlessM4T—Massively Multilingual & Multimodal Machine Translation](https://ai.meta.com/blog/seamless-m4t/)" describes the model and its performance. The following figure, part of the paper, shows the model's architecture for scenarios where different types of inputs are translated into text:
 
 ![](../assets/imgs/seamlessm4t.png)
 
-Universal speech model (USM)
+Universal Speech Model (USM)
 {: .section}
 
-Otro modelo multilingue a gran escala es Universal Speech Model (USM) que usa RNN-T y llega a 300 idiomas. La siguiente figura está tomada del artículo "[Google USM: Scaling Automatic Speech Recognition Beyond 100 Languages](https://arxiv.org/abs/2303.01037)" y muestra las diferentes fases de entrenamiento del modelo. Aunque no las veremos con detalle, seguro que puedes encontrar en la figura varios términos que te resultan familiares:
+Another large-scale multilingual model is the Universal Speech Model (USM), which uses RNN-T and supports up to 300 languages. The following figure, taken from the paper "[Google USM: Scaling Automatic Speech Recognition Beyond 100 Languages](https://arxiv.org/abs/2303.01037)," illustrates the model's different training phases. Although we will not go into detail, you may recognize several familiar terms in the figure:
 
 ![](../assets/imgs/usm.png)
 
-
-Otros modelos
+Other Models
 {: .section}
 
-Estos modelos se salen de la línea de los modelos anteriores, ya que no son modelos de reconocimiento de voz, sino de síntesis de voz y de otro tipo de sonidos. Se han añadido aquí como muestra interesante de modelos que son capaces de generar sonidos realistas o procesar otros tipos de sonidos, pero no entraremos en más detalles por quedar fuera de los objetivos de este bloque. 
+These models deviate from the ones mentioned above as they are not speech recognition models but instead focus on speech synthesis or other types of sound generation. They are included here as interesting examples of models capable of generating realistic sounds or processing other types of audio, but we will not delve further into them as they fall outside the scope of this section.
 
-- UniAudio puede hacer síntesis de voz, conversión de voz, síntesis de voces cantando, texto a sonido, texto a música, o edición de voz y audio, entre otros. Puedes leer más sobre el modelo y probarlo en su [repositorio de Github](https://github.com/yangdongchao/UniAudio).
-- MERT es un modelo general para diversas tareas de lo que se denomina *music understanding*. Está descrito en el artículo "[MERT: Acoustic Music Understanding Model with Large-Scale Self-supervised Training](https://arxiv.org/abs/2306.00107)".
-- MaGNET es un sistema de texto a música y de texto a sonidos descrito en "[Masked Audio Generation using a Single Non-Autoregressive Transformer](https://arxiv.org/abs/2401.04577)".
-
+- **UniAudio**: Capable of speech synthesis, voice conversion, singing voice synthesis, text-to-sound, text-to-music, or audio editing, among other tasks. You can learn more and try the model in its [GitHub repository](https://github.com/yangdongchao/UniAudio).
+- **MERT**: A general model for various tasks in *music understanding*. It is described in the paper "[MERT: Acoustic Music Understanding Model with Large-Scale Self-supervised Training](https://arxiv.org/abs/2306.00107)."
+- **MaGNET**: A text-to-music and text-to-sound system described in "[Masked Audio Generation using a Single Non-Autoregressive Transformer](https://arxiv.org/abs/2401.04577)."

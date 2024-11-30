@@ -5,7 +5,7 @@
 # Problems
 </div>
 
-## Regressor Problems
+## Problems on Regression
 
 Problem
 {: .problema}
@@ -22,7 +22,7 @@ Problem
 
 After training a logistic regressor, we apply an input $\mathbf{x}$ and calculate the derivative $\partial \hat{y} / \partial \mathbf{x}_i$ for a certain $i$. What does this derivative measure? Think about the basic concept of a derivative and how it measures the *sensitivity* of the value of a function concerning a change in one of its variables.
 
-## Embedding Problems
+## Problems on Embeddings
 
 Problem
 {: .problema}
@@ -33,7 +33,7 @@ When searching for analogy relationships between word embeddings, we attempt, gi
 - A=plane, B=@3, C=person, D=@4
 - A=mother, B=father, C=@5, D=@6
 
-## Transformer Problems
+## Problems on Transformers
 
 Problem
 {: .problema}
@@ -54,7 +54,7 @@ Describe the shape of the mask matrix $M$. Find the PyTorch operations that allo
 Problem
 {: .problema}
 
-Given a sequence of input tokens, the transformer provides a set of embeddings for each input token. These embeddings are contextual in all layers except one. In which layer are the embeddings not contextual? How are the final values of these embeddings obtained? And what about the initial values?
+Given a sequence of input tokens, the transformer provides a set of embeddings for each input token. These embeddings are contextual in all layers except one. In which layer are the embeddings non-contextual? How are the final values of these embeddings obtained? And what about the initial values?
 
 Problem
 {: .problema}

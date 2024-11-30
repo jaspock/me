@@ -5,6 +5,9 @@
 # Feedforward Networks: The Basic Neural Computation Model
 </div>
 
+!!! danger "Caution: Page Under Review"
+    This page has not been fully reviewed and may contain errors or inaccuracies. Use the information here at your own discretion and risk.
+
 Feedforward neural networks can be seen as a simple machine learning model. Although we won't use them independently, they are a necessary component of the more advanced models we will explore later.
 
 {%

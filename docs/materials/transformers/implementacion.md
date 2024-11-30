@@ -18,7 +18,7 @@ La implementación en forma de código de los diferentes modelos es un enfoque c
 
 Estas son dos implementaciones en PyTorch de los regresores que se estudian [en esta página](regresor.md) en unas pocas decenas de líneas de código. Asegúrate de que terminas entendiendo el código lo suficiente como para sentirte con ánimo de poder modificarlo para adaptarlo a otras necesidades. 
 
-Repasa antes de abordar el código cómo puedes [depurar](pytorch.md#depuración) programas escritos en Python. Repasa también cómo funciona el mecanismo de [broadcasting](apuntes.md#broadcasting-en-pytorch) en PyTorch.
+Repasa antes de abordar el código cómo puedes [depurar](pytorch.md#depuracion) programas escritos en Python. Repasa también cómo funciona el mecanismo de [broadcasting](apuntes.md#broadcasting-en-pytorch) en PyTorch.
 
 Los dos programas de este apartado son:
 

@@ -5,6 +5,11 @@
 # Transformers and Attention Models: Understanding Attention Mechanisms and Their Application in the Transformer Model
 </div>
 
+
+!!! danger "Caution: Page Under Review"
+    This page has not been fully reviewed and may contain errors or inaccuracies. Use the information here at your own discretion and risk.
+
+
 In 2017, recurrent neural networks based on LSTM units were the standard architecture for neural sequence processing, in general, and natural language processing, in particular. Some researchers were also achieving good results in this area with convolutional neural networks, which were traditionally used for image processing. On the other hand, attention mechanisms introduced a few years earlier in recurrent networks had enhanced their ability to solve certain tasks and expanded the range of possibilities for these models. Additionally, the encoder-decoder model became the cornerstone for systems that transformed one sequence into another (seq2seq systems, such as machine translation or summarization systems). However, in mid-2017, a paper titled "[Attention Is All You Need](https://arxiv.org/abs/1706.03762)" proposed removing recurrence from the encoder-decoder model and replacing it with what is known as self-attention. Although the paper focused on machine translation, it quickly became evident that this architecture, dubbed the *transformer*, was highly effective in many other fields, relegating recurrent architectures to a secondary role. Furthermore, the transformer became one of the foundational elements of pre-trained models, which we will study later and which began to emerge in the subsequent months or years. Nonetheless, there are still researchers working with recurrent networks, so it cannot be ruled out that they may regain prominence in the future.
 
 {%

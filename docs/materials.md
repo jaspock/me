@@ -15,6 +15,18 @@ Guía para aprender cómo funcionan las redes neuronales que procesan textos y c
 <hr>
 
 <div class="content-2columns catalog" markdown>
+<a href="transformers/en/intro">![](materials/transformers/assets/imgs/math-triangle.png){: .rounded-catalogue-img}</a>
+
+<div>
+<h2>A step-by-step guide to transformers</h2> 
+
+Understanding how neural networks process texts and how to program them.
+</div>
+</div>
+
+<hr>
+
+<div class="content-2columns catalog" markdown>
 <a href="dnc">![](materials/assets/dnc/logo-cube.png){: .rounded-catalogue-img}</a>
 
 <div>

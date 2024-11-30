@@ -51,6 +51,18 @@ nav:
       - Apuntes de PyTorch: materials/transformers/apuntes.md
       - Problemas: materials/transformers/problemas.md
       - Voz: materials/transformers/speech.md
+    - Guide to transformers:
+      - Introduction: materials/transformers/en/intro.md
+      - Regressors: materials/transformers/en/regresor.md
+      - Embeddings: materials/transformers/en/embeddings.md
+      - Feedforward nets: materials/transformers/en/ffw.md
+      - Attention: materials/transformers/en/attention.md
+      - Transformers: materials/transformers/en/attention2.md
+      - Implementation: materials/transformers/en/implementacion.md
+      - PyTorch: materials/transformers/en/pytorch.md
+      - PyTorch notes: materials/transformers/en/apuntes.md
+      - Problems: materials/transformers/en/problemas.md
+      - Speech: materials/transformers/en/speech.md  
     - Differentiable neural computers: materials/dnc.md
     - Historia del PLN: materials/historia.md
   - Teaching: teaching.md

@@ -5,6 +5,11 @@
 # The Complete Transformer Architecture
 </div>
 
+
+!!! danger "Caution: Page Under Review"
+    This page has not been fully reviewed and may contain errors or inaccuracies. Use the information here at your own discretion and risk.
+
+
 In the previous section, we studied the transformer as a system that progressively generates a sequence of tokens. However, the first use of the architecture was for a different case: transforming one sequence of tokens into another to enable automatic translation between languages. For this use case, a two-phase system was designed: encoding and decoding, where the transformer from the previous section corresponds to the second phase. In this chapter, we will examine the encoder and its interaction with the decoder. Additionally, it is possible to use only the encoder for other types of tasks, which we will also explore. In all three options, the term *transformer* is used to describe the underlying architecture.
 
 {%

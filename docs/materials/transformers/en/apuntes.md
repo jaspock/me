@@ -31,7 +31,7 @@ Consider the case where we have a mini-batch of target words represented by thei
 
 Let $N$ be the size of the embeddings. We want to calculate the dot product of each $\mathbf{w}_i$ with each $\mathbf{c}_i$, a calculation that is fundamental in training and using skip-gram models. To compute these dot products using PyTorch and benefit from the efficiency of GPU-calculated matrix operations, we can pack the target word embeddings row-wise in a matrix $A$ of size $E \times N$ and the contextual word embeddings column-wise in a matrix $B$ of size $N \times E$. If we compute the product $A \cdot B$, we get a matrix of size $E \times E$ where each element $i,j$ is the dot product of $\mathbf{w}_i$ with $\mathbf{c}_j$.
 
-However, we are only interested in a subset of these dot products: those that lie on the diagonal of the result, which are of the form $\mathbf{w}_i \cdot \mathbf{c}_i$. Matrix multiplication is inefficient in this case for our purposes, but if we consult the PyTorch documentation, we won't initially find an operation that exactly matches our needs.
+However, we are only interested in a subset of these dot products: those that lie on the diagonal of the result, which are of the form $\mathbf{w}_i \cdot \mathbf{c}_i$. Matrix multiplication is inefficient in this case for our purposes, but if we consult the PyTorch documentation, we will not initially find an operation that exactly matches our needs.
 
 There is, however, an efficient and compact way in PyTorch to define matrix operations using Einstein notation. You can learn more by reading up to section 2.8 of the tutorial "[Einsum is all you need](https://rockt.github.io/2018/04/30/einsum)". Specifically, we are interested in obtaining a vector $\mathbf{d}$ such that:
 
@@ -47,19 +47,19 @@ d = torch.einsum('ij,ji->i', A, B)
 
 ## Unsqueezing Tensors
 
-A frequent operation in PyTorch is the *unsqueezing*[^1] of a tensor using the `unsqueeze` operation. This operation adds a dimension of size 1 at the specified position. For example, if we have a tensor with shape `(2,3,4)` and apply `unsqueeze(1)`, the result will be a tensor with shape `(2,1,3,4)`. If we apply `unsqueeze(0)`, the result will have shape `(1,2,3,4)`. If we apply `unsqueeze(-1)`, the result will have shape `(2,3,4,1)`. One common use of `unsqueeze` is converting a single datum into a minibatch. For example, if we have a lexical category assignment model (e.g., verb, noun, adjective, etc.) that receives a minibatch of word embeddings and returns a probability vector for each category for each word, we can use `unsqueeze(0)` to turn a single word embedding into a minibatch with one element. Assuming there are 10 categories, running the model will yield a tensor with shape `(1,10)`, which we can convert to a tensor with shape `(10)` using `squeeze(0)`. The `squeeze` operation complements `unsqueeze`: by default, it removes all dimensions of size 1, but it allows specifying the position of the dimension to remove.
+A frequent operation in PyTorch is the *unsqueezing*[^1] of a tensor using the `unsqueeze` operation. This operation adds a dimension of size 1 at the specified position. For example, if we have a tensor with shape `(2,3,4)` and apply `unsqueeze(1)`, the result will be a tensor with shape `(2,1,3,4)`. If we apply `unsqueeze(0)`, the result will have shape `(1,2,3,4)`. If we apply `unsqueeze(-1)`, the result will have shape `(2,3,4,1)`. One common use of `unsqueeze` is converting a single value into a minibatch. For example, if we have a lexical category classification model (assigning a part-of-speech such as verb, noun, adjective, etc. to each word) that receives a minibatch of word embeddings and returns a vector for each input word giving the probability of that word corresponding to each lexical category, we can use `unsqueeze(0)` to turn a single word embedding into a minibatch with one element. Assuming there are 10 categories, running the model will yield a tensor with shape `(1,10)`, which we can convert to a tensor with shape `(10)` using `squeeze(0)`. The `squeeze` operation complements `unsqueeze`: by default, it removes all dimensions of size 1, but it allows specifying the position of the dimension to remove.
 
-[^1]: It is challenging to find an appropriate translation for the terms *squeeze* and *unsqueeze* from English, but you can associate them with the shape alteration that occurs when opening or closing instruments (called *squeezeboxes*) like an accordion or concertina.
+[^1]: The English terms *squeeze* and *unsqueeze* denote the shape alteration that occurs when opening or closing instruments (called *squeezeboxes*) like an accordion or concertina.
 
 Adding a dimension of size 1 as done by `unsqueeze` does not affect the number of elements in the tensor but does change its shape. The underlying data block in memory remains unchanged. The following example demonstrates the results of unsqueezing operations at various positions:
 
 ```python
 import torch 
-a = torch.tensor([[1,2],[3,4]])  #   [[1, 2], [3, 4]]  2x2
-a.unsqueeze(0)                  # [[[1, 2], [3, 4]]]  1x2x2
-a.unsqueeze(1)                  # [[[1, 2]], [[3, 4]]]  2x1x2
-a.unsqueeze(2)                  # [[[1], [2]], [[3], [4]]]  2x2x1
-a.unsqueeze(3)                  # exception: dimension out of range
+a = torch.tensor([[1,2],[3,4]])  #  [[1, 2], [3, 4]]         2x2
+a.unsqueeze(0)                   # [[[1, 2], [3, 4]]]        1x2x2
+a.unsqueeze(1)                   # [[[1, 2]], [[3, 4]]]      2x1x2
+a.unsqueeze(2)                   # [[[1], [2]], [[3], [4]]]  2x2x1
+a.unsqueeze(3)                   # exception: dimension out of range
 ```
 
 As is common in PyTorch, dimensions can be negative, allowing you to specify their position by counting from the end. In the example above, `a.unsqueeze(-1)` is equivalent to `a.unsqueeze(3)`. In terms of the `view` function, `t.unsqueeze(i)` is equivalent to `view(*t.shape[:i], 1, *t.shape[i:])`.
@@ -107,7 +107,7 @@ t = a.t()
 print(t.stride())  # (1, 3)
 ```
 
-Verify that the strides `(1, 3)` are correct if the data in memory has not been modified. Many PyTorch operations are implemented to iterate over the data from the last dimension to the first (e.g., first through columns and then through rows), assuming this means starting with the smallest strides (columns, in this case) and moving to dimensions with larger strides. This way, when the algorithm accesses the next data point, it is often a neighbor of the current one and likely already in cache. If the elements were arranged differently in memory, the algorithm would need to jump more positions in memory to access the data, making it slower or potentially non-functional. Therefore, some operations (e.g., `t.view(-1)`) raise an exception, and we must explicitly reorder the tensor's data in memory before using such operations:
+You may verify that the strides `(1, 3)` are correct if the data in memory has not been modified. Many PyTorch operations are implemented to iterate over the data from the last dimension to the first (e.g., first through columns and then through rows), assuming this means starting with the smallest strides (columns, in this case) and moving to dimensions with larger strides. This way, when the algorithm accesses the next data point, it is often a neighbor of the current one and likely already in cache. If the elements were arranged differently in memory, the algorithm would need to jump more positions in memory to access the data, making it slower or potentially non-functional. Therefore, some operations (e.g., `t.view(-1)`) raise an exception, and we must explicitly reorder the tensor's data in memory before using such operations:
 
 ```python
 print(a.is_contiguous())  # True
@@ -127,7 +127,7 @@ print(x.stride())  # (24, 6, 2, 1)
 
 ## Ways to Use Matplotlib
 
-There are two different ways to interact with the Matplotlib library. You will likely encounter both styles in code you find online, so it is important to know them. The first way (implicit) is the simplest and involves importing the library and calling its functions directly. The second way is more comprehensive and involves creating a `Figure` object and calling its methods using the returned objects to interact with the library. In both cases, you are working internally with a figure and one or more associated axes (in English, *axes*, but do not confuse with the axes or *axis* of a plot). However, in the first case, a global state is maintained, so it is not necessary to explicitly use the different objects; simply calling the functions directly is sufficient.
+There are two different ways to interact with the Matplotlib library. You will likely encounter both styles in code you find online, so it is important to know them. The first way (implicit) is the simplest and involves importing the library and calling its functions directly. The second way is more comprehensive and involves creating a `Figure` object and calling its methods using the returned objects to interact with the library. In both cases, you are working internally with a figure and one or more associated *axes* (do not confuse the axes with the *axis* of a plot). However, in the first case, a global state is maintained, so it is not necessary to explicitly use the different objects; simply calling the functions directly is sufficient.
 
 Here is an example of code using the implicit style:
 

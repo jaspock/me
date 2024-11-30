@@ -13,7 +13,7 @@ Esta guía propone un camino para entender cómo funciona realmente la red neuro
 
     Esta página contiene una pauta para aprender de forma autónoma cómo funcionan los transformers. Para ello, se enlazan documentos contenidos en otras páginas de esta web. Visto así, el conjunto puede considerarse como una guía completa que te ayude en tu camino. Sin embargo, es posible que hayas llegado a estas páginas desde otra fuente (por ejemplo, una asignatura específica) que plantee otra forma diferente de utilizar los diferentes contenidos. En ese caso, usa las recomendaciones y la planificación que te ofrezca esa fuente y no las que se proponen en esta página.
 
-Algunos de los contenidos los puedes ir estudiando en paralelo. A la vez que aprendes sobre modelos neuronales, puedes ir iniciándote en [Python](pytorch.md#python), NumPy e incluso, una vez vistos los dos anteriores, [PyTorch](pytorch.md#pytorch). También puedes repasar en paralelo los [elementos de álgebra, cálculo y probabilidad](#conceptos-previos) que hayas olvidado. El estudio del código del transformer no deberías abordarlo hasta tener bien asimilados todos los conceptos anteriores.
+Algunos de los contenidos los puedes ir estudiando en paralelo. A la vez que aprendes sobre modelos neuronales, puedes ir iniciándote en [Python](pytorch.md#python), NumPy e incluso, una vez vistos los dos anteriores, [PyTorch](pytorch.md#pytorch). También puedes repasar en paralelo los [elementos de álgebra, cálculo y probabilidad](#conceptos-matematicos-previos) que hayas olvidado. El estudio del código del transformer no deberías abordarlo hasta tener bien asimilados todos los conceptos anteriores.
 
 ## Manual de estudio
 
@@ -69,7 +69,7 @@ La siguiente tabla muestra una secuenciación de los contenidos de esta guía co
 En cada sección se usa el icono :octicons-book-24: para destacar aquellos enlaces que es más importante que sigas, bien porque dan acceso a capítulos del libro que has de leer, bien porque apuntan a código que has de explorar.
 
 
-## Conceptos matemáticos previos
+## Conceptos matemáticos previos 
 
 Los elementos básicos de álgebra, cálculo y probabilidad necesarios para manejarte con soltura en el mundo del procesamiento del lenguaje natural los puedes encontrar en las secciones "Linear Algebra", "Calculus" (junto con "Automatic differentiation") y "Probability and Statistics" del [:octicons-book-24:][cap2] [capítulo 2][cap2] del libro "Dive into Deep Learning". Otros como la teoría de la información o el principio de máxima verosimilitud se abordan en las secciones "Information theory" y "Maximum likelihood", respectivamente, en un [:octicons-book-24:][apéndice] [apéndice][apéndice] del mismo libro.
 

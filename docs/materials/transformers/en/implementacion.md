@@ -2,71 +2,70 @@
 <div class="content-2columns" markdown>
 ![](../assets/imgs/implementation-heart.png){: .rounded-title-img}
 
-# Implementación de los modelos en PyTorch
+# Implementation of Models in PyTorch
 </div>
 
-La implementación en forma de código de los diferentes modelos es un enfoque complementario a su estudio desde un punto de vista matemático. En esta página se presentan implementaciones en PyTorch de cada uno de los modelos estudiados. La idea es que abordes el estudio de estas implementaciones después de haber estudiado conceptualmente el modelo en cuestión.
+The implementation of different models in code is a complementary approach to studying them from a mathematical perspective. This page presents PyTorch implementations of each of the studied models. The idea is to approach these implementations after conceptually studying the respective model.
 
 {%
-   include-markdown "../assets/mds/texts.md"
+   include-markdown "./assets/mds/texts.md"
    start="<!--nota-inicial-start-->"
    end="<!--nota-inicial-end-->"
 %}
 
+## Code for a Logistic and a Multinomial Regressor {#code-regressor}
 
-## Código para un regresor logístico y uno multinomial
+Here are two PyTorch implementations of the regressors studied [on this page](regresor.md) in just a few dozen lines of code. Ensure you understand the code well enough to feel confident about modifying it to suit other needs.
 
-Estas son dos implementaciones en PyTorch de los regresores que se estudian [en esta página](regresor.md) en unas pocas decenas de líneas de código. Asegúrate de que terminas entendiendo el código lo suficiente como para sentirte con ánimo de poder modificarlo para adaptarlo a otras necesidades. 
+Review how to [debug](pytorch.md#debug) Python programs before tackling the code. Also, review how the [broadcasting](apuntes.md#broadcasting) mechanism works in PyTorch.
 
-Repasa antes de abordar el código cómo puedes [depurar](pytorch.md#depuración) programas escritos en Python. Repasa también cómo funciona el mecanismo de [broadcasting](apuntes.md#broadcasting-en-pytorch) en PyTorch.
+The two programs in this section are:
 
-Los dos programas de este apartado son:
-
-- Un  [:octicons-book-24:][pylog] [regresor logístico][pylog] que clasifica muestras bidimensionales sintéticas en dos clases. Se usan solo los elementos más básicos de PyTorch para poder tener una implementación lo más detallada posible. Como ejercicio, puedes hacer una traza y analizar qué tamaños tienen los tensores. Puedes jugar también con el número de pasos de entrenamiento  y la tasa de aprendizaje para ver cómo evoluciona el entrenamiento. Explora diversas posiciones de los centros de las clases y de la dispersión de los datos alrededor de estos y observa cómo cambia la frontera de decisión. Elimina el sesgo (*bias*) de las ecuaciones y observa cómo se restringe la forma de la frontera de decisión al obligar a esta a pasar por el origen de coordenadas. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/logistic.ipynb">
+- A [:octicons-book-24:][pylog] [logistic regressor][pylog] that classifies two-dimensional synthetic samples into two classes. Only the most basic elements of PyTorch are used to keep the implementation as detailed as possible. As an exercise, trace and analyze the sizes of the tensors. Experiment with the number of training steps and the learning rate to observe how training evolves. Explore various positions of class centers and data dispersion to see how the decision boundary changes. Remove the bias from the equations and observe how forcing the decision boundary to pass through the origin restricts its shape. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/logistic.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
-- Un  [:octicons-book-24:][pysoft] [regresor softmax para clasificar textos según su temática][pysoft]. Como ejercicio, puedes probar a entrenar con un solo embedding en cada paso de entrenamiento en lugar de con un batch de todos ellos y ver cómo se comporta el error. Puedes también adaptar el código del regresor logístico anterior para que use las funciones de PyTorch que se ven en este programa. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/softmax.ipynb">
+- A [:octicons-book-24:][pysoft] [softmax regressor for classifying texts by topic][pysoft]. As an exercise, try training with a single embedding per training step instead of a batch of all embeddings and observe how the error behaves. You can also adapt the previous logistic regressor code to use the PyTorch functions seen in this program. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/softmax.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-Si no lo has hecho ya, puedes empezar a aprender Python y PyTorch siguiendo el [capítulo][cappy] correspondiente de esta serie.
+If you haven't already, you can start learning Python and PyTorch by following the [chapter][cappy] corresponding to this series.
 
 [cappy]: pytorch.md
 [pylog]: ../assets/notebooks/logistic.ipynb
 [pysoft]: ../assets/notebooks/softmax.ipynb
 
-## Código para skip-grams
+## Code for Skip-Grams {#code-skipgrams}
 
-Esta es una implementación del algoritmo [:octicons-book-24:][pyskip] [skip-gram][pyskip] para la obtención de embeddings incontextuales que se estudia [en esta página](embeddings.md) de la guía y que sigue las pautas marcadas en el libro de Jurafsky y Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/skipgram.ipynb">
+This is an implementation of the [:octicons-book-24:][pyskip] [skip-gram][pyskip] algorithm for obtaining static embeddings as studied [on this page](embeddings.md). It follows the guidelines in the book by Jurafsky and Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/skipgram.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 [pyskip]: ../assets/notebooks/skipgram.ipynb
 
-## Código para un modelo de lengua con redes feedforward
+## Code for a Language Model with Feedforward Networks {#code-ffw}
 
-Esta es la implementación de un [:octicons-book-24:][pylm] [modelo de lengua][pylm] con redes *feedforward* que se estudia [en esta página](ffw.md) y que sigue las ecuaciones del libro de Jurafsky y Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/ffnn.ipynb">
+This is the implementation of a [:octicons-book-24:][pylm] [language model][pylm] using feedforward networks as studied [on this page](ffw.md). It adheres to the equations in the book by Jurafsky and Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/ffnn.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 [pylm]: ../assets/notebooks/ffnn.ipynb
 
-## Código para el transformer
+## Code for the Transformer {#code-transformer}
 
-El transformer (estudiado en esta [parte](attention.md) de la guía) se presenta en tres cuadernos diferentes: 
+The transformer (studied in this [section](attention.md) of the guide) is presented in three separate notebooks:
 
-- Uno que contiene la [:octicons-book-24:][pytr] [arquitectura base][pytr] y las implementaciones tanto de un modelo basado en codificador como de uno basado en descodificador. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/transformer.ipynb">
+- One that contains the [:octicons-book-24:][pytr] [base architecture][pytr] and implementations for both an encoder-based model and a decoder-based model. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/transformer.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
-- Otro que aplica el descodificador a un [:octicons-book-24:][pygpt] [modelo de lengua][pygpt] que predice el siguiente token de una secuencia. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/lmgpt.ipynb">
+- Another that applies the decoder to a [:octicons-book-24:][pygpt] [language model][pygpt] predicting the next token in a sequence. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/lmgpt.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
-- Y otro que se basa en el codificador para instrumentar un sistema de [:octicons-book-24:][pyner] [reconocimiento de entidades nombradas][pyner]. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/nerbert.ipynb">
+- And one based on the encoder to build a [:octicons-book-24:][pyner] [named entity recognition system][pyner]. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/nerbert.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 [pytr]: ../assets/notebooks/transformer.ipynb
 [pygpt]: ../assets/notebooks/lmgpt.ipynb
 [pyner]: ../assets/notebooks/nerbert.ipynb
 
-## Código para un transformer del proyecto minGPT
+## Code for a Transformer from the minGPT Project {#code-mingpt}
 
-Una buena implementación en PyTorch de un modelo de lengua basado en transformer es la de [minGPT][minGPT] de Andrej Karpathy. El código permite entrenar y usar modelos de lengua, además de permitir la carga de los pesos del modelo GPT-2. El código de nuestro transformer está basado en el de minGPT, por lo que el modelo en sí no te debería resultar difícil de entender.
+A good PyTorch implementation of a transformer-based language model is Andrej Karpathy's [minGPT][minGPT]. The code allows for training and using language models and loading the weights of the GPT-2 model. The transformer in our guide is based on minGPT, so the model itself should not be difficult to understand.
 
-El repositorio de esta guía tiene una [copia][copia] del código de minGPT con algunas pequeñas modificaciones. A continuación, se comenta qué ficheros son relevantes para nuestros intereses. Los ficheros de los que no se diga nada no tienes que mirarlos. Para usar el código y poder modificarlo, puedes instalarlo con:
+This guide's repository has a [copy][copia] of the minGPT code with minor modifications. Below is a summary of relevant files. You do not need to examine files that are not mentioned. To use and modify the code, you can install it with:
 
 ```bash
 pip install --editable .
@@ -76,23 +75,23 @@ pip install --editable .
 [vidkarpathy]: https://youtu.be/kCc8FmEb1nY
 [copia]: ../assets/code/minGPT-20230108/README.md
 
-Debido a cambios en elementos externos, el código actual no funciona tal cual. Para que funcione, tienes que cambiar la línea 200 del fichero `mingpt/model.py` de:
+Due to changes in external dependencies, the current code may not work as-is. To fix this, modify line 200 of the file `mingpt/model.py` from:
 
 ```python
 assert len(keys) == len(sd)
 ```
 
-a:
+to:
 
 ```python
 assert len(keys) == len([k for k in sd if not k.endswith(".attn.bias")])
 ```
 
-### Fichero mingpt/bpe.py
+### File mingpt/bpe.py
 
-Este fichero contiene la implementación necesaria para usar el modelo de subpalabras de tipo BPE usado por GPT-2. De su función se habla más adelante. El código principal del fichero muestra un ejemplo de tokenización paso a paso de una cadena de entrada que puedes ver haciendo `python bpe.py`. La primera vez que se llama a los métodos `encode` o `decode` se descargan los ficheros `encoder.json` y `vocab.bpe`, que contienen el vocabulario y las reglas de unión de subpalabras, respectivamente, usados por GPT-2. Estos ficheros se almacenan en el directorio `~/.cache/mingpt`.
+This file contains the necessary implementation to use the BPE subword model used by GPT-2. Its functionality is discussed later. The main code in the file demonstrates a step-by-step tokenization example of an input string, which you can see by running `python bpe.py`. The first time the `encode` or `decode` methods are called, the files `encoder.json` and `vocab.bpe`—containing the vocabulary and subword merge rules used by GPT-2, respectively—are downloaded. These files are stored in the `~/.cache/mingpt` directory.
 
-No es necesario que estudies el código de este fichero. Basta con que sepas que nos permite obtener la lista de índices de los tokens de un texto de entrada, así como obtener el texto asociado a una lista de índices de tokens obtenida a la salida del modelo:
+It is not necessary to study the code in this file. Simply know that it allows you to obtain a list of token indices from an input text and retrieve the text associated with a list of token indices output by the model:
 
 ```python
 bpe = BPETokenizer()
@@ -107,52 +106,58 @@ for token in tokens[0]:
 # A/ relaxing/ cup/ of/ café/ con/ le/che/ in/ Plaza/ Mayor/
 ```
 
-### Fichero mingpt/utils.py
+### File mingpt/utils.py
 
-No es necesario que estudies con detalle el código de este fichero. Simplemente, ábrelo y observa que define dos funciones auxiliares (`set_seed` y `setup_logging`) y una clase (`CfgNode`) para gestionar los parámetros de configuración del modelo.
+It is not necessary to study this file in detail. Simply open it to observe that it defines two utility functions (`set_seed` and `setup_logging`) and a class (`CfgNode`) for managing the model's configuration parameters.
 
-### Fichero mingpt/trainer.py
+### File mingpt/trainer.py
 
-Estudia este fichero, que contiene el código general que se encarga de entrenar un modelo. El código no tiene nada específico de la arquitectura transformer, por lo que podría aplicarse con pocas modificaciones a cualquier otro modelo.
+Study this file, as it contains the general code responsible for training a model. The code is not specific to the transformer architecture and could be applied with minor modifications to other models.
 
-### Fichero mingpt/model.py
+### File mingpt/model.py
 
-El fichero más importante para nuestros propósitos. Puedes saltarte, no obstante, el método `from_pretrained` de la clase `GPT` (incorpora los pesos de GPT-2 descargados de huggingface/transformers a nuestro modelo) y, especialmente, el método `configure_optimizers` (devuelve un optimizador de tipo Adam que trabaja de forma diferente según el tipo de parámetro sobre el que actúa), ya que contienen código muy específico para el sistema GPT-2. 
+The most important file for our purposes. However, you can skip the `from_pretrained` method of the `GPT` class (incorporates GPT-2 weights downloaded from Hugging Face Transformers) and especially the `configure_optimizers` method (returns an Adam optimizer with different behavior depending on the type of parameter it acts upon), as they contain code specific to the GPT-2 system.
 
-Estudia con detalle las clases `CausalSelfAttention` y `Block`, así como los métodos `forward`, `generate`, `__init__`, `_init_weights` y `get_default_config` de la clase `GPT`.
+Study the `CausalSelfAttention` and `Block` classes in detail, as well as the `forward`, `generate`, `__init__`, `_init_weights`, and `get_default_config` methods of the `GPT` class.
 
-### Fichero generate.ipynb
+### File generate.ipynb
 
-Estudia este código que usa el modelo para generar texto. Es un cuaderno de Python, pero lo puedes ejecutar desde la línea de órdenes conviertiéndolo antes a un programa de Python con:
-   
+Study this code, which uses the model to generate text. It is a Python notebook but can be executed from the command line by converting it to a Python script:
+
 ```bash
 pip install nbconvert
 jupyter nbconvert --to script generate.ipynb
 python generate.py
 ```
 
-Puedes cambiar la variable `model-type` para que use diferentes modelos preentrenados de GPT-2. De mayor a menor tamaño, los modelos disponibles son `gpt2-xl`, `gpt2-large`, `gpt2-medium` y `gpt2`. Si quieres poder ejecutar el código sobre CPU, cambia el valor de `device` a:
+You can change the `model-type` variable to use different pre-trained GPT-2 models. From largest to smallest, the available models are `gpt2-xl`, `gpt2-large`, `gpt2-medium`, and `gpt2`. If you want to run the code on a CPU, change the `device` value to:
 
 ```python
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 ```
 
-### Fichero projects/chargpt/charpgt.py
+### File projects/chargpt/charpgt.py
 
-Este código realiza el entrenamiento de un modelo de lengua a nivel de caracteres a partir del contenido del fichero `input.txt`. Puedes usar para el fichero de entrada textos como el [Quijote][quijote] o parte de la obra de [Shakespeare][shakespeare].
+This code trains a character-level language model using the content of the `input.txt` file. You can use texts such as [Don Quixote][quijote] or parts of [Shakespeare's works][shakespeare] as input files.
 
 [quijote]: https://www.gutenberg.org/cache/epub/2000/pg2000.txt
 [shakespeare]: https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 
-Puedes cambiar la variable `C.model.model_type` para que use modelos de diferentes tamaños (de mayor a menor, `gpt2-xl`, `gpt2-large`, `gpt2-medium`, `gpt2`, `gpt-mini`, `gpt-micro` y `gpt-nano`). Puedes ver el número de capas, el número de cabezales y el tamaño de los embeddings de cada modelo en el constructor de la clase `GPT` del fichero `mingpt/model.py`.
+You can change the `C.model.model_type` variable to use models of different sizes (from largest to smallest: `gpt2-xl`, `gpt2-large`, `gpt2-medium`, `gpt2`, `gpt-mini`, `gpt-micro`, and `gpt-nano`). The number of layers, attention heads, and embedding sizes for each model can be found in the `GPT` class constructor in the `mingpt/model.py` file.
 
-Lanza el programa y déjalo un tiempo entrenando con `python charpgt.py`. El modelo se va guardando en la carpeta `out`. 
+Run the program and let it train for a while with:
 
-## Implementaciones adicionales
+```bash
+python charpgt.py
+```
 
-El proyecto [MinT][MinT] incluye diferentes tutoriales con implementaciones desde cero de modelos tipo BERT, GPT, BART o T5. El código es ligeramente más extenso que el que hemos estudiado, pero puede servir para afianzar conocimientos en una fase avanzada. El proyecto [x-transformers] sigue un enfoque similar.
+The model is saved periodically in the `out` folder.
 
-Existe cierto *pique* entre los desarrolladores por conseguir una implementación del transformer lo más compacta posible. Algunas de ellas son [minGPT][mingpt], [nanoGPT][nanogpt] y [picoGPT][picogpt]. Un aspecto destacable de estas es que son capaces de cargar los pesos de GPT-2 y realizar inferencia con ellos. Andrej Karpathy, el desarrollador de minGPT y nanoGPT tiene un [vídeo][video] muy pedagógico en el que explica el funcionamiento de su implementación.
+## Additional Implementations
+
+The [MinT][MinT] project includes various tutorials with scratch implementations of models like BERT, GPT, BART, or T5. The code is slightly more extensive than what we have studied but can help consolidate knowledge at an advanced stage. The [x-transformers][x-transformers] project follows a similar approach.
+
+There is some competition among developers to achieve the most compact transformer implementation possible. Some notable ones are [minGPT][mingpt], [nanoGPT][nanogpt], and [picoGPT][picogpt]. A notable feature of these implementations is their ability to load GPT-2 weights and perform inference. Andrej Karpathy, the developer of minGPT and nanoGPT, has a highly educational [video][video] explaining his implementation.
 
 [MinT]: https://github.com/dpressel/mint
 [x-transformers]: https://github.com/lucidrains/x-transformers
@@ -160,4 +165,5 @@ Existe cierto *pique* entre los desarrolladores por conseguir una implementació
 [mingpt]: https://github.com/karpathy/minGPT
 [nanogpt]: https://github.com/karpathy/nanoGPT
 [picogpt]: https://github.com/jaymody/picoGPT
-[video]: https://youtu.be/kCc8FmEb1nYç
+[video]: https://youtu.be/kCc8FmEb1nY
+

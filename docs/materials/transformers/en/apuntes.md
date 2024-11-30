@@ -8,12 +8,12 @@
 Here are some notes on specific aspects of PyTorch that may be useful for understanding our model implementations. Each section of this page has been referenced from other pages, so you don't need to read it from start to finish.
 
 {%
-   include-markdown "../assets/mds/texts.md"
+   include-markdown "./assets/mds/texts.md"
    start="<!--nota-inicial-start-->"
    end="<!--nota-inicial-end-->"
 %}
 
-## Broadcasting in PyTorch
+## Broadcasting in PyTorch {#broadcasting}
 
 Notice that in equation (5.12) of the Jurafsky and Martin book, the vector $\mathbf{b}$ is obtained by repeatedly copying the scalar value $b$. When implementing equations like this in PyTorch, it is not necessary to explicitly perform this copying, thanks to the *broadcasting* mechanism that is automatically activated in certain cases when combining tensors of initially incompatible sizes:
 

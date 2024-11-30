@@ -6,13 +6,13 @@
 
 ## Introduction
 
-This guide provides a pathway to understanding how the most widely used neural network in natural language processing (*transformer*) actually works. It follows the theoretical explanations of selected chapters from a well-regarded book on the subject. It also proposes learning Python programming, as needed, along with the basics of a library called PyTorch, which enables neural networks to be programmed, trained, and run on GPUs. As a culmination, an existing implementation of the transformer programmed with PyTorch is studied. The ultimate goal is to modify this code to experiment with a simple problem involving human language. The idea is to gain solid knowledge for tackling more complex tasks later, rather than creating something flashy to showcase immediately.
+This guide provides a pathway to understanding how the most widely used neural network in natural language processing (*transformer*) actually works. It follows the theoretical explanations of selected chapters from a well-regarded book on the subject. It also proposes learning Python programming along with the basics of a library called PyTorch, which enables neural networks to be programmed, trained, and run on GPUs. As a culmination, an existing implementation of the transformer programmed with PyTorch is studied. The ultimate goal is to modify this code to experiment with a simple problem involving human language. The idea is to gain solid knowledge for tackling more complex tasks later, rather than creating something flashy to showcase immediately.
 
 !!! note "Note"
 
     This page outlines a self-learning roadmap for understanding transformers. It links to documents hosted on other pages of this website. Thus, the collection can be considered a complete guide to assist you on your journey. However, you may have come to these pages from another source (e.g., a specific course) that suggests a different way of using the various contents. In that case, follow the recommendations and plan provided by that source instead of those proposed here.
 
-Some content can be studied in parallel. While learning about neural models, you can start exploring [Python](pytorch.md#python), NumPy, and later [PyTorch](pytorch.md#pytorch) after the first two. You can also review the [elements of algebra, calculus, and probability](#prerequisite-concepts) that you might have forgotten. Studying the transformer's code should only be undertaken after thoroughly assimilating all these prior concepts.
+Some content can be studied in parallel. While learning about neural models, you can start exploring [Python](pytorch.md#python), NumPy, and later [PyTorch](pytorch.md#pytorch) after the first two. You can also review the [elements of algebra, calculus, and probability](#prerequisite) that you might have forgotten. Studying the transformer's code should only be undertaken after thoroughly assimilating all these prior concepts.
 
 ## Study Manual
 
@@ -48,26 +48,26 @@ The following table shows a sequence of the guide's content along with indicativ
 | Step | Content | Estimated Time :octicons-stopwatch-24: | Notes |
 | -------- | ------- | --------------- | ------------- |
 | 1 | [Introduction](intro.md) | 10 minutes | This page! |
-| 2 | [Mathematical Concepts](intro.md#conceptos-matematicos-previos) | 5 hours | Refer to the links in this section only if you need to refresh your knowledge of mathematical concepts. |
-| 3 | [Regressors](regresor.md) | 4 hours | This document introduces a machine learning model that isn't usually categorized as a neural network but helps introduce most of the key ideas relevant for discussing neural networks. |
-| 4 | [Learning PyTorch](pytorch.md) | 5 hours | Going beyond equations and learning to implement the different models we'll study is fundamental to fully understanding them. This page links to resources for learning (or reviewing) Python and PyTorch. Invest time here before advancing to theoretical content to better understand the implementations. |
-| 5 | [Regressor Implementation](implementacion.md#codigo-para-un-regresor-logistico-y-uno-multinomial) | 4 hours | Examine PyTorch code for implementing logistic and softmax regressors. Use debugging tools as explained [here][debug] to step through the code: analyze variable values and types, tensor shapes, and ensure you understand what each dimension represents. |
+| 2 | [Mathematical Concepts](intro.md#prerequisite) | 5 hours | Refer to the links in this section only if you need to refresh your knowledge of mathematical concepts. |
+| 3 | [Regressors](regresor.md) | 4 hours | This document introduces a machine learning model that is not usually categorized as a neural network but helps introduce most of the key ideas relevant for discussing neural networks. |
+| 4 | [Learning PyTorch](pytorch.md) | 5 hours | Going beyond equations and learning to implement the different models we will study is fundamental to fully understanding them. This page links to resources for learning (or reviewing) Python and PyTorch. Invest time here before advancing to theoretical content to better understand the implementations. |
+| 5 | [Regressor Implementation](implementacion.md#code-regressor) | 4 hours | Examine PyTorch code for implementing logistic and softmax regressors. Use debugging tools as explained [here][debug] to step through the code: analyze variable values and types, tensor shapes, and ensure you understand what each dimension represents. |
 | 6 | [Non-contextual Embeddings](embeddings.md) | 4 hours | Obtaining non-contextual embeddings is an immediate application of logistic regressors, showcasing the potential of self-supervised learning. |
-| 7 | [Skip-gram Implementation](implementacion.md#codigo-para-skip-grams) | 2 hours | Analyze PyTorch code for skip-gram implementation. Use debugging tools as explained [here][debug] to step through the code. By this point, it's advisable to start familiarizing yourself with PyTorch usage before proceeding further. |
+| 7 | [Skip-gram Implementation](implementacion.md#code-skipgrams) | 2 hours | Analyze PyTorch code for skip-gram implementation. Use debugging tools as explained [here][debug] to step through the code. By this point, it is advisable to start familiarizing yourself with PyTorch before proceeding further. |
 | 8 | [Feedforward Networks](ffw.md) | 3 hours | This section introduces the neural network concept and creates a very basic language model with feedforward networks. |
-| 9 | [Feedforward Network Implementation](implementacion.md#codigo-para-un-modelo-de-lengua-con-redes-feedforward) | 1 hour | Explore the code for implementing a simple feedforward-based language model. |
+| 9 | [Feedforward Network Implementation](implementacion.md#code-ffw) | 1 hour | Explore the code for implementing a simple feedforward-based language model. |
 | 10 | [Transformers and Attention Models](attention.md) | 6 hours | All previous concepts prepare you to delve into the transformer architecture. This page focuses on the transformer’s *decoder* part, used in language models. |
-| 11 | [Transformer Code Implementation](implementacion.md#codigo-para-el-transformer) | 6 hours | Analyze the general transformer implementation and a decoder-based language model. This code is more complex than others. |
+| 11 | [Transformer Code Implementation](implementacion.md#code-transformer) | 6 hours | Analyze the general transformer implementation and a decoder-based language model. This code is more complex than those you studied before. |
 | 12 | [Additional Aspects of Transformers](attention2.md) | 4 hours | This page introduces the transformer’s *encoder* part and its potential uses, both standalone and paired with a decoder. |
-| 13 | [Named Entity Recognizer Implementation](implementacion.md#codigo-para-el-transformer) | 1 hour | Analyze the code for implementing a named entity recognizer based on the encoder. |
-| 14 | [GPT-2 Model Implementation](implementacion.md#codigo-para-un-transformer-del-proyecto-mingpt) | 4 hours | Optionally analyze the code for implementing a language model capable of loading and using GPT-2. |
+| 13 | [Named Entity Recognizer Implementation](implementacion.md#code-transformer) | 1 hour | Analyze the code for implementing a named entity recognizer based on an encoder. |
+| 14 | [GPT-2 Model Implementation](implementacion.md#code-mingpt) | 4 hours | Optionally analyze the code for implementing a language model capable of loading and using GPT-2. |
 | 15 | [Speech](speech.md) | 4 hours | This content is optional as it shifts to the domain of speech processing. |
 
-[debug]: pytorch.md#depuracion
+[debug]: pytorch.md#debug
 
 In each section, the :octicons-book-24: icon highlights essential links, whether to book chapters for reading or code for exploration.
 
-## Prerequisite Mathematical Concepts
+## Prerequisite Mathematical Concepts {#prerequisite}
 
 Basic algebra, calculus, and probability concepts needed for natural language processing can be found in the "Linear Algebra," "Calculus" (including "Automatic differentiation"), and "Probability and Statistics" sections of [:octicons-book-24:][cap2] [Chapter 2][cap2] in the book "Dive into Deep Learning." Other topics like information theory or the maximum likelihood principle are covered in the "Information Theory" and "Maximum Likelihood" sections of an [:octicons-book-24:][appendix] [appendix][appendix] in the same book.
 
@@ -78,14 +78,12 @@ Basic algebra, calculus, and probability concepts needed for natural language pr
 
 Expand your knowledge with the following books, most of which are available online:
 
-- "[Speech and Language Processing][jurafskybib]" by Dan Jurafsky and James H. Martin. Still unpublished but with an advanced draft online. Details key NLP concepts and models without delving into implementation details. This guide is based on this book.
+- "[Speech and Language Processing][jurafskybib]" by Dan Jurafsky and James H. Martin. Third edition unpublished as of 2024 but with an advanced draft online. Details key NLP concepts and models without delving into implementation details. This guide is based on this book.
 - "[Dive into Deep Learning][d2l]" by Aston Zhang, Zachary C. Lipton, Mu Li, and Alexander J. Smola. Explores deep learning models in detail, with a [paper version][cambridge] published in 2023.
 - ["Deep Learning: Foundations and Concepts"][bishop] by Chris Bishop and Hugh Bishop. Also available in print since 2024.
 - "[Understanding Deep Learning][understanding]" (2023) by Simon J.D. Prince. Filled with illustrations and figures to clarify concepts.
 - The series "[Probabilistic Machine Learning: An Introduction][pml1]" (2022) and "[Probabilistic Machine Learning: Advanced Topics][pml2]" (2023) by Kevin Murphy covers various machine learning elements in depth.
-- "[Deep Learning for Natural Language Processing: A Gentle Introduction][gentle]" by Mihai Surdeanu and Marco A. Valenzuela-Escárcega. Still under development. Contains code in some
-
- chapters.
+- "[Deep Learning for Natural Language Processing: A Gentle Introduction][gentle]" by Mihai Surdeanu and Marco A. Valenzuela-Escárcega. Still under development. Contains code in some chapters.
 - "[Deep Learning with PyTorch Step-by-Step: A Beginner's Guide][pytorchstep]" (2022) by Daniel Voigt Godoy. Paid, with digital and print versions (in three volumes). A Spanish version of the first chapters exists. Written in a clear, example-rich style.
 - "[The Mathematical Engineering of Deep Learning][mathdl]" (2024) by Benoit Liquet, Sarat Moka, and Yoni Nazarathy.
 - "[The Little Book of Deep Learning][little]" (2023) by François Fleuret.
@@ -111,7 +109,7 @@ The following list includes links to video courses by renowned researchers or un
 - [Stanford CS229][cs229] ― Machine Learning; [course website][cs229web].
 - [Stanford CS230][cs230] ― Deep Learning; [course website][cs230web].
 - [MIT 6.S191][mit191] ― Introduction to Deep Learning; [course website][mit191web].
-- Neural Networks: [Zero to Hero][zero2hero]" by Andrew Karpathy.
+- "Neural Networks: [Zero to Hero][zero2hero]" by Andrew Karpathy.
 - [Machine Learning][mlspec] Specialization.
 
 [mlspec]: https://www.youtube.com/playlist?list=PLkDaE6sCZn6FNC6YRfRQc_FbeQrF8BwGI

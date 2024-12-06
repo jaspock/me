@@ -90,21 +90,9 @@ markdown_extensions:
   - toc:
       permalink: "#" # create permalinks for each header
 
-
 plugins:
   - search
   - include-markdown
-  - enumerate-headings:
-      toc_depth: 2
-      strict: true
-      increment_across_pages: true
-      include:
-        - materials/transformers/*
-      exclude:
-        - another_page.md
-      restart_increment_after:
-        - transformers/intro.md
-        - transformers/en/intro.md
 
 extra_javascript:
   - assets/javascripts/mathjax.js

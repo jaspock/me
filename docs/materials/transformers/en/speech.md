@@ -6,14 +6,10 @@
 </div>
 
 
-!!! danger "Caution: Page Under Review"
-    This page has not been fully reviewed and may contain errors or inaccuracies. Use the information here at your own discretion and risk.
-
-
-Speech recognition and generation systems have a long history, but in recent years, deep learning-based systems have significantly outperformed traditional systems. Classic systems were typically composed of multiple stages, each designed separately. In contrast, neural network-based systems are often *end-to-end*, where the input is the speech signal, and the output is text, for example.
+Speech recognition and synthesis systems have a long history, but in recent years, deep learning-based systems have significantly outperformed traditional systems. Classic systems were typically composed of multiple stages, each designed separately. In contrast, neural network-based systems are often *end-to-end*, where the input is the speech signal, and the output is text, for example.
 
 {%
-   include-markdown "../assets/mds/texts.md"
+   include-markdown "./assets/mds/texts.md"
    start="<!--nota-inicial-start-->"
    end="<!--nota-inicial-end-->"
 %}
@@ -29,7 +25,7 @@ The book introduces very basic *end-to-end* architectures for speech recognition
 ## Book Annotations
 
 {%
-   include-markdown "../assets/mds/texts.md"
+   include-markdown "./assets/mds/texts.md"
    start="<!--recomendable-start-->"
    end="<!--recomendable-end-->"
 %}
@@ -58,7 +54,7 @@ This section introduces an advanced form of CTC known as the RNN-Transducer (RNN
 Whisper
 {: .section}
 
-Whisper was one of the best-performing systems in 2023, despite not deviating significantly from the basic architectures presented in the book. The system is based on a transformer architecture with an encoder and decoder, similar to the LAS system shown in Figure 16.6 of the book. The speech input is processed by the encoder, which generates a deep embedding for each speech window. The decoder then generates textual output, character by character, from these embeddings. Instead of RNN-T or CTC, Whisper uses cross-entropy as the error function, which is not specifically designed for this task. The system's strong performance is attributed to a large training dataset and, to a lesser extent, training the same model for multiple tasks beyond transcription, such as detecting silence or noise. Whisper also supports multiple languages, using a special token to specify the output language. It was even trained on tasks like transcribing speech in one language to text in another.
+Whisper was one of the best-performing systems in recent years, despite not deviating significantly from the basic architectures presented in the book. The system is based on a transformer architecture with an encoder and decoder, similar to the LAS system shown in Figure 16.6 of the book. The speech input is processed by the encoder, which generates a deep embedding for each speech window. The decoder then generates textual output, character by character, from these embeddings. Instead of RNN-T or CTC, Whisper uses cross-entropy as the error function, which is not specifically designed for this task. The system's strong performance is attributed to a large training dataset and, to a lesser extent, training the same model for multiple tasks beyond transcription, such as detecting silence or noise. Whisper also supports multiple languages, using a special token to specify the output language. It was even trained on tasks like transcribing speech in one language to text in another.
 
 The following figure, from the paper "[Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356)", shows Whisper's architecture. Note the language and task tags in the decoder's input. The `SOT` token is the special token that marks the start of transcription.
 

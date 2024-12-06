@@ -136,15 +136,15 @@ This content is optional. You can skip it unless explicitly instructed to study 
 [dontloo]: https://stats.stackexchange.com/a/424127/240809
 
 $$
-\boldsymbol{c} = \sum_{j} \alpha_j \boldsymbol{h}_j   \qquad \mathrm{with} \,\, \sum_j \alpha_j = 1
+\mathbf{c} = \sum_{j} \alpha_j \mathbf{h}_j   \qquad \mathrm{with} \,\, \sum_j \alpha_j = 1
 $$
 
-If $\alpha$ were a one-hot vector, attention would reduce to retrieving a specific element among the different $\boldsymbol{h}_j$ based on its index. However, $\alpha$ is unlikely to be a one-hot vector, so it represents a weighted retrieval. In this case, $\boldsymbol{c}$ can be considered the resulting value.
+If $\alpha$ were a one-hot vector, attention would reduce to retrieving a specific element among the different $\mathbf{h}_j$ based on its index. However, $\alpha$ is unlikely to be a one-hot vector, so it represents a weighted retrieval. In this case, $\mathbf{c}$ can be considered the resulting value.
 
-There is a significant difference in how this weight vector (summing to 1) is obtained in *seq2seq* architectures compared to transformers. In *seq2seq*, a feedforward network, represented by the function $a$, determines the *compatibility* between the $i$-th token's representation in the decoder, $\boldsymbol{s}_i$, and the $j$-th token's representation in the encoder, $\boldsymbol{h}_j$:
+There is a significant difference in how this weight vector (summing to 1) is obtained in *seq2seq* architectures compared to transformers. In *seq2seq*, a feedforward network, represented by the function $a$, determines the *compatibility* between the $i$-th token's representation in the decoder, $\mathbf{s}_i$, and the $j$-th token's representation in the encoder, $\mathbf{h}_j$:
 
 $$
-e_{ij} = a(\boldsymbol{s}_i,\boldsymbol{h}_j)
+e_{ij} = a(\mathbf{s}_i,\mathbf{h}_j)
 $$
 
 From this:
@@ -155,13 +155,13 @@ $$
 
 Suppose the input sequence length is $m$ and the output sequence generated so far is $n$. A drawback of this approach is that at every decoder step, the feedforward network $a$ must be executed $mn$ times to compute all $e_{ij}$ values.
 
-A more efficient strategy involves projecting $\boldsymbol{s}_i$ and $\boldsymbol{h}_j$ into a common space (e.g., via linear transformations $f$ and $g$) and using a similarity measure (such as the dot product) to compute $e_{ij}$:
+A more efficient strategy involves projecting $\mathbf{s}_i$ and $\mathbf{h}_j$ into a common space (e.g., via linear transformations $f$ and $g$) and using a similarity measure (such as the dot product) to compute $e_{ij}$:
 
 $$
-e_{ij} = f(\boldsymbol{s}_i) \cdot g(\boldsymbol{h}_j)^T
+e_{ij} = f(\mathbf{s}_i) \cdot g(\mathbf{h}_j)^T
 $$
 
-Here, $f(\boldsymbol{s}_i)$ is the decoder's query, and $g(\boldsymbol{h}_j)$ is the encoder's key. This reduces the complexity to $m+n$, requiring only $n$ calls to $f$ and $m$ calls to $g$. Additionally, $e_{ij}$ can now be efficiently computed via matrix multiplication.
+Here, $f(\mathbf{s}_i)$ is the decoder's query, and $g(\mathbf{h}_j)$ is the encoder's key. This reduces the complexity to $m+n$, requiring only $n$ calls to $f$ and $m$ calls to $g$. Additionally, $e_{ij}$ can now be efficiently computed via matrix multiplication.
 
 The transformer's attention mechanism establishes the conditions for query and key projections and similarity calculations. When attention operates within vectors of the same origin (e.g., within the encoder), it is called *self-attention*. The transformer combines separate self-attention in the encoder and decoder with another *heterogeneous* attention mechanism, where $Q$ comes from the decoder, and $K$ and $V$ come from the encoder.
 

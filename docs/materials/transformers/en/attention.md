@@ -6,46 +6,42 @@
 </div>
 
 
-!!! danger "Caution: Page Under Review"
-    This page has not been fully reviewed and may contain errors or inaccuracies. Use the information here at your own discretion and risk.
-
-
 In 2017, recurrent neural networks based on LSTM units were the standard architecture for neural sequence processing, in general, and natural language processing, in particular. Some researchers were also achieving good results in this area with convolutional neural networks, which were traditionally used for image processing. On the other hand, attention mechanisms introduced a few years earlier in recurrent networks had enhanced their ability to solve certain tasks and expanded the range of possibilities for these models. Additionally, the encoder-decoder model became the cornerstone for systems that transformed one sequence into another (seq2seq systems, such as machine translation or summarization systems). However, in mid-2017, a paper titled "[Attention Is All You Need](https://arxiv.org/abs/1706.03762)" proposed removing recurrence from the encoder-decoder model and replacing it with what is known as self-attention. Although the paper focused on machine translation, it quickly became evident that this architecture, dubbed the *transformer*, was highly effective in many other fields, relegating recurrent architectures to a secondary role. Furthermore, the transformer became one of the foundational elements of pre-trained models, which we will study later and which began to emerge in the subsequent months or years. Nonetheless, there are still researchers working with recurrent networks, so it cannot be ruled out that they may regain prominence in the future.
 
 {%
-   include-markdown "../assets/mds/texts.md"
+   include-markdown "./assets/mds/texts.md"
    start="<!--nota-inicial-start-->"
    end="<!--nota-inicial-end-->"
 %}
 
 ## Transformer Fundamentals
 
-We will study the basic elements of the transformer architecture following Chapter [:octicons-book-24:][basictransformer] "[Deep Learning Architectures for Sequence Processing][basictransformer]". Here, you will understand one of the most important equations in recent years in machine learning:
+We will study the basic elements of the transformer architecture following chapter [:octicons-book-24:][basictransformer] "[Deep Learning Architectures for Sequence Processing][basictransformer]". Here, you will understand one of the most important equations in recent years in machine learning:
 
 $$
 \text{Attention}(Q,K,V) = \text{softmax} \left( \frac{Q K^T}{\sqrt{d_k}} \right) \, V
 $$
 
-Skip sections 9.2 to 9.6, which focus on an alternative model for sequence processing, recurrent neural networks, which have been used less in natural language processing after the advent of the transformer.
+You may safely skip sections 9.2 to 9.6, which focus on an alternative model for sequence processing, recurrent neural networks, which have been used less in natural language processing after the advent of the transformer.
 
 [basictransformer]: https://web.archive.org/web/20221218211150/https://web.stanford.edu/~jurafsky/slp3/9.pdf
 
 ## Book Annotations
 
 {%
-   include-markdown "../assets/mds/texts.md"
+   include-markdown "./assets/mds/texts.md"
    start="<!--recomendable-start-->"
    end="<!--recomendable-end-->"
 %}
 
-Essentially, the transformer is an architecture that enables working with sequences of different natures. When we use it to analyze or generate sentences in natural language, the sequences will be sentences formed by word tokens. As we already know, to have "word calculators," these tokens must be represented numerically. Deep representations in the form of embedding vectors that capture certain underlying properties of words are particularly useful. In fact, the transformer is nothing more than a machine for calculating contextual word embeddings, and this contextuality differentiates them from algorithms like skip-grams, which provided a unique representation for each word. Transformers begin with a non-contextual representation of the words at their input and refine it layer by layer. From the output of the first layer, the representations become contextual, so the representation of *station* in "Summer is my favorite station" is different from *station* in "The train station is around the corner," and even different from "Winter is my favorite station." As we move through the layers, the representations not only become more contextual but also adapt to the specific task to be solved with the model's output in its final layer. The final layer is usually a classifier, often implemented through a dense layer (instrumented, as we’ve seen, via a matrix) that generates a logits vector, which is then transformed into probabilities using a softmax activation function. Some possible operations with the transformer are:
+Essentially, the transformer is an architecture that enables working with sequences of different natures. When we use it to analyze or generate sentences in natural language, the sequences will be sentences formed by word tokens. As we already know, to have "word calculators," these tokens must be represented numerically. Deep representations in the form of embedding vectors that capture certain underlying properties of words are particularly useful. In fact, the transformer is nothing more than a machine for calculating contextual word embeddings, and this contextuality differentiates them from algorithms like skip-grams, which provided a unique representation for each word. Transformers begin with a non-contextual representation of the words at their input and refine it layer by layer. From the output of the first layer, the representations become contextual, so the representation of *season* in "Summer is my favorite season" is different from *season* in "The new season of the show is just around the corner," and even different from "Winter is my favorite season." As we move through the layers, the representations not only become more contextual but also adapt to the specific task to be solved with the model's output in its final layer. The final layer is usually a classifier, often implemented through a dense layer (instrumented, as we have already seen, via a matrix) that generates a logits vector, which is then transformed into probabilities using a softmax activation function. Some possible operations with the transformer are:
 
 - Generate as many probability vectors at the output as there are tokens in the input, where each corresponds to the probability that the respective input token belongs to a certain class. This way, for example, the model output can determine if each token is a proper noun, a task useful for preventing machine translation systems from translating names when inappropriate.
-- Combine all the output embeddings into a single vector (e.g., by calculating their mean) and use the resulting embedding as a representation of the entire sentence. Passing this embedding through a dense layer and a softmax activation function, we can obtain the probability that the sentence belongs to a certain class. For example, this can determine whether a sentence expresses a positive, negative, or neutral sentiment about a topic.
-- An alternative approach for sentence-level classification tasks is to add a *special* token (traditionally represented as `CLS`) to the beginning or end of the sentence and use it as an additional input to the transformer. The transformer's output for this token will be the representation of the entire sentence, which we provide to the classifier.
-- Train the model so that the probability vector output for a specific token indicates the likelihood of each vocabulary word being the next token in the sentence. For example, after training, the model output can generate text from a given prefix, resulting in a generative language model capable of engaging in dialogue, answering questions, translating text, or summarizing documents.
+- Combine all the output embeddings into a single vector (e.g., by calculating their average) and use the resulting embedding as a representation of the entire sentence. Passing this embedding through a dense layer and a softmax activation function, we can obtain the probability that the sentence belongs to a certain class. For example, this can determine whether a sentence expresses a positive, negative, or neutral sentiment about a topic.
+- An alternative approach for sentence-level classification tasks is to add a *special* token (traditionally represented as `CLS`) to the beginning or end of the sentence and use it as an additional input to the transformer. The transformer's output for this token will be the representation of the entire sentence, which could be then provided to the classifier.
+- Train the model so that the probability vector output for a specific token indicates the likelihood of each vocabulary word being the next token in the sentence. For example, after training, the model output can be used to generate text from a given prefix, resulting in a generative language model capable of engaging in dialogue, answering questions, translating text, or summarizing documents.
 
-In its most general form, the transformer consists of two main modules: an encoder and a decoder. The encoder generates deep representations of the input tokens, which the decoder uses to generate the output sequence. When classifying input text or labeling its tokens, using the encoder alone may suffice. For tasks like transforming one text into another (e.g., machine translation or summarization), both modules have traditionally been used. For generative language models, the decoder is used, generating the output sequence token by token in an *autoregressive* manner. However, there has been a convergence towards models integrating both the encoder and decoder into a single module. Many people refer to all these options as "transformers," while others reserve the term "transformer" for the model integrating both modules and use terms like "encoder-like transformer" or "decoder-like transformer" for models that only use one module.
+In its most general form, the transformer consists of two main modules: an encoder and a decoder. The encoder generates deep representations of the input tokens, which the decoder uses to generate the output sequence. When classifying input text or annotating its tokens, using the encoder alone may suffice. For tasks like transforming one text into another (e.g., machine translation or summarization), both modules have traditionally been used. For generative language models, a decoder-only model is used, generating the output sequence token by token in an *autoregressive* manner. However, there has been a convergence towards models integrating both the encoder and decoder into a single module. Many people refer to all these options as "transformers," while others reserve the term "transformer" for the model integrating both modules and use terms like "encoder-like transformer" or "decoder-like transformer" for models that only use one module.
 
 One of the significant advantages of transformers compared to other models, such as feedforward neural networks, is their ability to process sequences of variable length. They do not learn different parameters for processing the first word, the second, the third, and so on. Instead, transformers learn a single transformation in each layer that applies to all input tokens. Since each token is represented by a different embedding at the model's input, the transformation yields different results (query, key, and value) for each token.
 
@@ -62,23 +58,23 @@ Although the previous way of combining embeddings can be useful in certain conte
 - The key indicates *how* each token defines itself.
 - The value specifies *what* each token offers to other tokens.
 
-A common analogy to explain this form of attention is a dating app, where people indicate what they are looking for (*query*) and how they define themselves (*key*). Once the affinity between each individual and the others is determined (via the dot product), the genes (*values*) of each person are combined to create a new embedding. This process is repeated for each token, resulting in $n^2$ dot products. Here, unlike dating apps, a token can relate to itself to a certain degree, and the new embeddings usually result from combining the genes of more than two individuals. Another analogy that helps explain attention is based on accessing a programming language dictionary, which you can consult [below][dictionary].
+A common analogy to explain this form of attention is a dating app, where people indicate what they are looking for (*query*) and how they define themselves (*key*). Once the affinity between each individual and the others is determined (via the dot product), the genes (*values*) of each person are combined to create a new person. This process is repeated for each token, resulting in $n^2$ dot products. Here, unlike dating apps, a token can relate to itself to a certain degree, and the new embeddings usually result from combining the genes of more than two individuals. Another analogy that helps explain attention is based on accessing a programming language dictionary, which you can consult [below][dictionary].
 
-[dictionary]: #an-analogy-for-the-self-attention-mechanism
+[dictionary]: #analogy-self-attention
 
-Interestingly, the transformation of a vector $\mathbf{x}_i$ into three $d$-dimensional vectors is performed using three linear transformations $\mathbf{W}^Q$, $\mathbf{W}^K$, and $\mathbf{W}^V$, applied to all input tokens. Thus, the number of parameters to learn is much smaller than if we applied a separate linear transformation to each input token. Additionally, since these linear transformations are independent of each other, they can be parallelized, thereby accelerating computation. Furthermore, as shown in the book, the different matrix products of the embeddings representing all the sentence's words can also be computed in parallel if the input embeddings are arranged *row-wise* in a matrix $X$. In fact, as we’ll see in the implementation, we can group the embeddings of all sentences in a mini-batch into a single tensor (equivalent to a vector of $X$ matrices) to further parallelize the calculations. GPUs are optimized to efficiently perform these types of matrix operations.
+Interestingly, the transformation of a vector $\mathbf{x}_i$ into three $d$-dimensional vectors is performed using three linear transformations $\mathbf{W}^Q$, $\mathbf{W}^K$, and $\mathbf{W}^V$, applied to all input tokens. Thus, the number of parameters to learn is much smaller than if we applied a separate linear transformation to each input token. Additionally, since these linear transformations are independent of each other, they can be parallelized, thereby accelerating computation. Furthermore, as shown in the book, the different matrix products of the embeddings representing all the sentence's words can also be computed in parallel if the input embeddings are arranged *row-wise* in a matrix $X$. In fact, as we will see in the implementation, we can group the embeddings of all sentences in a mini-batch into a single tensor (equivalent to a vector of $X$ matrices) to further parallelize the calculations. GPUs are optimized to efficiently perform these types of matrix operations.
 
 A noteworthy detail is the division by $\sqrt{d_k}$ in the denominator of the attention formula. This division avoids excessively high dot product values from dominating the probability distribution generated by the softmax. A [special section][division] below examines this issue in more detail.
 
 [division]: #scaled-attention
 
-A key focus of this section is the autoregressive approach of the transformer, i.e., its use as a generative model. During the inference stage (also called *usage*), the model generates the probability vector for the next token based on the current token. In this case, we can choose the token with the highest probability and feed it back into the input. It’s as if we were asking the system to respond to this request: given the prefix you’ve seen so far, if I add this new token, give me the probabilities for the next tokens. Choosing the token with the highest probability is just one way to use the probability vector, but there are many others. Later, we’ll explore the technique known as *beam search*, but a simpler option is to sample the next token based on the probabilities (the more likely a token, the higher its probability of being selected), so the model may generate a different sequence in each run. This explains why generative models sometimes produce different sequences for the same prefix (*prompt*).
+A key focus of this section is the autoregressive approach of the transformer, i.e., its use as a generative model. During the inference stage (that is, when the model is used after training), the model generates the probability vector for the next token based on the current token. In this case, we can choose the token with the highest probability and feed it back into the input. It is as if we were asking the system to respond to this request: given the prefix you have seen so far, if I add this new token, give me the probabilities for the next token. Choosing the token with the highest probability is just one way to use the probability vector, but there are many others. Later, we will explore the technique known as *beam search*, but a simpler option is to sample the next token based on the probabilities (the more likely a token, the higher its probability of being selected), so the model may generate a different sequence in each run. This explains why generative models sometimes produce different sequences for the same prefix (*prompt*).
 
 The autoregressive use of the transformer implies that during training, the model must operate in a manner similar to its intended usage during inference. To emulate this behavior, the attention mechanism cannot consider information from subsequent tokens. Otherwise, the learning algorithm might easily focus on the next token when generating the probability vector, which would have severe negative effects during inference when this information is unavailable. This explains the mask shown in Figure 9.17.
 
-Later, we’ll see scenarios where it’s beneficial for all tokens in a sentence to mix with each other, not just with preceding ones. For instance, when classifying the topic of input texts, all tokens are available from the start, so it’s unnecessary to disregard information from subsequent tokens when preparing the embedding cocktail. The encoder-based transformer version, which we’ll discuss later, enables this. However, this section focuses on the transformer as a decoder, used to autoregressively generate output sequences.
+Later, we will see scenarios where it is beneficial for all tokens in a sentence to mix with each other, not just with preceding ones. For instance, when classifying the topic of input texts, all tokens are available from the start, so it’s unnecessary to disregard information from subsequent tokens when preparing the embedding cocktail. The encoder-based transformer version, which we will discuss later, enables this. However, this section focuses on the transformer as a decoder, used to autoregressively generate output sequences.
 
-### Subsection 9.7.1
+Subsection 9.7.1
 {: .section}
 
 After examining the fundamentals of the self-attention mechanism, this subsection analyzes other complementary elements present in each transformer layer: the feedforward network, residual connections, and layer normalization.
@@ -91,7 +87,7 @@ Layer normalization also helps prevent excessively large or small intermediate o
 
 [normalization]: #layer-normalization
 
-### Subsection 9.7.2
+Subsection 9.7.2
 {: .section}
 
 Since the tokens in a text are related in different ways, the transformer replicates the attention mechanism in each layer by applying multiple attention heads. For example, some heads may focus on nearby tokens, while others may concentrate on tokens with specific syntactic or semantic relationships, regardless of their distance. Conceptually, multiple heads add little novelty compared to the attention mechanism already described. In any case, since subsequent elements expect to receive a vector of a given size, the outputs of the different heads are concatenated to form a single output vector, which is then passed through a linear projection to both standardize the representations from each head and obtain a vector of the desired size, if necessary.
@@ -101,7 +97,7 @@ Note that now each head has its own parameter matrices $\mathbf{W}^Q_i$, $\mathb
 Subsection 9.7.3
 {: .section}
 
-Until now, we’ve presented as a positive feature the fact that the matrices used in each layer are the same for all input tokens (knowing, of course, that if there’s more than one head, these matrices are different). This reduces the number of parameters compared to, for instance, a feedforward network, which would require different parameters for each input token, likely necessitating a small token window at each step. However, this poses a problem since (ensure you understand why) the same embeddings would be computed for sentences like "Dog bites man" and "Man bites dog." Nevertheless, it’s easy to deduce that the role and semantic properties of each word differ significantly in both sentences. Therefore, before the first layer, a *positional embedding* vector is added to each token’s non-contextual embedding. Ideally, these positional embeddings meet several criteria:
+Until now, we have presented as a positive feature the fact that the matrices used in each layer are the same for all input tokens (knowing, of course, that if there is more than one head, these matrices are different). This reduces the number of parameters compared to, for instance, a feedforward network, which would require different parameters for each input token, likely necessitating a small token window at each step. However, this poses a problem since (ensure you understand why) the same embeddings would be computed for sentences like "Dog bites man" and "Man bites dog." Nevertheless, it is easy to deduce that the role and semantic properties of each word differ significantly in both sentences. Therefore, before the first layer, a *positional embedding* vector is added to each token’s non-contextual embedding. Ideally, these positional embeddings meet several criteria:
 
 - They do not repeat in different positions.
 - They are more similar for tokens in closer positions.
@@ -118,16 +114,16 @@ Section 9.9
 
 Notice that the previous language model example is quite limited because the model is asked to generate text without providing any *seed*. If, as mentioned, we sample possible words from the probability distribution, we can generate more than one sequence. If we simply select the token with the highest probability, the generated sequence would be unique.
 
-This section demonstrates how a prefix (*prompt*) can be provided to the model, asking it to continue the sequence. This is the underlying idea of recent language models (GPT, PaLM, LLaMA, etc.) that have shown the ability to generate text, sustain conversations, and present arguments of surprising quality. These models have been trained to generate the next token in a sequence but include additional training phases that generally consist of:
+This section demonstrates how a prefix (*prompt*) can be provided to the model, asking it to continue the sequence. This is the underlying idea of recent language models (GPT, Gemini, Llama, etc.) that have shown the ability to generate text, hold conversations, and present arguments of surprising quality. These models have been trained to generate the next token in a sequence but include additional training phases that generally consist of:
 
 - *Fine-tuning* the weights with text datasets formed by questions and answers, enabling the system to handle dialogues effectively;
-- Fine-tuning based on human feedback about the quality of the generated responses, where evaluators rank different responses to the same question by quality (truthful and polite answers receive the highest scores). Since there is no differentiable loss function in this case, reinforcement learning techniques are used to adjust the weights according to alternative policies.
+- Fine-tuning based on human feedback about the quality of the generated responses, where evaluators rank different responses to the same question by quality (truthful and polite answers receive the highest scores). Since there is no differentiable loss function in this case, reinforcement learning techniques are used to adjust the weights according to alternative policies. An alternative approach is to have pairs of preferred/dispreferred responses and use a standard loss funcion that promotes the preferred response and discourages the dispreferred one, a technique known as *preference optimization*.
 
 Observe how the autoregressive architecture we have studied can also be used for summarizing or translating text into other languages. In these cases, the prefix consists of the text to be summarized or translated, respectively. A special token indicates to the model that the prefix has ended and that it should start generating the output text.
 
 Finally, the representations learned by a transformer during training for each of its layers on new input phrases can be considered contextual embeddings of the different input tokens. These embeddings can be very useful in various natural language processing tasks. In principle, any layer can be suitable for obtaining these representations, but some studies have shown that certain layers are better suited for specific tasks. Layers closer to the input seem to capture more morphological information, while final layers are more related to semantics.
 
-## A Self-Attention Analogy
+## A Self-Attention Analogy {#analogy-self-attention}
 
 The self-attention mechanism can be introduced for educational purposes based on a hypothetical version of Python that allows accessing dictionary values using *approximate* keys. Consider the following Python dictionary stored in the variable `d`; like any Python dictionary, it contains a set of keys (e.g., `apple`) and associated values (e.g., `8` is the value associated with the key `apple`):
 
@@ -152,7 +148,7 @@ These results, normalized so their sum is 1, are `0`, `0.4`, and `0.6`. Our imag
 In the case of the transformer, queries, keys, and values are vectors of a certain dimension, and the similarity function used is the dot product of the query and the different keys. The similarity scores are normalized using the softmax function and then used to weight the different values:
 
 $$
-\text{SelfAtt}(Q,K,V) = \text{softmax}\left( \frac{Q K^T}{\sqrt{d_k}} \right) V
+\text{Attention}(Q,K,V) = \text{softmax}\left( \frac{Q K^T}{\sqrt{d_k}} \right) V
 $$
 
 ## Visual Guides
@@ -203,11 +199,11 @@ print(f'Mean value of highest softmax: {s.max(dim=-1)[0].mean().item():.2f}')
 # max value of each channel smaller than 1
 ```
 
-In general, if the variance of $Q$ and $K$ elements is $m$, the variance of the product will be approximately $m^4 C$. If $m=2$, for example, normalization doesn’t reduce the variance to 1, but it does reduce it to around $m^4 = 16$.
+In general, if the variance of $Q$ and $K$ elements is $m$, the variance of the product will be approximately $m^4 C$. If $m=2$, for example, normalization does not reduce the variance to 1, but it does reduce it to around $m^4 = 16$.
 
 ## Layer Normalization
 
-Let $\hat{\mu}$ and $\hat{\sigma}^2$ be the mean and variance, respectively, of all inputs, represented by $\boldsymbol{x}$, to the neurons in a layer with $H$ neurons:
+Let $\hat{\mu}$ and $\hat{\sigma}^2$ be the mean and variance, respectively, of all inputs, represented by $\mathbf{x}$, to the neurons in a layer with $H$ neurons:
 
 $$
 \begin{align}
@@ -222,7 +218,7 @@ $$
 \text{LN}(x_i) = \gamma_i \frac{x_i - \hat{\mu}}{\hat{\sigma}^2} + \beta
 $$
 
-The fraction ensures that all inputs to the layer at a given moment have a mean of zero and a variance of 1. Since these values are arbitrary, learnable parameters $\boldsymbol{\gamma}$ and $\boldsymbol{\beta}$ are added to rescale them. The normalized values become the new inputs to each neuron, and the corresponding activation function is applied to them. In the case of the transformer, there is no additional activation function.
+The fraction ensures that all inputs to the layer at a given moment have a mean of zero and a variance of 1. Since these values are arbitrary, learnable parameters $\mathbf{\gamma}$ and $\mathbf{\beta}$ are added to rescale them. The normalized values become the new inputs to each neuron, and the corresponding activation function is applied to them. In the case of the transformer, there is no additional activation function.
 
 The PyTorch code for layer normalization is quite straightforward:
 

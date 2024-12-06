@@ -104,6 +104,7 @@ plugins:
         - another_page.md
       restart_increment_after:
         - transformers/intro.md
+        - transformers/en/intro.md
 
 extra_javascript:
   - assets/javascripts/mathjax.js

@@ -102,3 +102,13 @@ h2 {
     grid-column: 1;
   }
 }
+
+.custom-bordered-table th, 
+.custom-bordered-table td {
+    border: 1px solid #888;
+    border-collapse: collapse;
+}
+
+.custom-bordered-table th {
+  opacity: 0.6;
+}

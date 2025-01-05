@@ -1,7 +1,7 @@
 site_name: Juan Antonio Pérez Ortiz
 site_description: Academic website
 site_author: Juan Antonio Pérez Ortiz
-copyright: Copyright 2024 Juan Antonio Pérez Ortiz — Universitat d'Alacant
+copyright: Copyright 2025 Juan Antonio Pérez Ortiz — Universitat d'Alacant
 
 extra:
   social:
@@ -89,6 +89,11 @@ markdown_extensions:
   - md_in_html # process markdown inside html blocks
   - toc:
       permalink: "#" # create permalinks for each header
+  - pymdownx.superfences:  # diagrams
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 plugins:
   - search

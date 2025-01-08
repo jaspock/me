@@ -11,10 +11,8 @@ Estos son los materiales del taller *Revelando los misterios de la IA* impartido
 
 TO-DO's:
 
-- [ ] Revisar y completar la guía.
-- [ ] Explicar cómo crear cuenta de Google para Colab.
 - [ ] Hacer que el cuaderno de Llama muestre las probabilidades de las 10 más probables, además de las de la lista.
-- [ ] Poner una celda como %%capture %pip install torch numpy matplotlib en lugar del lío de requirements.txt
+- [ ] Poner una celda como %%capture %pip install torch numpy matplotlib en lugar de procesar requirements.txt
 - [ ] Añadir más cuadros de "Piensa".
 
 -->
@@ -200,6 +198,7 @@ Aunque las GPUS que pueden comprarse con un ordenador personal potente (como la 
 [colab]: https://colab.research.google.com/
 [studio]: https://studiolab.sagemaker.aws/
 
+
 ### El papel de los parámetros en una red neuronal
 
 Vuelve a echar un vistazo a la fórmula que define el modelo de lengua neuronal simple que hemos venido estudiando anteriormente. Durante el entrenamiento de la red neuronal, vamos tomando los ejemplos del conjunto de datos de entrenamiento y ajustando los valores de la matriz $W$ para que la salida de la red neuronal sea lo más parecida posible a la salida deseada. Si los embeddings de palabras se representan con vectores de dimensión 1000 y el vocabulario es de 20000 palabras, los datos de entrenamiento de nuestro ejemplo estarán formados por pares de 2000 valores de entrada (1000 para cada una de las dos palabras) y 20000 valores de salida (una probabilidad para cada palabra del vocabulario). 
@@ -214,7 +213,7 @@ Hasta ahora hemos asumido que los embeddings multidimensionales que representan 
 
 ### Código: entrenar y ejecutar un modelo de lengua
 
-Vamos a ver en acción una implementación en Python de un modelo de lengua similar al explicado hasta este momento. Para poder ejecutar el código sin tener que instslar un intérprete de Python en nuestro ordenador y para opcionalmente poder usar GPUs, vamos a usar la plataforma Google Colab.
+Vamos a ver en acción una implementación en Python de un modelo de lengua similar al explicado hasta este momento. Para poder ejecutar el código sin tener que instalar un intérprete de Python en nuestro ordenador y para opcionalmente poder usar GPUs, vamos a usar la plataforma Google Colab.
 
 Estudia el cuaderno de Python al que se puede acceder desde el siguiente botón. Necesitarás una cuenta de Google para poder acceder a Google Colab. Si no tienes una, puedes crearla en [este enlace][google]. Si eres menor de edad, asegúrate de que tienes la edad necesaria para hacerlo y consulta con tus padres o tutores.
 
@@ -298,6 +297,22 @@ Se ha [estudiado][embers] los efectos que tienen en el rendimiento de los modelo
 
 ![](assets/misterios/imgs/griffiths-pig-latin.png)
 
+### Limitaciones de los modelos de lengua
+
+Una limitación muy importante es que lo modelos de lengua actuales suelen *alucinar* sin previo aviso, es decir, generar textos que no tienen sentido o que son incorrectos o que no corresponden a la realidad. Por otro lado, también hay que reconocer que las personas no siempre somos capaces de dar respuestas correctas sin, al menos, pensarlas un poco antes; por ello, se están incorporando modos de razonamiento a los modelos de lengua que someten a las respuestas definitivas a procesos de verificación y contraste adicionales (usando el propio modelo de lengua) antes de emitir una respuesta definitiva.
+
+![](assets/misterios/imgs/socratic.png)
+
+Aunque algunas voces aseguran que la inteligencia artificial general (es decir, una inteligencia artificial que pueda resolver cualquier tarea que un ser humano pueda hacer) está a la vuelta de la esquina, existen muchos problemas que las personas podemos resolver con cierta facilidad y en las que los modelos de lengua obtienen tasas de acierto muy bajas. La inteligencia artificial general implica sistemas que son capaces de adquirir nuevas habilidades que no pueden encontrarse en sus datos de entrenamiento. Algunas de estas tareas que a día de hoy son difíciles para los modelos de lengua son [ciertos rompecabezas][puzles] o [tareas de la Olimpiada Lingüística][linguini] que plantean problemas sobre idiomas que los modelos de lengua no han visto antes.
+
+[puzles]: https://arcplayground.com/#
+[linguini]: https://arxiv.org/abs/2409.12126
+
+![](assets/misterios/imgs/arcagi.png)
+![](assets/misterios/imgs/linguini.png)
+
+Otros auguran la llegada de la *superinteligencia*, esto es, una inteligencia artificial que supere a la humana y que realice avances científicos y tecnológicos fuera del alcance de las personas. Sin embargo, aunque es cierto que los progresos de estos últimos años en inteligencia artificial han sido espectaculares, es recomendable ser cautos y entender que a lo largo de la historia de la humanidad ha habido muchas predicciones sobre el futuro que no se han cumplido.
+
 ### Sesgos
 
 Otro tema importante en los modelos de lengua es el de los sesgos de todo tipo. Los sesgos en los modelos de lengua son inclinaciones o patrones sistemáticos en sus respuestas que reflejan los datos con los que fueron entrenados, como prejuicios sociales, estereotipos o desigualdades presentes en los textos. Se producen porque los modelos aprenden directamente de grandes conjuntos de datos recopilados de internet y otros textos, que pueden contener contenido parcial o desequilibrado. Para corregirlos, se utilizan técnicas como la selección cuidadosa de datos de entrenamiento, la filtración de contenido problemático, la aplicación de ajustes a través de etapas de alineamiento y el uso de métricas específicas para monitorear y mitigar el impacto de estos sesgos en los resultados generados. Sin embargo, su eliminación completa sigue siendo un desafío.
@@ -321,11 +336,13 @@ Tras la etapa de máster, podrías continuar con un doctorado, pero ten en cuent
 
 ### Libros gratuitos para saber más
 
+- "[Build a Large Language Model (From Scratch)][scratch]". Una guía para programar un modelo de lengua desde cero con PyTorch.
 - "[Speech and Language Processing][jurafskybib]". Explica detalladamente los conceptos y modelos más relevantes en el procesamiento del lenguaje natural sin entrar en detalles de implementación.
 - "[Dive into Deep Learning][d2l]". Se adentra con mucho detalle en la implementación de los modelos más relevantes del aprendizaje profundo.
 - ["Deep learning: foundations and concepts"][bishop]. Ligeramente más avanzado que los anteriores.
 - "[Understanding Deep Learning][understanding]". Libro lleno de imágenes y figuras que ayudan a entender todos los conceptos.
 
+[scratch]: https://www.manning.com/books/build-a-large-language-model-from-scratch
 [jurafskybib]: https://web.stanford.edu/~jurafsky/slp3/
 [gentle]: https://clulab.org/gentlenlp/
 [understanding]: https://udlbook.github.io/udlbook/

@@ -90,7 +90,9 @@ Para ampliar conocimientos, puedes consultar estos libros que, en su mayoría, e
 - "[Deep Learning with PyTorch Step-by-Step: A Beginner's Guide][pytorchstep]" (2022) de Daniel Voigt Godoy. Este es un libro de pago con versión digital o en papel (en tres volúmenes, en este caso). Existe una versión en español para los primeros capítulos. Escrito en un estilo directo y sencillo con multitud de detalles y ejemplos.
 - "[The Mathematical Engineering of Deep Learning][mathdl]" (2024) de Benoit Liquet, Sarat Moka y Yoni Nazarathy.
 - "[The Little Book of Deep Learning][little]" (2023) de François Fleuret.
+- "[Build a Large Language Model (From Scratch)][scratch]". Una guía para programar un modelo de lengua desde cero con PyTorch.
 
+[scratch]: https://www.manning.com/books/build-a-large-language-model-from-scratch
 [jurafskybib]: https://web.stanford.edu/~jurafsky/slp3/
 [gentle]: https://clulab.org/gentlenlp/
 [understanding]: https://udlbook.github.io/udlbook/

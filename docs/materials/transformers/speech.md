@@ -78,6 +78,17 @@ La siguiente figura representa la arquitectura de Wav2Vec 2.0 y está tomada del
 
 Como puedes ver, el modelo procesa directamente la señal de voz, sin necesidad de obtener una representación en frecuencias. La señal es convenientemente segmentada y cada segmento se pasa por un codificador con múltiples capas convolucionales. La salida de la última capa convolucional se cuantiza en un número determinado de valores, es decir, cada vector se termina clasificando dentro de un conjunto de posibles clases o *códigos*. Estos códigos no tienen por qué coincidir con fonemas concretos, pero ayudan a agrupar los vectores de forma que idealmente, tras el entrenamiento, vectores de código similares corresponden a ventanas de voz que comparten características similares. El código correspondiente se representa en la ilustración mediante un vector $\mathbf{q}$. Las representaciones cuantizadas se pasan a un codificador de un transformer donde se combinan globalmente (observa que las capas convolucionales realizan un procesamiento local y no global) mediante la auto-atención, capturando así de una forma *end-to-end* las posibles dependencias a nivel de secuencia. A su salida, el transformer tiene que predecir la representación latente cuantizada de aquellas partes de la señal de voz cuyas representaciones latentes han sido enmascaradas.
 
+Hidden unit BERT (HuBERT)
+{: .section}
+
+HuBERT es un modelo auto-supervisado diseñado para procesar voz transformando los segmentos de audio en representaciones discretas, que pueden considerarse aproximadamente equivalentes a los tokens en el procesamiento de texto. Trabajos posteriores han demostrado que estas representaciones pueden integrarse en modelos de lengua masivos (MLMs) para funcionar como modelos multimodales de texto/voz.
+
+HuBERT se obtiene mediante un método iterativo que alterna dos pasos: **clustering** y predicción. El paso de clustering ($k$-means con 500 pseudo-tokens) asigna cada ventana de audio a uno de varios clústeres. En el primer paso, los segmentos se representan con vectores resultantes del espectrograma de Mel. En los pasos posteriores, las representaciones se obtienen de las capas intermedias del modelo HuBERT preentrenado en la iteración anterior. De manera similar a Wav2vec 2.0, el paso de predicción consiste en predecir las partes enmascaradas de la entrada utilizando los índices de los clústeres como vocabulario de salida. Finalmente, el modelo HuBERT preentrenado (después de eliminar la capa de predicción) puede ajustarse para realizar tareas específicas, como el reconocimiento de habla utilizando la función de pérdida CTC. Como veremos más adelante, las representaciones discretas también son interesantes por sí mismas.
+
+La siguiente figura, tomada del artículo "[HuBERT: Self-Supervised Speech Representation Learning by Masked Prediction of Hidden Units](https://arxiv.org/abs/2106.07447)," muestra la arquitectura del modelo:
+
+![](assets/imgs/hubert.png)
+
 
 Conformer
 {: .section}
@@ -117,6 +128,20 @@ Universal speech model (USM)
 Otro modelo multilingue a gran escala es Universal Speech Model (USM) que usa RNN-T y llega a 300 idiomas. La siguiente figura está tomada del artículo "[Google USM: Scaling Automatic Speech Recognition Beyond 100 Languages](https://arxiv.org/abs/2303.01037)" y muestra las diferentes fases de entrenamiento del modelo. Aunque no las veremos con detalle, seguro que puedes encontrar en la figura varios términos que te resultan familiares:
 
 ![](assets/imgs/usm.png)
+
+
+Spirit LM
+{: .section}
+
+Las unidades fonéticas discretas de voz, como las generadas por HuBERT, pueden incorporarse en modelos de lengua masivos (MLMs) para crear los modelos denominados SpeechLM, que son modelos de lengua capaces de procesar tanto lenguaje hablado como escrito, tanto en su entrada como en su salida. Spirit LM es un ejemplo de SpeechLM: un modelo Llama-2 ajustado con una mezcla de texto y habla, codificados como los tokens BPE originales o como las unidades fonéticas (deduplicadas) generadas por HuBERT, respectivamente, con un token especial añadido al principio de cada tipo de entrada. El modelo se ajusta mediante la tarea habitual de predicción del siguiente token. Para la generación de voz, se añade un sistema de síntesis de voz condicionado por los tokens de HuBERT. Opcionalmente, se puede incluir información de sentimiento en forma de tokens de tono y estilo en los datos de entrenamiento para evitar que el modelo genere solo habla monotona.
+
+Esta imagen, tomada del artículo "[Spirit LM: Interleaved Spoken and Written Language Model](https://arxiv.org/abs/2402.05755)," ilustra la arquitectura del modelo:
+
+![](assets/imgs/spiritlm.png)
+
+Aunque el uso de los pseudo-tokens de voz es un método interesante, cuando el objetivo no es que el modelo de lengua *hable*, otros investigadores han demostrado que usar directamente las representaciones continuas aprendidas por modelos como Whisper, con una capa de proyección intermedia antes de la entrada del MLM, también puede ser efectivo, como se muestra en esta figura del artículo "[An Embarrassingly Simple Approach for LLM with Strong ASR Capacity](https://arxiv.org/abs/2402.08846)":
+
+![](assets/imgs/slam-asr.png)
 
 
 Otros modelos

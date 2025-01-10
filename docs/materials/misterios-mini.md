@@ -135,10 +135,10 @@ graph LR
 
 !!! note "Piensa"
 
-  1. ¿Cuándo se crearon los primeros programas de correo electrónico?
-  2. ¿Cuándo se diseñó el primer lenguaje de programación?
-  3. ¿Qué cosas que se veían como futuristas en las películas de ciencia ficción de hace unos años son hoy posibles?
-  4. ¿Cuáles siguen pareciendo futuristas?
+    1. ¿Cuándo se crearon los primeros programas de correo electrónico?
+    2. ¿Cuándo se diseñó el primer lenguaje de programación?
+    3. ¿Qué cosas que se veían como futuristas en las películas de ciencia ficción de hace unos años son hoy posibles?
+    4. ¿Cuáles siguen pareciendo futuristas?
 
 
 ### Datos de entrenamiento

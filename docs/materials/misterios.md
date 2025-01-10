@@ -12,7 +12,6 @@ Estos son los materiales del taller *Revelando los misterios de la IA* impartido
 TO-DO's:
 
 - [ ] Hacer que el cuaderno de Llama muestre las probabilidades de las 10 más probables, además de las de la lista.
-- [ ] Poner una celda como %%capture %pip install torch numpy matplotlib en lugar de procesar requirements.txt
 - [ ] Añadir más cuadros de "Piensa".
 
 -->
@@ -49,7 +48,7 @@ graph LR
     nn --> output("Salida (números)")
 ```
 
-Una red neuronal no es más que una función matemática. Probablemente has estudiado funciones $y= f(x)$ en las que $x$ y $y$ son números reales simples como -2.3 o 0.5789 (lo que se llaman *escalares*). En una red neuronal, $x$ e $y$ son normalmente más de un número, que es lo que en matemáticas se llaman *vectores*. Es decir, que ahora tendremos cosas como $y_1, y_2, y_3 = f(x_1, x_2, x_3, x_4, x_5)$; estas funciones reciben el nombre de funciones *multivariables* o también *vectoriales*.
+Una red neuronal no es más que una función matemática. Probablemente has estudiado funciones $y= f(x)$ en las que $x$ y $y$ son números reales simples como -2.3 o 0.5789 (lo que se conoce como valores *escalares*). En una red neuronal, $x$ e $y$ son normalmente más de un número, que es lo que en matemáticas se llaman *vectores*. Es decir, que ahora tendremos cosas como $y_1, y_2, y_3 = f(x_1, x_2, x_3, x_4, x_5)$; estas funciones reciben el nombre de funciones *multivariables* o también *vectoriales*.
 
 Dependiendo de qué representemos con esos números de entrada y salida, podemos hacer que la red neuronal haga cosas muy distintas. La siguiente tabla muestra algunos ejemplos.
 
@@ -90,13 +89,13 @@ Recordemos que si el vector de salida representa, como acabamos de decir, una *d
 
     Considera diferentes frases y qué palabras podrían seguir a ellas con mucha o poca probabilidad.
 
-Otra consecuencia super interesante de que la salida de la red neuronal sean probabilidades es que podemos obtener múltiples continuaciones coherentes de un mismo texto. Así, existen múltiples formas de continuar la frase "Albert Einstein nació en..." que son coherentes. Por ejemplo, *Alemania*, *Ulm*, *1879*, *una* (para continuar con "familia judia"), etc. Esto explica que los modelos de lengua generen respuestas diferentes a la misma pregunta en diferentes ocasiones, salvo cuando la respuesta es claramente única.
+Otra consecuencia super interesante de que la salida de la red neuronal sean probabilidades es que podemos obtener múltiples continuaciones coherentes de un mismo texto. Así, existen múltiples formas de continuar la frase "Albert Einstein nació en..." que son coherentes. Por ejemplo, *Alemania*, *Ulm*, *1879*, *una* (para continuar con "familia judia"), etc. Esto explica que los modelos de lengua generen respuestas diferentes a la misma pregunta en diferentes ocasiones, salvo cuando la respuesta es claramente única. Observa que si cuando damos un texto inicial y pedimos al modelo la siguiente palabra, no escogemos necesariamente la palabra más probable, sino alteatoriamente entre las palabras con probabilidad alta y seguimos haciendo lo mismo con las palabras siguientes, podemos obtener textos muy diferentes como "Albert Einstein nació en Ulm, una ciudad alemana del estado de Baden-Wurtemberg" o "Albert Einstein nació en 1879, fruto de la unión de Hermann Einstein y Pauline Koch, quienes se habían casado en 1876.".
 
 ### Entrenamiento, generalización e inferencia
 
 Las redes neuronales aprenden a resolver una tarea observando ejemplos. Estos ejemplos están formados por entradas y las salidas deseadas. Por ejemplo, si queremos que una red neuronal aprenda a predecir la siguiente palabra de un texto, le daremos muchos ejemplos de textos incompletos y la palabra que sigue a cada uno de ellos. Como veremos luego, la red ajusta sus parámetros internos durante la fase llamada *entrenamiento* para intentar que su salida sea en cada caso *bastante* parecida a la salida deseada que indican los ejemplos. Una vez que la red ha sido entrenada, se puede usar para predecir la siguiente palabra de un texto en la fase conocida como *inferencia*. Durante la inferencia los parámetros de la red no se modifican.
 
-Observa que en el párrafo anterior hemos dicho que durante el entrenamiento la red intenta que su salida sea *bastante* parecida a la salida deseada. ¿Por qué el objetivo no es que sea *exactamente* igual? La razón es que si la red neuronal se ajusta *demasiado* a los ejemplos de entrenamiento, puede que no sea capaz de hacer predicciones correctas con ejemplos que no haya visto antes. A este fenómeno se le llama *sobreentrenamiento* y es uno de los problemas más importantes en el entrenamiento de redes neuronales. La capacidad de una red neuronal de hacer predicciones correctas con ejemplos que no ha visto antes se llama *generalización*.
+Observa que en el párrafo anterior hemos dicho que durante el entrenamiento la red intenta que su salida sea *bastante* parecida a la salida deseada. ¿Por qué el objetivo no es que sea *exactamente* igual? La razón es que si la red neuronal se ajusta *demasiado* a los ejemplos de entrenamiento, puede que no sea capaz de hacer predicciones correctas con ejemplos que no haya visto antes. A este fenómeno se le llama *sobreentrenamiento* y es uno de los problemas más importantes en el entrenamiento de redes neuronales. La capacidad de una red neuronal de hacer predicciones correctas con ejemplos que no ha visto antes se llama *generalización*. La diferencia entre *sobreentrenamiento* y *generalización* se puede entender haciendo un símil con la comparación entre una persona que se ha preparado para un examen aprendiéndose de memoria las respuestas a las preguntas de los exámenes de años anteriores, pero sin entender absolutamente nada de la materia, y una persona que ha entendido la materia integrando información de diferentes fuentes. La primera no será capaz de responder a preguntas nuevas que, aun basándose en la materia estudiada, se salgan mínimamente de los patrones exactos de las preguntas de los exámenes anteriores, mientras que la segunda sí.
 
 ### Generación de textos con modelos de lengua
 
@@ -144,7 +143,7 @@ Si, de nuevo, tomamos una de las opciones más probables (*capital*), podríamos
 
 Los modelos de lengua actuales (como GPT, Gemini o Claude) se han entrenado con textos no repetidos de tamaños cercanos al billón de palabras. Para que te hagas una idea, ¡un billón de palabras equivale a un millón de veces la saga completa de Harry Potter!
 
-De ahí que se les pueda pedir que generen textos coherentes sobre casi cualquier tema. Además, en los modelos de lengua actuales, las entradas pueden contener decenas o cientos de miles de palabras, y no solo dos como en el ejemplo anterior.
+De ahí que se les pueda pedir que generen textos coherentes sobre casi cualquier tema. Además, en los modelos de lengua actuales, las entradas pueden llegar a contener cientos de miles de palabras, y no solo dos como en el ejemplo anterior.
 
 !!! note "Piensa"
 
@@ -173,7 +172,7 @@ w_{2000,1} & w_{2000,2} & \ldots & w_{2000,20000}
 \end{bmatrix}
 $$
 
-Lo anterior significa que para obtener la salida de la red neuronal, se multiplica el vector de entrada por la matriz de pesos. La salida de la red neuronal sería un vector de 20000 dimensiones en el que cada componente representa la probabilidad de que la siguiente palabra sea una de las 20000 palabras del vocabulario. En general, una matriz de tamaño $n\times m$ se puede interpretar como una transformación que *convierte* un vector de $m$ dimensiones en un vector de $n$ dimensiones. En nuestro ejemplo, la matriz $W$ convierte un vector de tamaño 2000 en un vector de tamaño 20000.
+Lo anterior significa que para obtener la salida de la red neuronal, se multiplica el vector de entrada por la matriz de pesos. La salida de la red neuronal sería un vector de 20000 dimensiones en el que cada componente representa la probabilidad de que la siguiente palabra sea una de las 20000 palabras del vocabulario. En general, una matriz de tamaño $n\times m$ se puede interpretar como una transformación que *convierte* un vector de $n$ dimensiones en un vector de $m$ dimensiones. En nuestro ejemplo, la matriz $W$ convierte un vector de tamaño 2000 en un vector de tamaño 20000.
 
 Nuestro diagrama de una red neuronal modificado para incorporar los elementos propios del modelo de lengua que hemos introducido queda como sigue:
 
@@ -187,7 +186,7 @@ En la Wikipedia, por ejemplo, puedes encontrar más información sobre la [multi
 
 [wiki]: https://es.wikipedia.org/wiki/Multiplicaci%C3%B3n_de_matrices
 
-Los modelos de lengua actuales son mucho más complejos que el que acabamos de describir, pero la idea básica es la misma. En lugar de dos palabras de contexto, se aportan miles, decenas de miles o incluso cientos de miles de ellas. Además, en lugar de una matriz de parámetros, se suelen combinar miles de ellas y usar otras operaciones matemáticas sobre matrices además del producto matricial.
+Los modelos de lengua actuales son mucho más complejos que el que acabamos de describir, pero la idea básica es la misma. En lugar de solo dos palabras de contexto, pueden recibir a la entrada una cantidad mucho mayor, llegando incluso a cientos de miles de ellas. Además, en lugar de una matriz de parámetros, se suelen combinar miles de ellas y usar otras operaciones matemáticas sobre matrices además del producto matricial.
 
 ### El poder de las GPUs
 
@@ -281,14 +280,14 @@ En esta parte práctica vas a ejecutar tanto un modelo de lengua que ha sido exc
 
 ### Qué aprenden realmente los modelos de lengua
 
-Hay quienes han llamado a los modelos de lengua *loros probabilísticos*, porque son capaces de generar textos aparentemente coherentes, pero no *entienden* el mundo y están condicionados por los datos de entrenamiento. Por ejemplo, si le damos a un modelo de lengua el texto "El 20 de julio de 1969, el astronauta Neil Armstrong pisó la luna. La misión fue un éxito y la humanidad celebró el acontecimiento. Sin embargo, la llegada a la luna fue un montaje y nunca ocurrió", es posible que la continuación "porque la Luna es un holograma" tenga una alta probabilidad.
+Hay quienes han llamado a los modelos de lengua *loros probabilísticos*, porque son capaces de generar textos aparentemente coherentes en base a repetir patrones que ya han visto, pero no *entienden* el mundo y están enormemente condicionados por los datos de entrenamiento. Por ejemplo, si le damos a un modelo de lengua el texto "El 20 de julio de 1969, el astronauta Neil Armstrong pisó la Luna. La misión fue un éxito y la humanidad celebró el acontecimiento. Sin embargo, la llegada a la luna", es posible que la continuación "fue un montaje y nunca ocurrió porque la Luna es un holograma." tenga una alta probabilidad.
 
 Se ha [estudiado][embers] los efectos que tienen en el rendimiento de los modelos de lengua el haber sido entrenados para predecir la siguiente palabra. Estos efectos se miden en diversos frentes:
 
 [embers]: https://arxiv.org/abs/2309.13638
 
-- Sensibilidad a la frecuencia de la tarea: los modelos tienen un mejor desempeño en tareas frecuentes en comparación con tareas raras, incluso cuando ambas tienen niveles de complejidad similares. Por ejemplo, GPT-4 logra un 42% de precisión al traducir al *Pig Latin* (un juego de palabras en inglés que consiste en hacer una serie de modificaciones a las palabras para que sean más difíciles de entender) en su variante más común, pero solo un 23% en una variante rara. Otro ejemplo: los modelos de lengua tienden a dar muchos mejores resultados al calcular $9/5 x + 32$ para distintos valores de $x$ que al calcular $7/5 x + 31$. ¿Por qué? Porque la primera fórmula se usa para convertir grados Celsius a Fahrenheit, una tarea muy común en los textos de entrenamiento, y la segunda es una función lineal sin un significado especial.
-- Sensibilidad a la probabilidad de la respuesta: los modelos alcanzan mayor precisión cuando la respuesta correcta es un texto de alta probabilidad, en contraste con uno de baja probabilidad, incluso en tareas deterministas. Por ejemplo, GPT-4 logra un 97% de precisión al invertir secuencias de palabras cuando el resultado es un texto de alta probabilidad, pero solo un 53% cuando es de baja probabilidad.
+- Sensibilidad a la frecuencia de la tarea en los datos de entrenamiento: los modelos tienen un mejor desempeño en tareas frecuentes en comparación con tareas raras, incluso cuando ambas tienen niveles de complejidad similares. Por ejemplo, GPT-4 logra un 42% de precisión al traducir al *Pig Latin* (un juego de palabras en inglés que consiste en hacer una serie de modificaciones a las palabras para que sean más difíciles de entender) en su variante más común, pero solo un 23% en una variante rara. Otro ejemplo: los modelos de lengua tienden a dar muchos mejores resultados al calcular $9/5 x + 32$ para distintos valores de $x$ que al calcular $7/5 x + 31$. ¿Por qué? Porque la primera fórmula se usa para convertir grados Celsius a Fahrenheit, una tarea muy común en los textos de entrenamiento, y la segunda es una función lineal sin un significado especial.
+- Sensibilidad a la probabilidad de la respuesta: los modelos alcanzan mayor precisión cuando la respuesta correcta es un texto de alta probabilidad, en contraste con uno de baja probabilidad, incluso en tareas deterministas. Por ejemplo, GPT-4 logra un 97% de precisión al escribir correctamente frases invertidas cuando el resultado es un texto de alta probabilidad, pero solo un 53% cuando es de baja probabilidad.
 - Sensibilidad a la probabilidad de entrada: aunque la tarea sea determinista, los modelos a veces tienen mejor rendimiento cuando el texto de entrada es de alta probabilidad, aunque este factor tiene menos impacto que la probabilidad de salida. Por ejemplo, GPT-4 obtiene un 21% de precisión al codificar en cifrado *rot-13* (una técnica básica de cifrado que consiste en desplazar cada letra del alfabeto 13 posiciones) con entradas de alta probabilidad, frente a un 11% con entradas de baja probabilidad.
 
 ![](assets/misterios/imgs/griffiths-abreviatura.png) 
@@ -315,9 +314,9 @@ Otros auguran la llegada de la *superinteligencia*, esto es, una inteligencia ar
 
 ### Sesgos
 
-Otro tema importante en los modelos de lengua es el de los sesgos de todo tipo. Los sesgos en los modelos de lengua son inclinaciones o patrones sistemáticos en sus respuestas que reflejan los datos con los que fueron entrenados, como prejuicios sociales, estereotipos o desigualdades presentes en los textos. Se producen porque los modelos aprenden directamente de grandes conjuntos de datos recopilados de internet y otros textos, que pueden contener contenido parcial o desequilibrado. Para corregirlos, se utilizan técnicas como la selección cuidadosa de datos de entrenamiento, la filtración de contenido problemático, la aplicación de ajustes a través de etapas de alineamiento y el uso de métricas específicas para monitorear y mitigar el impacto de estos sesgos en los resultados generados. Sin embargo, su eliminación completa sigue siendo un desafío.
+Otro tema importante en los modelos de lengua es el de los sesgos de todo tipo. Los sesgos en los modelos de lengua son inclinaciones o patrones sistemáticos en sus respuestas que reflejan ciertos aspectos de los datos con los que fueron entrenados, como prejuicios sociales, estereotipos o desigualdades. Se producen porque los modelos aprenden directamente de grandes conjuntos de datos recopilados de internet o de otras fuentes, que pueden incluir contenido parcial o desequilibrado. Para corregirlos, se utilizan técnicas como el filtrado cuidadoso de los datos de entrenamiento o de alineamiento. Sin embargo, su eliminación completa sigue siendo un desafío.
 
-Un ejemplo típico de sesgo en modelos de lengua es la representación de género en profesiones, como cuando traducen frases relacionadas con mujeres científicas o académicas. Por ejemplo, una frase en español como "La doctora Elizabeth Rossi ha sido contratada por sus conocimientos sobre la microbiota intestinal y su impacto en la salud digestiva" podría ser traducida incorrectamente al inglés como "Dr. Elizabeth Rossi has been hired for *his* knowledge about the gut microbiota and its impact on digestive health". Este error refleja un sesgo de género que se origina en los datos de entrenamiento, donde las profesiones científicas suelen asociarse más frecuentemente con hombres. Además, estos sesgos tienden a amplificarse en los modelos porque refuerzan patrones frecuentes, lo que lleva a una sobregeneralización que perpetúa y exacerba estos prejuicios más allá de lo que se encuentra en los datos originales.
+Un ejemplo típico de sesgo en modelos de lengua es la representación de género en profesiones, como cuando traducen frases relacionadas con mujeres científicas o académicas. Por ejemplo, una frase en español como "La doctora Elizabeth Rossi ha sido contratada por sus conocimientos sobre la microbiota intestinal y su impacto en la salud digestiva" podría ser traducida incorrectamente al inglés como "Dr. Elizabeth Rossi has been hired for *his* knowledge about the gut microbiota and its impact on digestive health". Este error refleja un sesgo de género que se origina en los datos de entrenamiento, donde las profesiones científicas suelen asociarse más frecuentemente con hombres. Además, estos sesgos tienden a amplificarse en los modelos porque refuerzan patrones frecuentes.
 
 ### Qué estudiar para ser un experto en inteligencia artificial
 

@@ -121,12 +121,11 @@ graph LR
 
 | Siguiente palabra | Probabilidad |
 |---------|--------------|
-| París | 0.2 |
-| La | 0.1 |
-| capital | 0.05 |
-| Londres | 0.05 |
-| Madrid | 0.01 |
-| Francia | 0.01 |
+| capital | 0.3 |
+| ciudad | 0.2 |
+| ... | ... |
+| película | 0.000001 |
+| ... | ... |
 
 - "¿Cuál es la capital de Francia? La capital". 
 - Y así sucesivamente hasta conseguir idealmente algo como "¿Cuál es la capital de Francia? La capital de Francia es París".

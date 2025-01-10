@@ -89,7 +89,7 @@ Recordemos que si el vector de salida representa, como acabamos de decir, una *d
 
     Considera diferentes frases y qué palabras podrían seguir a ellas con mucha o poca probabilidad.
 
-Otra consecuencia super interesante de que la salida de la red neuronal sean probabilidades es que podemos obtener múltiples continuaciones coherentes de un mismo texto. Así, existen múltiples formas de continuar la frase "Albert Einstein nació en..." que son coherentes. Por ejemplo, *Alemania*, *Ulm*, *1879*, *una* (para continuar con "familia judia"), etc. Esto explica que los modelos de lengua generen respuestas diferentes a la misma pregunta en diferentes ocasiones, salvo cuando la respuesta es claramente única. Observa que si cuando damos un texto inicial y pedimos al modelo la siguiente palabra, no escogemos necesariamente la palabra más probable, sino alteatoriamente entre las palabras con probabilidad alta y seguimos haciendo lo mismo con las palabras siguientes, podemos obtener textos muy diferentes como "Albert Einstein nació en Ulm, una ciudad alemana del estado de Baden-Wurtemberg" o "Albert Einstein nació en 1879, fruto de la unión de Hermann Einstein y Pauline Koch, quienes se habían casado en 1876.".
+Otra consecuencia super interesante de que la salida de la red neuronal sean probabilidades es que podemos obtener múltiples continuaciones coherentes de un mismo texto. Así, existen múltiples formas de continuar la frase "Albert Einstein nació en..." que son coherentes. Por ejemplo, *Alemania*, *Ulm*, *1879*, *una* (para continuar con "familia judía"), etc. Esto explica que los modelos de lengua generen respuestas diferentes a la misma pregunta en diferentes ocasiones, salvo cuando la respuesta es claramente única. Observa que si cuando damos un texto inicial y pedimos al modelo la siguiente palabra, no escogemos necesariamente la palabra más probable, sino aleatoriamente entre las palabras con probabilidad alta y seguimos haciendo lo mismo con las palabras siguientes, podemos obtener textos muy diferentes como "Albert Einstein nació en Ulm, una ciudad alemana del estado de Baden-Wurtemberg" o "Albert Einstein nació en 1879, fruto de la unión de Hermann Einstein y Pauline Koch, quienes se habían casado en 1876.".
 
 ### Entrenamiento, generalización e inferencia
 
@@ -310,6 +310,10 @@ Aunque algunas voces aseguran que la inteligencia artificial general (es decir, 
 ![](assets/misterios/imgs/arcagi.png)
 ![](assets/misterios/imgs/linguini.png)
 
+!!! note "Piensa"
+
+    Estudia los rompecabezas, intenta resolver algunos y piensa cómo podría un modelo de lengua hacerlo. ¿Qué dificultades ves?
+
 Otros auguran la llegada de la *superinteligencia*, esto es, una inteligencia artificial que supere a la humana y que realice avances científicos y tecnológicos fuera del alcance de las personas. Sin embargo, aunque es cierto que los progresos de estos últimos años en inteligencia artificial han sido espectaculares, es recomendable ser cautos y entender que a lo largo de la historia de la humanidad ha habido muchas predicciones sobre el futuro que no se han cumplido.
 
 ### Sesgos
@@ -320,7 +324,7 @@ Un ejemplo típico de sesgo en modelos de lengua es la representación de géner
 
 ### Qué estudiar para ser un experto en inteligencia artificial
 
-Si quieres estar al día de los avances en el área de la inteligencia artificial (IA), puedes seguir a *youtubers* como [DotCSV][dot] o [Xavier Mitjana][xavier]. Pero si quieres convertirte en un experto, tendrás que ir más allá de los vídeos divulgativos e invertir más tiempo en estudiar los conceptos matemáticos y la programación detrás de los diferentes modelos. El lenguaje de programación más utilizado en IA es Python 3 (ten cuidado porque algunos materiales antiguos pueden centrarse en Python 2, una versión ya desfasada) y las matemáticas que necesitarás incluyen parte del álgebra lineal, cálculo y probabilidad que se estudia en bachillerato. La librería de programación más utilizada es [Hugging Face][hf]. Otras como Pytorch o JAX son opciones para los *hackers* super avanzados que ya dominan Hugging Face. Más adelante, tienes una lista de libros que te pueden ayudar a profundizar en los conceptos. Uno de los profesores de este taller, tiene una [guía][guía] sobre procesamiento del lenguaje natural (la rama de la IA centrada en el lenguaje humano) que puede ser de tu interés para profundizar en los modelos de lengua.
+Si quieres estar al día de los avances en el área de la inteligencia artificial (IA), puedes seguir a *youtubers* como [DotCSV][dot] o [Xavier Mitjana][xavier]. Pero si quieres convertirte en un experto, tendrás que ir más allá de los vídeos divulgativos e invertir más tiempo en estudiar los conceptos matemáticos y la programación detrás de los diferentes modelos. El lenguaje de programación más utilizado en IA es Python 3 (ten cuidado porque algunos materiales antiguos pueden centrarse en Python 2, una versión ya desfasada) y las matemáticas que necesitarás incluyen parte del álgebra lineal, cálculo y probabilidad que se estudia en bachillerato. La librería de programación más utilizada es [Hugging Face][hf]. Otras como PyTorch o JAX son opciones para los *hackers* super avanzados que ya dominan Hugging Face. Más adelante, tienes una lista de libros que te pueden ayudar a profundizar en los conceptos. Uno de los profesores de este taller, tiene una [guía][guía] sobre procesamiento del lenguaje natural (la rama de la IA centrada en el lenguaje humano) que puede ser de tu interés para profundizar en los modelos de lengua.
 
 [guía]: https://www.dlsi.ua.es/~japerez/materials/transformers/intro/
 [dot]: https://www.youtube.com/dotcsv

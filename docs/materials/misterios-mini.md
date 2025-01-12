@@ -278,6 +278,8 @@ graph LR
 - En el contexto "Rosalind Franklin trabajó incansablemente en la obtención de imágenes de difracción de rayos X del ADN. Estas imágenes resultaron cruciales para que Watson y Crick pudieran desarrollar su conocido modelo de la doble hélice en 1953 cuando investigaban en la Universidad de Cambridge. Aunque su contribución fue fundamental, pocos reconocieron en aquel momento el impacto del trabajo de...", palabras como "Rosalind" son más importantes que "Cambridge" para predecir la siguiente palabra.
 - La atención evita que los modelos se *desborden* ante enormes cantidades de embeddings de entrada.
 - Se aprende automáticamente durante el ajuste de parámetros para minimizar la función de pérdida.
+- Aún más importante, el mecanismo de atención permite que los embeddings de las palabras cambien en función del contexto.
+- "You shall know a word by the company it keeps".
 
 ### Código: observando el mecanismo de atención 
 

@@ -127,15 +127,15 @@ Este contenido es opcional. Puedes saltarlo directamente salvo que te hayan dich
 [dontloo]: https://stats.stackexchange.com/a/424127/240809
 
 $$
-\boldsymbol{c} = \sum_{j} \alpha_j \boldsymbol{h}_j   \qquad \mathrm{con} \,\, \sum_j \alpha_j = 1
+\mathbf{c} = \sum_{j} \alpha_j \mathbf{h}_j   \qquad \mathrm{con} \,\, \sum_j \alpha_j = 1
 $$
 
-Si $\alpha$ fuera un vector one-hot, la atención se reduciría a recuperar aquel elemento de entre los distintos $\boldsymbol{h}_j$ en base al correspondiente índice; pero sabemos que $\alpha$ difícilmente será un vector unitario, por lo que se tratará más bien de una recuperación ponderada. En este caso, $\boldsymbol{c}\,$ puede considerarse como el valor resultante.
+Si $\alpha$ fuera un vector one-hot, la atención se reduciría a recuperar aquel elemento de entre los distintos $\mathbf{h}_j$ en base al correspondiente índice; pero sabemos que $\alpha$ difícilmente será un vector unitario, por lo que se tratará más bien de una recuperación ponderada. En este caso, $\mathbf{c}\,$ puede considerarse como el valor resultante.
 
-Hay una diferencia importante en cómo este vector de pesos con suma 1 se obtiene en las arquitecturas de *seq2seq* y la del *transformer*. En el primer caso, se usa una red neuronal *feedforward*, representada mediante la función $a$, que determina la *compatibilidad* entre la representación del token $i$-ésimo del descodificador $\boldsymbol{s}_i$ y la representación del token $j$-ésimo del codificador $\boldsymbol{h}_j$:
+Hay una diferencia importante en cómo este vector de pesos con suma 1 se obtiene en las arquitecturas de *seq2seq* y la del *transformer*. En el primer caso, se usa una red neuronal *feedforward*, representada mediante la función $a$, que determina la *compatibilidad* entre la representación del token $i$-ésimo del descodificador $\mathbf{s}_i$ y la representación del token $j$-ésimo del codificador $\mathbf{h}_j$:
 
 $$
-e_{ij} = a(\boldsymbol{s}_i,\boldsymbol{h}_j)
+e_{ij} = a(\mathbf{s}_i,\mathbf{h}_j)
 $$
 
 y de aquí:
@@ -146,13 +146,13 @@ $$
 
 Supongamos que la longitud de la secuencia de entrada es $m$ y la de la salida generada hasta este momento es $n$. Un problema de este enfoque es que en cada paso del descodificador es necesario pasar por la red neuronal $a$ un total de $mn$ veces para computar todos los $e_{ij}$.
 
-Existe una estrategia más eficiente que pasa por proyectar los $\boldsymbol{s}_i$ y los $\boldsymbol{h}_j$ a un espacio común (mediante, por ejemplo, sendas transformaciones lineales de una capa, $f$ y $g$) y usar entonces una medida de similitud (como el producto escalar) para obtener la puntuación $e_{ij}$:
+Existe una estrategia más eficiente que pasa por proyectar los $\mathbf{s}_i$ y los $\mathbf{h}_j$ a un espacio común (mediante, por ejemplo, sendas transformaciones lineales de una capa, $f$ y $g$) y usar entonces una medida de similitud (como el producto escalar) para obtener la puntuación $e_{ij}$:
 
 $$
-e_{ij} = f(\boldsymbol{s}_i) \cdot g(\boldsymbol{h}_j)^T
+e_{ij} = f(\mathbf{s}_i) \cdot g(\mathbf{h}_j)^T
 $$
 
-Podemos considerar que el vector de proyección $f(\boldsymbol{s}_i)$ es la consulta realizada por el descodificador y el vector de proyección $g(\boldsymbol{h}_j)$ es la clave proveniente del descodificador. Ahora solo es necesario realizar $n$ llamadas a $f$ y $m$ llamadas a $g$, con lo que hemos reducido la complejidad a $m+n$. Además, hemos conseguido que los $e_{ij}$ puedan calcularse eficientemente mediante producto de matrices.
+Podemos considerar que el vector de proyección $f(\mathbf{s}_i)$ es la consulta realizada por el descodificador y el vector de proyección $g(\mathbf{h}_j)$ es la clave proveniente del descodificador. Ahora solo es necesario realizar $n$ llamadas a $f$ y $m$ llamadas a $g$, con lo que hemos reducido la complejidad a $m+n$. Además, hemos conseguido que los $e_{ij}$ puedan calcularse eficientemente mediante producto de matrices.
 
 El mecanismo de atención del transformer establece las condiciones para que las proyecciones de consultas y claves y el cálculo de la similitud se puedan llevar a cabo. Cuando la atención se realiza desde y hacia vectores con el mismo origen (por ejemplo, dentro del codificador) se denomina *autoatención*. El transformer combina autoatención separada en codificador y descodificador con el otro mecanismo de atención *heterogénea* en el que $Q$ viene del descodificador y $K$ y $V$ vienen del codificador.
 

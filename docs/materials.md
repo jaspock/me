@@ -15,12 +15,37 @@ Guía para aprender cómo funcionan las redes neuronales que procesan textos y c
 <hr>
 
 <div class="content-2columns catalog" markdown>
+<a href="agents/agents">![](materials/agents/assets/imgs/monkeysquare.png){: .rounded-catalogue-img}</a>
+
+<div>
+<h2>Conversational AI: from talking automata to intelligent agents</h2> 
+
+The possibilities of conversational AI and the challenges of building intelligent agents.
+</div>
+</div>
+
+<hr>
+
+<div class="content-2columns catalog" markdown>
 <a href="transformers/en/intro">![](materials/transformers/assets/imgs/math-triangle.png){: .rounded-catalogue-img}</a>
 
 <div>
 <h2>A step-by-step guide to transformers</h2> 
 
 Understanding how neural networks process texts and how to program them.
+</div>
+</div>
+
+<hr>
+
+
+<div class="content-2columns catalog" markdown>
+<a href="misterios">![](materials/assets/misterios/imgs/gato.jpg){: .rounded-catalogue-img}</a>
+
+<div>
+<h2>Revelando los misterios de la IA</h2> 
+
+Una introducción a los modelos de lengua masivos para estudiantes de instituto.
 </div>
 </div>
 

@@ -10,4 +10,4 @@ He received his Ph.D. in computer science in 2002 with a thesis on recurrent neu
 
 He has been teaching for over twenty years various subjects related to the field of computer science, scientific writing, programming, and artificial intelligence.
 
-:octicons-mail-24:{ .envelope } &nbsp; Email me at japerez {@} ua.es
+:octicons-mail-24:{ .envelope } &nbsp; Email me at japerez [@] ua.es

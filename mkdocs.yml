@@ -62,8 +62,10 @@ nav:
       - PyTorch: materials/transformers/en/pytorch.md
       - PyTorch notes: materials/transformers/en/apuntes.md
       - Problems: materials/transformers/en/problemas.md
-      - Speech: materials/transformers/en/speech.md  
+      - Speech: materials/transformers/en/speech.md
+    - Language model agents: materials/agents/agents.md
     - Differentiable neural computers: materials/dnc.md
+    - Misterios de la IA: materials/misterios.md
     - Historia del PLN: materials/historia.md
   - Teaching: teaching.md
   - Publications: publications.md

@@ -5,7 +5,9 @@
 
 </div>
 
-Esta es una versión reducida del documento de apoyo del taller *Revelando los misterios de la IA*. El documento completo está disponible en [aquí][completo].
+!!! note
+
+    Esta es una versión reducida del documento de apoyo del taller *Revelando los misterios de la IA*. El documento completo está disponible [aquí][completo].
 
 [completo]: misterios.md
 

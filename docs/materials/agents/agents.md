@@ -443,17 +443,26 @@ DeepSeek-R1-Zero was built on top of DeepSeek-V3-Base, an LLM trained to predict
 
 The model is rewarded and optimized using a RL technique called GRPO (*group relative policy optimization*). As training progresses, DeepSeek-R1-Zero begins to generate increasingly longer and more detailed reasoning chains, that allows it to arrive more and more often at the correct answer. These chains are not explicitly taught but emerge naturally, showing signs of reflection, reevaluation, and strategic thinking. One striking behavior is what the authors call an *aha moment*: a point where the model pauses mid-reasoning, says things like "wait, wait, wait," and restarts its solution from a new perspective. This emergence is a vivid demonstration of how RL can lead to sophisticated behaviors not present in the base model.
 
+![](assets/imgs/agent204.png)
+
 Importantly, the model's ability to arrive at correct answers depends heavily on whether its reasoning is valid. Invalid or poorly structured reasoning almost always will lead to wrong answers, so guiding the model to generate sound reasoning is crucial. From a human perspective, this is also a win: readable, structured reasoning makes the model’s output far more interpretable and transparent. Interestingly, although the base model is trained as a next-token predictor, experiments by other researchers suggest that the distinction between next-token and instruction-tuned base models may not be essential.
 
 That said, DeepSeek-R1-Zero is not immediately ready for deployment. It exhibits issues like language switching in the middle of reasoning—e.g., starting in English and drifting into Chinese—and poor readability. This is the reason way the developers used DeepSeek-R1-Zero as the base for DeepSeek-R1, a model additionally trained to show better reasoning via small amounts of high-quality data, and strong general capabilities.
 
 ### Model context protocol
 
+![](assets/imgs/agent203.png)
+
 Model context protocol (MCP) is an open protocol introduced in late 2024 that defines a standard way for applications and services to provide context and capabilities to agentic LLMs. Just as USB-C offers a unified interface to connect devices, MCP offers a unified interface for connecting AI systems to external tools and data sources. In multi-agent systems, where agents need to interact with thousands of APIs (such as email servers for reading and sending messages, code repositories for submitting pull requests, or customer services that allow users to book flights), managing and updating these integrations can become complex and fragmented. MCP solves this by allowing agents to automatically discover the functionalities exposed by a given server and interact with them in a consistent homogeneous way. This eliminates the need to handcraft diverse instructions for each tool. Systems like Manus, which are designed to automate and adapt to lots of different tasks, benefit greatly from this open standard, as it simplifies tool integration and enhances scalability.
 
 ### Deep research
 
 Deep research systems (starting to appear commercially in early 2025) are designed to emulate the work of a human researcher in gathering information from the internet and specialized sources such as scientific repositories. These frameworks use multi-agent setups to simulate the process of investigating a topic in depth, coordinating multiple specialized agents that collaborate to retrieve, analyze, and synthesize knowledge in a report with links to the sources used. The systems operate in environments that support advanced capabilities like chain-of-thought reasoning, self-reflection, code execution, and tool use (for example, via the MCP protocol). An orchestrator oversees the interaction between agents, enabling LLMs to combine their expertise in structured, goal-driven workflows, thereby mirroring real-world research teams and enhancing performance by scaling up *test-time compute* (that is, computation at inference time) and generating longer completions.
+
+![](assets/imgs/agent201.png)
+![](assets/imgs/agent202.png)
+
+Source: [Assisting in Writing Wikipedia-like Articles From Scratch with Large Language Models](https://arxiv.org/abs/2402.14207)
 
 Two examples of this approach are STORM and Virtual Lab. STORM focuses on generating Wikipedia-style articles from scratch by simulating detailed conversations between virtual topic experts and writers. These agents ask and answer grounded questions based on trusted online sources, collaboratively building structured outlines that then guide the final writing process. Virtual Lab, on the other hand, is initiated by a human researcher who defines key roles such as a principal investigator and a scientific critic. The investigator assembles a team of scientist agents who meet in multiple discussion rounds to explore ideas, exchange feedback, and refine their approaches. The investigator then synthesizes insights and proposes next steps until producing a final report. Both systems exemplify how deep research platforms use coordinated agent collaboration to replicate expert-level inquiry and content creation.
 

@@ -1,5 +1,5 @@
 <div class="content-2columns" markdown>
-![](../assets/imgs/math-mandelbrot.png){: .rounded-title-img}
+![](../assets/imgs/math-triangle-2025-blue.png){: .rounded-title-img}
 
 # A Step-by-Step Guide to Transformers: Understanding How Neural Networks Process Texts and How to Program Them
 </div>

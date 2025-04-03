@@ -27,7 +27,7 @@ The possibilities of conversational AI and the challenges of building intelligen
 <hr>
 
 <div class="content-2columns catalog" markdown>
-<a href="transformers/en/intro">![](materials/transformers/assets/imgs/math-triangle.png){: .rounded-catalogue-img}</a>
+<a href="transformers/en/intro">![](materials/transformers/assets/imgs/math-triangle-2025-green.png){: .rounded-catalogue-img}</a>
 
 <div>
 <h2>A step-by-step guide to transformers</h2> 

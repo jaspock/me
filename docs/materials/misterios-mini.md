@@ -321,7 +321,7 @@ graph LR
 ### Código: comparando modelos base con modelos que siguen instrucciones
 
 - Vas a ejecutar dos tipos de modelos: uno entrenado solo para predecir la siguiente palabra; otro entrenado para seguir *instrucciones*.
-- Ventajas de los modelos Llama-3: son *abiertos*: se pueden descargar y usar sin coste; son *pequeños*: pueden ejecutarse en GPUs modestas.
+- Ventajas de los modelos que vas a usar: son *abiertos*: se pueden descargar y usar sin coste; son *pequeños*: pueden ejecutarse en GPUs modestas.
 - Inconvenientes: no son tan potentes como los modelos comerciales, que pueden tener hasta mil veces más parámetros.
 - Acceso completo: permiten realizar operaciones como acceder a las probabilidades de salida de la red neuronal, algo que no es posible con modelos comerciales.
 
@@ -349,16 +349,25 @@ graph LR
 ![](assets/misterios/imgs/griffiths-article-swapping.png)  
 ![](assets/misterios/imgs/griffiths-pig-latin.png)  
 
-### Limitaciones de los modelos de lengua
+### Limitaciones de los modelos de lengua y cómo superarlas
 
 - Los modelos pueden *alucinar*, generando textos sin sentido, incorrectos o alejados de la realidad.
-- Se incorporan modos de *razonamiento* (como las personas) para verificar y contrastar respuestas antes de emitirlas, sometiéndolas a procesos adicionales.
+- Pedir a un modelo que dé respuestas complejas simplemente en base a predecir la siguiente palabra no es justo.
+- Se incorporan modos de *razonamiento* (como las personas) y *autorreflexión* para verificar y contrastar respuestas antes de emitirlas, sometiéndolas a procesos adicionales.
   
 ![](assets/misterios/imgs/socratic.png)
 
+- En los sistemas multiagente, los modelos de lengua pueden colaborar entre sí para resolver problemas complejos.
+- Ejemplo: STORM, un sistema multiagente que escribe artículos de Wikipedia.
+
+### Inteligencia artificial general y superinteligencia
+
 - La inteligencia artificial general, que resolvería cualquier tarea humana, aún enfrenta problemas difíciles para los modelos actuales. Estas son algunas tareas en las que aún fallan:
-    - [Ciertos rompecabezas](https://arcplayground.com/#).
+  
+    - [Ciertos rompecabezas](https://arcprize.org/play?task=1ae2feb7) ([otros][otrosromp] son fáciles para los sistemas actuales).
     - [Tareas de la Olimpiada Lingüística](https://arxiv.org/abs/2409.12126).
+
+[otrosromp]: https://arcprize.org/play?task=007bbfb7
 
 !!! note "Piensa"
 

@@ -5,22 +5,13 @@
 # Revelando los misterios de la IA
 </div>
 
-Estos son los materiales del taller *Revelando los misterios de la IA* impartido varias veces en 2025 por Juan Antonio Pérez (coordinador) y Alberto Navalón de la Universitat d'Alacant a estudiantes de entre 14 y 18 años. No son unos materiales de autoestudio, sino que están pensados para servir de guión en un taller presencial.
+Estos son los materiales del taller *Revelando los misterios de la IA* impartido varias veces en 2025 por Juan Antonio Pérez (coordinador) y Alberto Navalón de la Universitat d'Alacant a estudiantes de entre 14 y 18 años. No son unos materiales de autoestudio, sino que están pensados para servir de guión en un taller presencial. No obstante, puede que una lectura atenta, te ayude a entender mejor cómo funcionan los modelos de lengua actuales y a entender su potencial y limitaciones. 
 
 !!! note
 
     Existe una versión [reducida] de este documento que puede proyectarse a modo de diapositivas durante la impartición del taller.
 
 [reducida]: misterios-mini.md
-
-<!--
-
-TO-DO's:
-
-- [ ] Hacer que el cuaderno de Llama muestre las probabilidades de las 10 más probables, además de las de la lista.
-- [ ] Añadir más cuadros de "Piensa".
-
--->
 
 ### Un poco de contexto histórico
 
@@ -95,7 +86,7 @@ Recordemos que si el vector de salida representa, como acabamos de decir, una *d
 
     Considera diferentes frases y qué palabras podrían seguir a ellas con mucha o poca probabilidad.
 
-Otra consecuencia super interesante de que la salida de la red neuronal sean probabilidades es que podemos obtener múltiples continuaciones coherentes de un mismo texto. Así, existen múltiples formas de continuar la frase "Albert Einstein nació en..." que son coherentes. Por ejemplo, *Alemania*, *Ulm*, *1879*, *una* (para continuar con "familia judía"), etc. Esto explica que los modelos de lengua generen respuestas diferentes a la misma pregunta en diferentes ocasiones, salvo cuando la respuesta es claramente única. Observa que si cuando damos un texto inicial y pedimos al modelo la siguiente palabra, no escogemos necesariamente la palabra más probable, sino aleatoriamente entre las palabras con probabilidad alta y seguimos haciendo lo mismo con las palabras siguientes, podemos obtener textos muy diferentes como "Albert Einstein nació en Ulm, una ciudad alemana del estado de Baden-Wurtemberg" o "Albert Einstein nació en 1879, fruto de la unión de Hermann Einstein y Pauline Koch, quienes se habían casado en 1876.".
+Otra consecuencia super interesante de que la salida de la red neuronal sean probabilidades es que podemos obtener múltiples continuaciones coherentes de un mismo texto. Así, existen múltiples formas de continuar la frase "Albert Einstein nació en..." que son coherentes. Por ejemplo, *Alemania*, *Ulm*, *1879*, *una* (para continuar con "familia judía"), etc. Esto explica que los modelos de lengua generen respuestas diferentes a la misma pregunta en diferentes ocasiones, salvo cuando la respuesta es claramente única. Observa que si cuando damos un texto inicial y pedimos al modelo la siguiente palabra, no escogemos necesariamente la palabra más probable, sino aleatoriamente entre las palabras con probabilidad alta y seguimos haciendo lo mismo con las palabras siguientes, podemos obtener textos muy diferentes como "Albert Einstein nació en Ulm, una ciudad alemana del estado de Baden-Wurtemberg" o "Albert Einstein nació en 1879, fruto de la unión de Hermann Einstein y Pauline Koch, quienes se habían casado en 1876".
 
 ### Entrenamiento, generalización e inferencia
 
@@ -276,7 +267,7 @@ El diagrama que aparece más abajo muestra cómo esta fase final se subdivide a 
 
 ### Código: comparando modelos base con modelos que siguen instrucciones
 
-En esta parte práctica vas a ejecutar tanto un modelo de lengua que ha sido exclusivamente entrenado para predecir la siguiente palabra, como otro que ha sido entrenado adicionalmente para seguir instrucciones. La ventaja de los modelos que vas a usar (de la familia de modelos conocida como Llama-3) es que son *abiertos* (puedes descargarlos y no has de pagar por usarlos) y *pequeños* (lo que implica que puedes ejecutarlos sobre GPUs modestas). El inconveniente es que no son tan potentes como los modelos de lengua comerciales que pueden llegar a tener mil veces más parámetros. El hecho de tener acceso completo a estos modelos desde tus propios programas implica que puedes hacer cosas que los modelos comerciales no permiten, como, por ejemplo, acceder a las probabilidades de salida de la red neuronal, como veremos en este cuaderno.
+En esta parte práctica vas a ejecutar tanto un modelo de lengua que ha sido exclusivamente entrenado para predecir la siguiente palabra, como otro que ha sido entrenado adicionalmente para seguir instrucciones. La ventaja de los modelos que vas a usar es que son *abiertos* (puedes descargarlos y no has de pagar por usarlos) y *pequeños* (lo que implica que puedes ejecutarlos sobre GPUs modestas). El inconveniente es que no son tan potentes como los modelos de lengua comerciales que pueden llegar a tener mil veces más parámetros. El hecho de tener acceso completo a estos modelos desde tus propios programas implica que puedes hacer cosas que los modelos comerciales no permiten, como, por ejemplo, acceder a las probabilidades de salida de la red neuronal, como veremos en este cuaderno.
 
 <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/assets/misterios/notebooks/llama.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
@@ -290,7 +281,7 @@ En esta parte práctica vas a ejecutar tanto un modelo de lengua que ha sido exc
 
 Hay quienes han llamado a los modelos de lengua *loros probabilísticos*, porque son capaces de generar textos aparentemente coherentes en base a repetir patrones que ya han visto, pero no *entienden* el mundo y están enormemente condicionados por los datos de entrenamiento. Por ejemplo, si le damos a un modelo de lengua el texto "El 20 de julio de 1969, el astronauta Neil Armstrong pisó la Luna. La misión fue un éxito y la humanidad celebró el acontecimiento. Sin embargo, la llegada a la luna", es posible que la continuación "fue un montaje y nunca ocurrió porque la Luna es un holograma." tenga una alta probabilidad.
 
-Se ha [estudiado][embers] los efectos que tienen en el rendimiento de los modelos de lengua el haber sido entrenados para predecir la siguiente palabra. Estos efectos se miden en diversos frentes:
+Científicos como Tom Griffiths y su equipo han [estudiado][embers] los efectos que tienen en el rendimiento de los modelos de lengua el haber sido entrenados para predecir la siguiente palabra. Estos efectos se miden en diversos frentes:
 
 [embers]: https://arxiv.org/abs/2309.13638
 
@@ -304,15 +295,27 @@ Se ha [estudiado][embers] los efectos que tienen en el rendimiento de los modelo
 
 ![](assets/misterios/imgs/griffiths-pig-latin.png)
 
-### Limitaciones de los modelos de lengua
+### Limitaciones de los modelos de lengua y cómo superarlas
 
-Una limitación muy importante es que lo modelos de lengua actuales suelen *alucinar* sin previo aviso, es decir, generar textos que no tienen sentido o que son incorrectos o que no corresponden a la realidad. Por otro lado, también hay que reconocer que las personas no siempre somos capaces de dar respuestas correctas sin, al menos, pensarlas un poco antes; por ello, se están incorporando modos de razonamiento a los modelos de lengua que someten a las respuestas definitivas a procesos de verificación y contraste adicionales (usando el propio modelo de lengua) antes de emitir una respuesta definitiva.
+Una limitación muy importante es que lo modelos de lengua actuales suelen *alucinar* sin previo aviso, es decir, generar textos que no tienen sentido o que son incorrectos o que no corresponden a la realidad. Por otro lado, también hay que reconocer que las personas no siempre somos capaces de dar respuestas correctas sin, al menos, pensarlas un poco antes. Un modelo de lengua que predice bastante bien las probabilidades de las siguientes palabras puede contestar a preguntas no triviales, pero inevitablemente habrá un techo en su rendimiento. Por ello, se están incorporando modos de razonamiento y autorreflexión (esto es, el modelo durante la generación del razonamiento se replantea lo que ha dicho previamente) a los modelos de lengua que someten las respuestas definitivas a procesos de verificación y contraste adicionales (usando el propio modelo de lengua) antes de emitir una respuesta definitiva.
 
 ![](assets/misterios/imgs/socratic.png)
 
+Un modelo de lengua puede razonar de varias maneras:
+
+- Pidiéndole simplemente que piense poco a poco antes de contestar.
+- Entrenándolo con textos que incluyan ejemplos de razonamiento paso a paso. En este caso, se necesita disponer de grandes cantidades de problemas que contengan ejemplos de razonamiento paso a paso para resolverlos. 
+- Pidiéndole que resuelva los problemas razonando e *incentivando* entonces aquellos valores de los parámetros que le permiten llegar a soluciones correctas según el grado en que lo hagan. En este caso, a diferencia del anterior, no necesitamos datos de entrenamiento que incluyan líneas de razonamiento, sino solo enunciados de problemas y sus respuestas correctas. Durante el entrenamiento, los parámetros del modelo se van ajustando en base a las respuestas de manera que indirectamente se van fomentando cadenas de pensamientos más avanzadas. Asumimos para ello que si el modelo no razona correctamente, no podrá llegar a la respuesta adecuada en problemas complejos.
+
+Cuando tenemos modelos de lengua que son capaces de razonar, podemos crear con ellos los sistemas denominados *multiagente* en los que cada modelo puede especializarse (bien mediante instrucciones, bien mediante entrenamiento) en ciertas tareas, consultar internet, generar código y razonar en base a la salida de su ejecución, acceder a bases de datos, etc. Los agentes son capaces de interaccionar en lenguaje humano con otros agentes en aras de resolver la tarea. Un programa relativamente sencillo escrito en un lenguaje de programación *orquesta* los distintos agentes, les va asignando tareas y va integrando la salida de algunos en la entrada de otros. Por ejemplo, el modelo [STORM][storm], que es capaz de escribir artículos de Wikipedia sin intervención humana, simula un equipo de redactores donde distintos agentes, todos representados por modelos de lengua, colaboran entre sí con distintos roles. Por un lado, hay agentes que adoptan diferentes puntos de vista (como el de un analista político, un periodista, un técnico o una persona lega en la materia) y hacen preguntas para investigar el tema. A estas preguntas responde otro agente, también instrumentado como un modelo de lengua, que actúa como experto y busca información en fuentes fiables de internet. Un tercer agente se encarga de sintetizar todas las respuestas y construir un esquema del artículo. Finalmente, otro modelo de lengua escribe el texto completo a partir de ese esquema y las fuentes recogidas​.
+
+[storm]: https://arxiv.org/abs/2402.14207
+
+### Inteligencia artificial general y superinteligencia
+
 Aunque algunas voces aseguran que la inteligencia artificial general (es decir, una inteligencia artificial que pueda resolver cualquier tarea que un ser humano pueda hacer) está a la vuelta de la esquina, existen muchos problemas que las personas podemos resolver con cierta facilidad y en las que los modelos de lengua obtienen tasas de acierto muy bajas. La inteligencia artificial general implica sistemas que son capaces de adquirir nuevas habilidades que no pueden encontrarse en sus datos de entrenamiento. Algunas de estas tareas que a día de hoy son difíciles para los modelos de lengua son [ciertos rompecabezas][puzles] o [tareas de la Olimpiada Lingüística][linguini] que plantean problemas sobre idiomas que los modelos de lengua no han visto antes.
 
-[puzles]: https://arcplayground.com/#
+[puzles]: https://arcprize.org/play?task=1ae2feb7
 [linguini]: https://arxiv.org/abs/2409.12126
 
 ![](assets/misterios/imgs/arcagi.png)
@@ -322,6 +325,8 @@ Aunque algunas voces aseguran que la inteligencia artificial general (es decir, 
 
     Estudia los rompecabezas, intenta resolver algunos y piensa cómo podría un modelo de lengua hacerlo. ¿Qué dificultades ves?
 
+En el caso de los rompecabezas, una primera versión de 800 diferentes (ARC-AGI-1) fue lanzada en 2020. Si bien la mayoría de personas podían resolver casi todos ellos sin mucho esfuerzo, los mejores modelos de IA de aquel año solo lograron resolver un 20%. Y durante varios años, este porcentaje no subió de forma significativa. Sin embargo, a finales de 2024, los modelos basados en razonamiento avanzado superaron el 87%, eso sí, con un coste de varios cientos de euros por rompecabezas. Esto llevó al desarrollo de una nueva generación de rompecabezas más complejos.
+
 Otros auguran la llegada de la *superinteligencia*, esto es, una inteligencia artificial que supere a la humana y que realice avances científicos y tecnológicos fuera del alcance de las personas. Sin embargo, aunque es cierto que los progresos de estos últimos años en inteligencia artificial han sido espectaculares, es recomendable ser cautos y entender que a lo largo de la historia de la humanidad ha habido muchas predicciones sobre el futuro que no se han cumplido.
 
 ### Sesgos
@@ -330,9 +335,9 @@ Otro tema importante en los modelos de lengua es el de los sesgos de todo tipo. 
 
 Un ejemplo típico de sesgo en modelos de lengua es la representación de género en profesiones, como cuando traducen frases relacionadas con mujeres científicas o académicas. Por ejemplo, una frase en español como "La doctora Elizabeth Rossi ha sido contratada por sus conocimientos sobre la microbiota intestinal y su impacto en la salud digestiva" podría ser traducida incorrectamente al inglés como "Dr. Elizabeth Rossi has been hired for *his* knowledge about the gut microbiota and its impact on digestive health". Este error refleja un sesgo de género que se origina en los datos de entrenamiento, donde las profesiones científicas suelen asociarse más frecuentemente con hombres. Además, estos sesgos tienden a amplificarse en los modelos porque refuerzan patrones frecuentes.
 
-### Qué estudiar para ser un experto en inteligencia artificial
+### Qué estudiar para saber más de inteligencia artificial
 
-Si quieres estar al día de los avances en el área de la inteligencia artificial (IA), puedes seguir a *youtubers* como [DotCSV][dot] o [Xavier Mitjana][xavier]. Pero si quieres convertirte en un experto, tendrás que ir más allá de los vídeos divulgativos e invertir más tiempo en estudiar los conceptos matemáticos y la programación detrás de los diferentes modelos. El lenguaje de programación más utilizado en IA es Python 3 (ten cuidado porque algunos materiales antiguos pueden centrarse en Python 2, una versión ya desfasada) y las matemáticas que necesitarás incluyen parte del álgebra lineal, cálculo y probabilidad que se estudia en bachillerato. La librería de programación más utilizada es [Hugging Face][hf]. Otras como PyTorch o JAX son opciones para los *hackers* super avanzados que ya dominan Hugging Face. Más adelante, tienes una lista de libros que te pueden ayudar a profundizar en los conceptos. Uno de los profesores de este taller, tiene una [guía][guía] sobre procesamiento del lenguaje natural (la rama de la IA centrada en el lenguaje humano) que puede ser de tu interés para profundizar en los modelos de lengua.
+Si quieres estar al día de los avances en el área de la inteligencia artificial (IA), puedes seguir a *youtubers* como [DotCSV][dot] o [Xavier Mitjana][xavier]. Pero si quieres convertirte en una persona experta, tendrás que ir más allá de los vídeos divulgativos e invertir más tiempo en estudiar los conceptos matemáticos y la programación detrás de los diferentes modelos. El lenguaje de programación más utilizado en IA es Python 3 (ten cuidado porque algunos materiales antiguos pueden centrarse en Python 2, una versión ya desfasada) y las matemáticas que necesitarás incluyen parte del álgebra lineal, cálculo y probabilidad que se estudia en bachillerato. La librería de programación más utilizada es [Hugging Face][hf]. Otras como PyTorch o JAX son opciones para los *hackers* super avanzados que ya dominan Hugging Face. Más adelante, tienes una lista de libros que te pueden ayudar a profundizar en los conceptos. Uno de los profesores de este taller, tiene una [guía][guía] sobre procesamiento del lenguaje natural (la rama de la IA centrada en el lenguaje humano) que puede ser de tu interés para profundizar en los modelos de lengua.
 
 [guía]: https://www.dlsi.ua.es/~japerez/materials/transformers/intro/
 [dot]: https://www.youtube.com/dotcsv
@@ -341,7 +346,7 @@ Si quieres estar al día de los avances en el área de la inteligencia artificia
 [pytorch]: https://pytorch.org/
 [jax]: https://github.com/jax-ml/jax
 
-En el nivel universitario, existen diferentes títulos que te pueden servir de forma directa para especializarte en IA. Por ejemplo, el grado de informática seguido de un máster en inteligencia artificial o en ciencia de datos. Otra opción es estudiar directamente un grado en inteligencia artificial, una carrera de más reciente implantación, pero que ya se imparte en varias universidades. Sin embargo, dado que prácticamente todas las disciplinas están incorporando la IA en sus procesos, otra opción es estudiar un grado de tu agrado con un perfil menos informático y especializarte en IA a través de un máster o de cursos de especialización. En este caso, dado que la presencia de la informática en muchos grados que no son de informática es normalmente escasa, sería recomendable que dedicaras parte de tu tiempo de estudio, incluso antes de terminar la carrera, a seguir de forma autodidacta los avances de la IA en tu campo. 
+En el nivel universitario, existen diferentes títulos que te pueden servir de forma directa para especializarte en IA. Por ejemplo, el grado de informática seguido de un máster en inteligencia artificial o en ciencia de datos. Alternativamente, otros grados como el de robótica, multimedia, o ingeniería biomédica pueden darte una base técnica para especializarte después mediante un máster. Otra opción es estudiar directamente un grado en inteligencia artificial, una carrera de más reciente implantación, pero que ya se imparte en varias universidades. Sin embargo, dado que prácticamente todas las disciplinas están incorporando la IA en sus procesos, otra opción es estudiar un grado de tu agrado con un perfil menos informático y especializarte en IA a través de un máster o de cursos de especialización. En este caso, dado que la presencia de la informática en muchos grados que no son de informática es normalmente escasa, sería recomendable que dedicaras parte de tu tiempo de estudio, incluso antes de terminar la carrera, a seguir de forma autodidacta los avances de la IA en tu campo. 
 
 Tras la etapa de máster, podrías continuar con un doctorado, pero ten en cuenta que las ayudas para cursar estos estudios son muy competitivas y tanto el expediente académico de las etapas universitarias anteriores como la experiencia en investigación son muy valorados.
 

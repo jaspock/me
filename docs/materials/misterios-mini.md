@@ -283,17 +283,21 @@ graph LR
 - Aún más importante, el mecanismo de atención permite que los embeddings de las palabras cambien en función del contexto.
 - "You shall know a word by the company it keeps".
 
-### Código: observando el mecanismo de atención 
+### Interpretabilidad: observando el mecanismo de atención
 
-- El siguiente código nos permite evaluar cómo la atención favorece unas palabras de la entrada sobre otras a la hora de generar una posible continuación.
+- Interpretación visual de las palabras de la entrada que son relevantes según la continuación.
+- Ejemplos: [1][interp1] y [2][interp2].
 
+[interp1]: https://huggingface.co/spaces/facebook/llm-transparency-tool-demo
+[interp2]: https://github.com/jalammar/ecco
+
+![](assets/misterios/imgs/alti.png)
+
+<!--
 <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/assets/misterios/notebooks/alti.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
-
-!!! note "Programa"
-
-    Prueba con diferentes frases de contexto y palabras objetivo y sorpresa. Estudia la relevancia que da el modelo a las palabras de entrada.
+-->
 
 ### Más allá de predecir la siguiente palabra
 
@@ -331,7 +335,7 @@ graph LR
 
 !!! note "Programa"
 
-    Observa cómo el contexto influye en la probabilidad de la siguiente palabra. Juega con diferentes frases de contexto y estudia las predicciones de los modelos. ¿Qué diferencias observas entre los modelos base y los que siguen instrucciones?
+    Observa cómo el contexto influye en la probabilidad de la siguiente palabra. Juega con diferentes frases de contexto y estudia las predicciones de los modelos. ¿Qué diferencias observas entre los modelos base y los que siguen instrucciones? ¿Cómo de sensibles son los modelos a cambios en la entrada (*prompt*)? ¿Cómo cambian las probabilidades de salida al hacer preguntas cuyas respuestas probablemente se han visto durante el entrenamiento con respecto a preguntas con respuestas menos frecuentes?
 
 ### Qué aprenden realmente los modelos de lengua
 
@@ -354,6 +358,11 @@ graph LR
 - Los modelos pueden *alucinar*, generando textos sin sentido, incorrectos o alejados de la realidad.
 - Pedir a un modelo que dé respuestas complejas simplemente en base a predecir la siguiente palabra no es justo.
 - Se incorporan modos de *razonamiento* (como las personas) y *autorreflexión* para verificar y contrastar respuestas antes de emitirlas, sometiéndolas a procesos adicionales.
+
+- Modos de inducir razonamiento:
+    - *think step by step*
+    - entrenamiento con datos que incluyen cadenas de razonamiento
+    - desarrollo inducido de razonamiento mediante aprendizaje por refuerzo
   
 ![](assets/misterios/imgs/socratic.png)
 

@@ -235,13 +235,22 @@ La *atención* permite a la red neuronal *escoger* entre todas las de la entrada
 
 Una consecuencia aún más importante del mecanismo de atención es que permite que los embeddings de las palabras cambien en función del contexto. Hasta ahora, podría parecer que los embeddings de las palabras son estáticos y que cada palabra se representa siempre con el mismo vector independientemente del texto en el que aparezca. Sin embargo, gracias a la atención, los embeddings de las palabras cambian en función de las palabras que las rodean para acercarse a aquellas de la entrada con las que más relación tienen. Para hacer esto, es necesario que el modelo de red neuronal sea más complejo que el que hemos estudiado hasta ahora: a la entrada de la red neuronal se aportan los embeddings estáticos de las palabras; a continuación, el mecanismo de atención (que también implica una serie de operaciones matriciales) refina los embeddings de cada palabra en función de las demás; finalmente, se calcula la salida de la red neuronal como hemos visto anteriormente. Esto pone en práctica la idea expresada por el lingüista J. R. Firth cuando dijo aquello de que "you shall know a word by the company it keeps".
 
-### Código: observando el mecanismo de atención 
+### Interpretabilidad: observando el mecanismo de atención 
 
-El siguiente código nos permite evaluar cómo la atención favorece unas palabras de la entrada sobre otras a la hora de generar una posible continuación. Para ello, aportamos una frase como "This summer, unlike the previous winter, is being extremely" y representamos la diferencia en la atención prestada a las palabras de la entrada si la siguiente palabra es "hot" (una continuación razonable) o "cold" (una continuación menos razonable). El modelo de lengua usado es GPT-2, un modelo de 2019 desarrollado por OpenAI disponible en abierto y que es el antecesor de GPT-3 y GPT-4.   
+Es muy instructivo poder estudiar cómo la atención favorece unas palabras de la entrada sobre otras a la hora de generar la continuaciones de un texto. Para ello, podemos hacer cosas como aportar el prefijo "A report about the Impressionists" a un modelo de lengua y [comparar][alti] qué palabras de la entrada tienen más peso en la probabilidad generada para "has" o para "have", como se ve en la siguiente tabla. Desafortunadamente, no hay muchas herramientas que se puedan ejecutar de forma fácil para ver estas ideas en acción, pero podemos ver algunos resultados para unas frases fijas [aquí][interp1] o [aquí][interp2].
 
+[alti]: https://arxiv.org/abs/2305.12535
+[interp1]: https://huggingface.co/spaces/facebook/llm-transparency-tool-demo
+[interp2]: https://github.com/jalammar/ecco
+
+![](assets/misterios/imgs/alti.png)
+
+
+<!--
 <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/assets/misterios/notebooks/alti.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
+-->
 
 ### Más allá de predecir la siguiente palabra
 
@@ -275,7 +284,7 @@ En esta parte práctica vas a ejecutar tanto un modelo de lengua que ha sido exc
 
 !!! note "Piensa"
 
-    Observa cómo el contexto influye en la probabilidad de la siguiente palabra. Juega con diferentes frases de contexto y estudia las predicciones de los modelos. ¿Qué diferencias observas entre los modelos base y los que siguen instrucciones?
+    Observa cómo el contexto influye en la probabilidad de la siguiente palabra. Juega con diferentes frases de contexto y estudia las predicciones de los modelos. ¿Qué diferencias observas entre los modelos base y los que siguen instrucciones? ¿Cómo de sensibles son los modelos a cambios en la entrada (*prompt*)? ¿Cómo cambian las probabilidades de salida al hacer preguntas cuyas respuestas probablemente se han visto durante el entrenamiento con respecto a preguntas con respuestas menos frecuentes?
 
 ### Qué aprenden realmente los modelos de lengua
 

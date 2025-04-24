@@ -5,7 +5,7 @@
 # Revelando los misterios de la IA
 </div>
 
-Estos son los materiales del taller *Revelando los misterios de la IA* impartido varias veces en 2025 por Juan Antonio Pérez (coordinador) y Alberto Navalón de la Universitat d'Alacant a estudiantes de entre 14 y 18 años. No son unos materiales de autoestudio, sino que están pensados para servir de guión en un taller presencial. No obstante, puede que una lectura atenta, te ayude a entender mejor cómo funcionan los modelos de lengua actuales y a entender su potencial y limitaciones. 
+Estos son los materiales del taller *Revelando los misterios de la IA* impartido varias veces en 2025 por Juan Antonio Pérez (coordinador) y Alberto Navalón de la Universitat d'Alacant a estudiantes de entre 14 y 18 años. En la clase de uno de los talleres también participó Marcos Pérez. No son unos materiales de autoestudio, sino que están pensados para servir de guión en un taller presencial. No obstante, puede que una lectura atenta, te ayude a entender mejor cómo funcionan los modelos de lengua actuales y a entender su potencial y limitaciones. 
 
 !!! note
 

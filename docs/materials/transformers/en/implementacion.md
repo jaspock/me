@@ -44,6 +44,9 @@ This is an implementation of the [:octicons-book-24:][pyskip] [skip-gram][pyskip
 This is the implementation of a [:octicons-book-24:][pylm] [language model][pylm] using feedforward networks as studied [on this page](ffw.md). It adheres to the equations in the book by Jurafsky and Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/ffnn.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+You can also explore a very similar notebook that in this case focuses on learning word embeddings using a feedforward neural network. The idea is to use a self-supervised task where the model predicts the next word to obtain the embeddings as a by-product. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/embeddings-ffnn.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 [pylm]: ../assets/notebooks/ffnn.ipynb
 
 ## Code for the Transformer {#code-transformer}

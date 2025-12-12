@@ -45,6 +45,9 @@ Esta es una implementación del algoritmo [:octicons-book-24:][pyskip] [skip-gra
 Esta es la implementación de un [:octicons-book-24:][pylm] [modelo de lengua][pylm] con redes *feedforward* que se estudia [en esta página](ffw.md) y que sigue las ecuaciones del libro de Jurafsky y Martin. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/ffnn.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+También puedes estudiar un código muy similar que se centra en la obtención de embeddings de palabras usando una red neuronal *feedforward*. La idea es usar una tarea de auto-supervisión en la que el modelo predice la siguiente palabra para obtener los embeddings como un subproducto. <a target="_blank" href="https://colab.research.google.com/github/jaspock/me/blob/main/docs/materials/transformers/assets/notebooks/embeddings-ffnn.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 [pylm]: assets/notebooks/ffnn.ipynb
 
 ## Código para el transformer
